@@ -1,0 +1,68 @@
+.btn-primary{
+  background:$dgreen-color;
+  color:$white-color;
+}
+.btn, .search-flex .btn{
+  box-sizing: border-box;
+  background: $lgreen-color;
+  color: $white-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
+  max-width: 240px;
+ padding:24px 12px;
+ height:44px;
+ border:none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 6px;
+  font-size: $font-size-lg;
+  font-family: "DM Sans";
+font-size: 15px;
+font-style: normal;
+font-weight: 600;
+line-height: 22px;
+    &:hover{
+      background: $lgreen-color;
+      color:$white-color;
+    }
+}
+.btn-empty{
+  background-color: transparent;
+  color:$gray-color;
+  .flex-btn{
+  gap:8px!important;
+  display:flex;
+  }
+}
+/* PAGINATION */
+.pagination{
+  margin-top:20px;
+  display:flex;
+  flex-direction: column;
+
+.pagination-row{
+  display:flex;
+}
+.btn:disabled {
+  border: 1px solid $lgray-color;
+  cursor: not-allowed;
+  background: none;
+  color:$dgray-color;
+}
+.btn:disabled:hover {
+  background: transparent;
+}
+}
+/* PAGINATION */
+
+
+
+
+
+
+
+
+
+

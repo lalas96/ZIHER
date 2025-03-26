@@ -1,0 +1,10 @@
+$font-stack:"DM Sans";
+
+
+$spaceamounts:(10,20);
+
+@each $space in $spaceamounts{
+    .p-#{$space}{
+        padding:#{$space}px;
+    }
+}
