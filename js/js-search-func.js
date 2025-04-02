@@ -28,62 +28,61 @@ async function fetchLocalData() {
     hideSpinner();
   }
 }
+function generateCard(nekretnina) {
+  const firstImage = nekretnina.images?.[0] || '../images/no-image.jpg';
+  return `
+    <div class="card">
+        <a href="nekretnina-details.html?id=${nekretnina.id}">
+            <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}" />
+        </a>
+        <div class="card-body">
+            <div class="card-text">
+                <h5>${nekretnina.type}</h5>
+                <h4 class="card-title">${nekretnina.title}</h4>
+                <div class="flex">    
+                    <div class="flex">    
+                        <small>
+                            <img class="icon-img" src="../img/house.png" alt="">
+                            ${nekretnina.size} m²
+                        </small>
+                    </div>
+                    <div class="flex">
+                        <small>
+                            <img class="icon-img" src="../img/rooms.png" alt="">
+                            ${nekretnina.rooms}
+                        </small>
+                    </div>
+                    <div class="flex"> 
+                        <small>$${addCommasToNumber(nekretnina.price)}</small>
+                    </div>
+                </div>
+                <div class="long-line"></div>
+                <div class="flex"> 
+                    <small>
+                        <img class="icon-img" src="../img/place.png" alt="">
+                        <h5>${nekretnina.location}</h5>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>`;
+}
 //generate cards
 async function createCards(data, containerId, filterType = null, page = 1) {
-  const ITEMS_PER_PAGE = 6; // items per page
-
-  const results = filterType 
-    ? data.estate.filter((nekretnina) => nekretnina.type === filterType)
+  const ITEMS_PER_PAGE = 6;
+  const results = filterType
+    ? data.estate.filter(nekretnina => nekretnina.type === filterType)
     : data.estate.slice(0);
 
   const paginatedResults = results.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
   const container = document.querySelector(`#${containerId}`);
   if (!container) return;
 
-  container.innerHTML = paginatedResults
-    .map(nekretnina => {
-      const firstImage = nekretnina.images?.[0] || '../images/no-image.jpg';
-      return `
-        <div class="card">
-            <a href="nekretnina-details.html?id=${nekretnina.id}">
-                <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}" />
-            </a>
-            <div class="card-body">
-                <div class="card-text">
-                    <h5>${nekretnina.type}</h5>
-                    <h4 class="card-title">${nekretnina.title}</h4>
-                    <div class="flex">    
-                        <div class="flex">    
-                            <small>
-                                <img class="icon-img" src="../img/house.png" alt="">
-                                ${nekretnina.size} m²
-                            </small>
-                        </div>
-                        <div class="flex">
-                            <small>
-                                <img class="icon-img" src="../img/rooms.png" alt="">
-                                ${nekretnina.rooms}
-                            </small>
-                        </div>
-                        <div class="flex"> 
-                            <small>Cijena: $${addCommasToNumber(nekretnina.price)}</small>
-                        </div>
-                    </div>
-                    <div class="long-line"></div>
-                    <div class="flex"> 
-                        <small>
-                            <img class="icon-img" src="../img/place.png" alt="">
-                            <h5>${nekretnina.location}</h5>
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>`;
-    })
-    .join("");
-
+  container.innerHTML = paginatedResults.map(generateCard).join("");
   displayPagination(results.length, ITEMS_PER_PAGE, page, containerId, filterType);
 }
+
+
 //DISPLAY CARDS FOR DIFFERENT PAGES
 async function displayNekretnine(containerId, filterType = null, limit = null) {
   global.search.page = 1;
@@ -104,7 +103,6 @@ const displayAllNekretnine = () => displayNekretnine("all-nekretnine");
 const displayLatestNekretnine = () => displayNekretnine("latest-nekretnine", null, 3);
 const displayProdajaNekretnine = () => displayNekretnine("prodaja-nekretnine", "Prodaja");
 const displayNajamNekretnine = () => displayNekretnine("najam-nekretnine", "Najam");
-const displayTopNekretnine = () => displayNekretnine("top-nekretnine", null, 5);
 
 //SPINNER
 function showSpinner() {
@@ -179,6 +177,13 @@ async function searchAPIData() {
   const isPoolChecked = pool;
   const isParkingChecked = parking;
 
+  const minPriceValue = global.search["min-price"] ? parseFloat(global.search["min-price"]) : null;
+  const maxPriceValue = global.search["max-price"] ? parseFloat(global.search["max-price"]) : null;
+  
+  
+  const minSurfaceValue = (!isNaN(parseFloat(global.search["min-surface"]))) ? parseFloat(global.search["min-surface"]) : null;
+  const maxSurfaceValue = (!isNaN(parseFloat(global.search["max-surface"]))) ? parseFloat(global.search["max-surface"]) : null;
+
   // Combine all data
   const combinedData = [...data.estate];
   const uniqueResults = Array.from(new Set(combinedData.map(item => item.id)))
@@ -192,8 +197,10 @@ async function searchAPIData() {
       (category ? item.category.toLowerCase() === category.toLowerCase() : true) &&
       (location ? item.location.toLowerCase() === location.toLowerCase() : true) &&
       (rooms ? item.rooms === parseInt(rooms) : true) &&
-      item.price >= (minPrice || 0) && item.price <= (maxPrice || Infinity) &&
-      item.size >= (minSurface || 0) && item.size <= (maxSurface || Infinity) &&
+      (minPriceValue === null || item.price >= minPriceValue) && 
+      (maxPriceValue === null || item.price <= maxPriceValue) && 
+      (minSurfaceValue === null || item.size >= minSurfaceValue) &&  
+      (maxSurfaceValue === null || item.size <= maxSurfaceValue) &&  
       (isPoolChecked ? item.pool : true) &&
       (isParkingChecked ? item.parking : true)
     );
@@ -242,7 +249,7 @@ function displaySearchResults(results, totalResults) {
           <small>Bazen: ${result.pool ? "Da" : "Ne"}</small>
           <small>Parking: ${result.parking ? "Da" : "Ne"}</small>
           <small>Tip nekretnine: ${result.type}</small>
-          <small>Cijena: ${result.price}</small>
+          <small>Cijena: $${result.price}</small>
         </p>
       </div>
     `;

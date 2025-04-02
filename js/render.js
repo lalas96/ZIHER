@@ -166,91 +166,100 @@ document.addEventListener('DOMContentLoaded', renderFooter);
 //NAVIGATION  START
 function renderNavBar() {
 const navBarHTML = `
-<nav id="navbar" class="navigation">
-<div class="container">
-<div class="bottom-bar">
-<div class="bottom-bar_content">
-<a href="index.html" class="logo">
-<img src="../img/logo.png" alt="Logo">
-</a>
-<nav class="nav desktop-nav">
-<ul class="nav_list">
-<li class="nav_item">
-  <a class="nav_link" href="landing.html">Landing</a>
-</li>
-<li class="nav_item">
-  <a class="nav_link" href="index.html">Naslovna</a>
-</li>
-<li class="nav_item">
-  <a class="nav_link" href="prodaja.html">Prodaja</a>
-</li>
-<li class="nav_item">
-  <a class="nav_link" href="najam.html">Najam</a>
-</li>
-<li class="nav_item">
-  <a class="nav_link" href="onama.html">O nama</a>
-</li>
-<li class="nav_item">
-  <a class="nav_link" href="kontakt.html">Kontakt</a>
-</li>
-</ul>
-</nav>
-<!-- Dropdown Container -->
-<div class="dropdown">
-  <button class="dropdown-btn">Select an option ▼</button>
-  <div class="dropdown-menu">
-    <a href="all.html">Osiguranje</a>
-  </div>
-</div>
+  <nav id="navbar" class="navigation">
+      <div class="navbar">
+      <a href="index.html" class="logo">
+      <img src="../img/logo.png" alt="Logo">
+      </a>
 
-<!--  toggle -->
-<div class="mobile-menu-toggle" onclick="toggleNav()">
-<div class="hamburger">
-<svg
-  class="line"
-  width="18"
-  height="2"
-  viewBox="0 0 18 2"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg">
-  <rect width="18" height="2" fill="#2A71BF" />
-</svg>
-<svg
-  class="line"
-  width="18"
-  height="2"
-  viewBox="0 0 18 2"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg">
-  <rect width="18" height="2" fill="#2A71BF" />
-</svg>
-</div>
-</div>
-</div>
-</div>
-</div>
-</nav>
-
-<!--  toggle -->
-<div id="toggleMobileNav" class="overlay">
-<div class="overlay-content">
-<nav class="nav mobile-nav">
-<ul class="nav_list">
-<li class="nav_item">
-<a class="nav_link" href="#usluge">Usluge</a>
-</li>
-<li class="nav_item">
-<a class="nav_link" href="#onama">O nama</a>
-</li>
-<li class="nav_item">
-<a class="nav_link" href="#kontakt">Kontakt</a>
-</li>
-</ul>
-</nav>
-<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-</a>
-</div>
-</div>
+      <nav class="nav desktop-nav">
+      <ul class="nav_list">
+      <li class="nav_item">
+        <a class="nav_link" href="landing.html">Landing</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="index.html">Naslovna</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="prodaja.html">Prodaja</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="najam.html">Najam</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="onama.html">O nama</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="kontakt.html">Kontakt</a>
+      </li>
+      </ul>
+      </nav>
+      
+      <!-- Dropdown Container -->
+       <div class="mobile-container">
+      <div class="dropdown">
+        <button class="dropdown-btn">Select an option ▼</button>
+        <div class="dropdown-menu">
+          <a href="all.html">Osiguranje</a>
+        </div>
+        </div>
+      
+      <!--  toggle -->
+      <div class="mobile-menu-toggle" onclick="toggleNav()">
+      <div class="hamburger">
+      <svg
+        class="line"
+        width="18"
+        height="2"
+        viewBox="0 0 18 2"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <rect width="18" height="2" fill="#2A71BF" />
+      </svg>
+      <svg
+        class="line"
+        width="18"
+        height="2"
+        viewBox="0 0 18 2"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <rect width="18" height="2" fill="#2A71BF" />
+      </svg>
+      </div>
+      </div>
+      </div>
+    
+      </nav>
+      
+      <!--  toggle -->
+      <div id="toggleMobileNav" class="overlay">
+      <div class="overlay-content">
+      <nav class="mobile-nav">
+      <ul class="nav_list">
+      <li class="nav_item">
+        <a class="nav_link" href="landing.html">Landing</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="index.html">Naslovna</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="prodaja.html">Prodaja</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="najam.html">Najam</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="onama.html">O nama</a>
+      </li>
+      <li class="nav_item">
+        <a class="nav_link" href="kontakt.html">Kontakt</a>
+      </li>
+      </ul>
+      </nav>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+      </a>
+      </div>
+      </div>
 `;
 const container = document.getElementById("navbar-container");
 if (container) {
@@ -335,10 +344,10 @@ if (container) {
 container.innerHTML = headerHTML;
 }
 }
-//-------------------SEARCHBAR
+ //------------------------------------------------------------------------SEARCHBAR
 function renderSearchBar() {
   const searchBarHTML = `
-  <section class="section-ponuda">
+  <section class="section-ponuda-showcase">
   <div class="container">
   <div class="search-bar">
   <div id="alert"></div>
@@ -410,21 +419,22 @@ function renderSearchBar() {
       <h5>Pretraži</h5> 
       </div>
     </button>
+          <input type="text" placeholder="Search by Location..." name="search-term" id="search-term" />
   </div>
   </div>
   <div class="additional">
       <div class="wrapper">
         <div class="search">
-      <input type="text" placeholder="Search by Name..." name="search-term" id="search-term" />
+      <input class="id-search" type="text" name="search-id" id="search-id" placeholder="ID nekretnine" />
         </div>
-        </div>
-<input class="id-search" type="text" name="search-id" id="search-id" placeholder="ID nekretnine" />
-
+ 
+   
   <div class="price-range">
     <input type="number" name="min-price" id="min-price" placeholder="Min price" />
     <input type="number" name="max-price" id="max-price" placeholder="Max price" />
   </div>
-  
+    </div>
+   <div class="wrapper">
   <div class="surface-range">
     <input type="number" name="min-surface" id="min-surface" placeholder="Min surface (m²)" />
     <input type="number" name="max-surface" id="max-surface" placeholder="Max surface (m²)" />
@@ -439,6 +449,7 @@ function renderSearchBar() {
       <label for="parking-checkbox">Parking</label>
     </div>
   </div>
+    </div>
   </div>
   </div>
   </form>
@@ -529,8 +540,8 @@ function renderSearchBar() {
   }
   }
   }
+  //------------------------------------------------------------------------SEARCHBAR END
 
-  //-------------------SEARCHBAR END
 //-------------------GALLERY
 async function displayGalleryPage() {
   const nekretninaId = new URLSearchParams(window.location.search).get("id");
@@ -670,7 +681,6 @@ case "/index.html":
 renderNavBar();
 renderSearchBar();
 displayLatestNekretnine();
-displayTopNekretnine();
 renderTeam();
 renderFooter();
 break;
@@ -716,6 +726,63 @@ break;
 highlightActiveLink();
 };
 //-------------------GALLERY
+let startIndex = 0;
+let interval;
+let nekretnine = [];
 
+async function fetchProperties() {
+    try {
+        const response = await fetch("nekretnine.json");
+        const data = await response.json();
+        
+        if (!data || !data.estate || data.estate.length === 0) {
+            console.error("No properties found in JSON.");
+            return;
+        }
+        nekretnine = data.estate;
+        updateCards();
+        startRotation();
+        addHoverListeners(); // Attach hover listeners after loading cards
+    } catch (error) {
+        console.error("Error fetching properties:", error);
+    }
+}
 
+function updateCards() {
+  for (let i = 0; i < 5; i++) {
+      let cardElement = document.getElementById(`card${i + 1}`);
+      if (!cardElement) continue; // Skip if element is not found
 
+      let nekretnina = nekretnine[(startIndex + i) % nekretnine.length];
+
+      // Use the reusable generateCard function
+      let cardHTML = generateCard(nekretnina);
+
+      cardElement.style.opacity = 0;
+      setTimeout(() => {
+          cardElement.innerHTML = cardHTML;
+          cardElement.style.opacity = 1;
+      }, 500);
+  }
+  startIndex = (startIndex + 1) % (nekretnine.length - 4);
+}
+
+function startRotation() {
+    interval = setInterval(updateCards, 6000);
+}
+function stopRotation() {
+    clearInterval(interval);
+}
+
+// Attach event listeners to all cards
+function addHoverListeners() {
+    for (let i = 1; i <= 5; i++) {
+        let card = document.getElementById(`card${i}`);
+        if (card) {
+            card.addEventListener("mouseenter", stopRotation);
+            card.addEventListener("mouseleave", startRotation);
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", fetchProperties);

@@ -86,28 +86,6 @@ function showAlert(message, className = "error") {
   function addCommasToNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-//navbar scroll koji ne radi
-/*   document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM content loaded!");
-    
-    const navbar = document.getElementById("navbar");
-    if (!navbar) {
-    console.error("Navbar element not found.");
-    return;
-    }
-    let prevScrollPos = window.pageYOffset; 
-    window.addEventListener("scroll", () => {
-    const currentScrollPos = window.pageYOffset; 
-    if (Math.abs(currentScrollPos - prevScrollPos) > 50) {
-    if (prevScrollPos > currentScrollPos) {
-    navbar.classList.remove("hidden"); 
-    } else {
-    navbar.classList.add("hidden"); 
-    }
-    prevScrollPos = currentScrollPos; 
-    }
-    });
-    }); */
 
     const left = document.querySelector(".left");
     const right = document.querySelector(".right");

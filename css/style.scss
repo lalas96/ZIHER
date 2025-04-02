@@ -15,14 +15,10 @@
   z-index: 20;
   top: 0;
   transition: all 0.3s ease-in-out; 
-
-    .bottom-bar {
-      
+  position: relative;
+    .navbar {
       max-width:1440px;
       width:100%;
-      background: transparent; 
-      overflow:hidden;
-        .bottom-bar_content {
           max-width:100%;
           width:100%;
           padding: 48px 72px;
@@ -32,8 +28,9 @@
         color:$white-color;
         height:100px;
         margin: 0 auto;
-        }
-        .bottom-bar_content a{
+        position: relative;
+
+        a{
         display:block;
         color:$gray-color;
         }
@@ -74,12 +71,23 @@
         color: $dgreen-color;
         }
         }
-        .dropdown{
-          display:flex;
-          justify-content: flex-end;
-          padding:20px;
-        }
+    
+        
       }
+}
+.mobile-container {
+  display: flex;
+  position: relative;
+  overflow: visible !important;
+  z-index: 1000;
+      .dropdown{
+          display:flex;
+          margin-right:20px;
+          position: relative;
+          display: inline-block;
+          z-index:11111;
+          overflow: visible !important;
+        }
 }
 
 #navbar {
@@ -151,8 +159,7 @@
     position: relative;
     left: 0 !important;
     top: 0;
-    justify-content: space-between;
-    align-items: flex-start !important; 
+    justify-content: flex-end;
     display: flex;
     width: 100%; 
     height: 100%;
@@ -164,9 +171,6 @@
         a{
           padding-bottom:50px;
           font-size: $font-size-3xl;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
           text-transform: uppercase;
           color:$white-color;
         }
@@ -191,7 +195,6 @@
   display: none;
 }
 .navigation {
-  /* position: fixed; */
   width: 100%;
   z-index: 20;
   top: 0;
@@ -227,7 +230,7 @@
     width:100%;
   .content{
     background: $lgreen-color;
-    border-radius: 6px;
+    border-radius: 8px;
     display: flex;
     gap: 26px;
     padding: 16px 24px;
@@ -446,10 +449,12 @@
 }
 .additional {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
   gap: 30px;
-  padding: 0 30px;
+  .search{
+    display:flex;
+    flex-direction: column;
+  }
 .price-range,
 .surface-range {
   max-width: 200px;
@@ -534,8 +539,18 @@
 }
 /*---------- DROPDOWN----------- */
 /* SEARCH BUTTON */
+.search-flex {
+  display:flex;
+  gap:48px;
+ align-items:  center;
+  input{
+    width:300px;
+    padding:15px;
+  }
+}
 .search-flex .btn {
-  margin-top: 16px;
+  margin-top: 32px;
+  margin-bottom: 32px;
 h5{
   font-size: 15px;
   font-style: normal;
@@ -565,13 +580,16 @@ h5{
 .alert {
   padding: 10px 20px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 6px;
   color:$dgray-color;
   background:$red-color;
 }
 /* SEARCH Alert */
 /*-------------------- NEKRETNINE DETAILS CARD ---------------------*/
-.section-ponuda{
+.section-ponuda-showcase{
+  border-bottom: 2px $lgray-color solid;
+}
+.section-ponuda, .section-ponuda-showcase{
   .container{
     gap:48px;
     display:flex;
@@ -598,9 +616,11 @@ h5{
     }
   }
 }
+
 .search-results{
  padding:0 30px;
 }
+
 
 .section-row-box{
   border-top:1px solid $lgray-color;
@@ -609,6 +629,82 @@ h5{
 
 
 /*---------- TOP NEKRETNINE----------- */
+
+.featured-section .flex .text:first-child{
+  padding-bottom:94px;
+}
+.featured-section .flex{
+  justify-content: space-between;
+  max-width:1200px;
+  h2{
+    font-size:$font-size-6xl;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 110%;
+  }
+  .box{
+    max-width:352px;
+  }
+  .box:first-child{
+    h5{
+      color:$dgreen-color;
+    }
+  }
+  .box:last-child{
+    p{
+      padding-top:8px;
+      padding-bottom:32px;
+    }
+  } 
+}
+.top-nekretnine {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(100%, auto); 
+    gap: 48px;
+  }
+
+  .card {
+    position: relative;
+    padding: 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: opacity 0.5s, transform 0.5s;
+    height:100%;
+    height:450px;
+    &.middle{
+      height:650px;
+    }
+  }
+  .card img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+    height:100%;
+  }
+  .card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $white-color;
+    color: $dgray-color;
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    border-radius: 8px;
+  }
+  .card:hover .card-body {
+    opacity: 1;
+    transform: translateY(0);
+    margin:20px;
+    border-radius: 8px;
+  }
+}
+
 section.featured-section{
   padding:80px 0px!important;
 }
@@ -634,43 +730,39 @@ section.featured-section{
       padding-top:8px;
       padding-bottom:32px;
     }
-
-
   } 
 }
-.featured-section .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px; 
-  
-  padding-top:80px;
-  .card{
-    height:400px;
-  }
-}
-.featured-section .grid .card:nth-child(1) {
+
+
+
+.top-nekretnine .grid .card:nth-child(1) {
   grid-column: 1;
 }
-.featured-section .grid .card:nth-child(2) {
+.top-nekretnine .grid .card:nth-child(2) {
   grid-column: 1;
 }
-.featured-section .grid .card:nth-child(3) {
+.top-nekretnine .grid .card:nth-child(3) {
   grid-column: 2;
-  grid-row-start: 1;
-  top: 50%;
+/*   grid-row: span 2; */
+  top: -50%;
   width: 100%;
-  height: 560px!important;
+  height:100%;
   position: relative;
 }
-.featured-section .grid .card:nth-child(4) {
+.top-nekretnine .grid .card:nth-child(4) {
   grid-column: 3;
   grid-row-start: 1;
 }
-.featured-section .grid .card:nth-child(5) {
+.top-nekretnine .grid .card:nth-child(5) {
   grid-column: 3;
 }
+
 /*---------- TOP NEKRETNINE----------- */
 
+
+.section-ponuda .card{
+  border: 1px solid $lgray-color!important;
+}
 //CARD
 .card-top-container{
   display:flex;
@@ -725,7 +817,7 @@ section.featured-section{
   }
 }
 .card{
-  border: 1px solid $lgray-color!important;
+  border-radius: 8px;
 .card-img-top{
   height:240px;
   width:100%;
@@ -733,6 +825,7 @@ section.featured-section{
 }
 .card-body{
   padding:20px;
+  border-radius: 8px;
 }
 .card-text{
   display: flex;
@@ -799,7 +892,7 @@ section.featured-section{
     color: $dgray-color;
     padding: 10px 20px;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 14px;
     display: flex;
     justify-content: center;
@@ -884,7 +977,7 @@ align-items: center;
 border-radius: 28px;
 }
 .contact-form, .contact-form{
-  border-radius: 6px;
+  border-radius: 8px;
 }
 .contact-form {
   background-color: $white-color;
@@ -1004,7 +1097,7 @@ height: 200px;
       width:100%;
       img{
         height:512px;
-        border-radius: 6px;
+        border-radius: 8px;
         object-fit: cover;
       }
       .text{
@@ -1016,7 +1109,7 @@ height: 200px;
         align-items: flex-start;
         gap: 16px;
         align-self: stretch;
-        border-radius: 6px;
+        border-radius: 8px;
       }
       .flex{
         gap:32px;
@@ -1055,32 +1148,36 @@ height: 200px;
         .btn-empty{
           color:$white-color;   
         }
-        
-      max-width:560px!important;
       width:100%;
       }
     
     }
     .box:last-child{
       position: relative;
-    
+      img{
+        max-width:560px;
+        width:100%;
+        height:420px;
+        
+      }
       .text {
         display: flex;
         flex-direction: column;
         height: 100%;
         justify-content: center;
-        width: 100%;
         position: absolute;
         top: 50%;
        /*  right:-50%; */
-        transform: translate(50%, -50%);
+       transform: translate(30%, -30%);
         text-align: center;
         background: $white-color;
         padding: 32px;
         height: 194px;
-        width: 443px;
-        border-radius: 6px;
+        max-width: 443px;
+        width:100%;
+        border-radius: 8px;
         z-index: 2;
+       right:80px;
         p{
         color:$dgray-color;
         }
@@ -1090,6 +1187,7 @@ height: 200px;
     img{
       max-width:560px;
       width:100%;
+          overflow: visible!important;
     }
   }
 }
@@ -1178,7 +1276,7 @@ height: 200px;
   min-width: 160px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .dropdown-menu {
@@ -1187,7 +1285,7 @@ height: 200px;
   background-color: white;
   min-width: 160px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -1206,3 +1304,12 @@ height: 200px;
 .dropdown.show .dropdown-menu {
   display: block;
 }
+
+
+
+
+
+
+
+
+
