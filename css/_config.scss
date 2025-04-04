@@ -1,5 +1,5 @@
-$font-stack:"DM Sans";
-
+$font-stack: "DM Sans", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 $spaceamounts:(10,20);
 
@@ -8,3 +8,7 @@ $spaceamounts:(10,20);
         padding:#{$space}px;
     }
 }
+
+
+
+

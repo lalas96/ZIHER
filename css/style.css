@@ -103,8 +103,8 @@ a {
 }
 
 body {
-  font-family: "$font-stack";
-  font-family: "DM Sans";
+  /* font-family: "$font-stack"!important; */
+  font-family: "DM Sans", "Arial", sans-serif;
   overflow-x: hidden;
 }
 
@@ -179,46 +179,6 @@ section {
 .column {
   display: flex;
   flex-direction: column;
-  /*   align-items: center; */
-}
-
-/* 
-
-body.no-scroll {
-  overflow: hidden;
-}
-.transparent {
-  background: none!important; 
-}
-
- */
-/*  .wrapper {
-  width: 300px;
-  margin: 0 auto;
-}
-
-.result {
-  display: none;
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  border: 1px solid #ccc;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
-}
-
-.result li {
-  padding: 8px;
-  cursor: pointer;
-}
-
-.result li:hover {
-  background-color: #f0f0f0;
-} */
-.btn-primary {
-  background: #005245;
-  color: #ffffff;
 }
 
 .btn, .search-flex .btn {
@@ -283,6 +243,9 @@ body.no-scroll {
   }
 }
 @media (max-width: 1200px) {
+  .select-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
   .featured-section .flex .text {
     padding: 35px !important;
   }
@@ -675,6 +638,12 @@ body.no-scroll {
   align-items: center;
   display: flex;
 }
+.showcase .right-section .content .text {
+  max-width: 252px;
+}
+.showcase .right-section .content .text p {
+  color: #ffffff;
+}
 .showcase .right-section .content .img-box {
   display: flex;
   align-items: flex-start;
@@ -684,10 +653,6 @@ body.no-scroll {
   height: 32px;
   border-radius: 32px;
   margin-right: -10px;
-}
-.showcase .right-section .content .text {
-  max-width: 252px;
-  color: #ffffff;
 }
 
 /*---------- HEADER----------- */
@@ -962,7 +927,7 @@ body.no-scroll {
 
 .select-items div,
 .select-selected {
-  color: #000;
+  /*   color: set-text-color($white-color); */
   padding: 8px 16px;
   cursor: pointer;
 }
@@ -1062,7 +1027,7 @@ body.no-scroll {
 }
 .section-ponuda .flex .btn, .section-ponuda-showcase .flex .btn {
   background: #EDE8E0;
-  color: #000;
+  color: #ffffff;
 }
 .section-ponuda .flex .btn:hover, .section-ponuda-showcase .flex .btn:hover {
   background: #005245;
@@ -1116,7 +1081,6 @@ body.no-scroll {
 .top-nekretnine .card {
   position: relative;
   padding: 0;
-  background: white;
   border-radius: 8px;
   overflow: hidden;
   transition: opacity 0.5s, transform 0.5s;
@@ -1138,7 +1102,6 @@ body.no-scroll {
   left: 0;
   right: 0;
   background: #ffffff;
-  color: #000;
   padding: 10px;
   opacity: 0;
   transform: translateY(100%);
@@ -1720,7 +1683,7 @@ section.contact .contact-form .textarea textarea, .inquiry .contact-form .textar
 
 .dropdown-btn {
   background-color: #026451;
-  color: white;
+  color: #ffffff;
   padding: 10px 20px;
   min-width: 160px;
   border: none;
@@ -1729,9 +1692,9 @@ section.contact .contact-form .textarea textarea, .inquiry .contact-form .textar
 }
 
 .dropdown-menu {
-  display: none; /* ✅ Closed by default */
+  display: none;
   position: absolute;
-  background-color: white;
+  background-color: #ffffff;
   min-width: 160px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
@@ -1739,14 +1702,14 @@ section.contact .contact-form .textarea textarea, .inquiry .contact-form .textar
 }
 
 .dropdown-menu a {
-  color: black;
+  color: #000;
   padding: 10px 16px;
   display: block;
   text-decoration: none;
 }
 
 .dropdown-menu a:hover {
-  background-color: #f1f1f1;
+  background-color: #EDE8E0;
 }
 
 /* Show dropdown when "active" */

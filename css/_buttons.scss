@@ -1,11 +1,8 @@
-.btn-primary{
-  background:$dgreen-color;
-  color:$white-color;
-}
+
 .btn, .search-flex .btn{
   box-sizing: border-box;
   background: $lgreen-color;
-  color: $white-color;
+  color: set-text-color($white-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +22,7 @@ font-weight: 600;
 line-height: 22px;
     &:hover{
       background: $lgreen-color;
-      color:$white-color;
+      color: set-text-color($white-color);
     }
 }
 .btn-empty{

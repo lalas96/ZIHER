@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
 
 
 @import 'config';
@@ -25,7 +25,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color:$white-color;
+          color: set-text-color($white-color);
         height:100px;
         margin: 0 auto;
         position: relative;
@@ -38,7 +38,7 @@
         vertical-align: middle;
         display: flex;
         align-items: center;
-        color:$white-color;
+          color: set-text-color($white-color);
         font-size:$font-size-4xl;
         font-weight: 700;
         justify-content: flex-start;
@@ -172,7 +172,7 @@
           padding-bottom:50px;
           font-size: $font-size-3xl;
           text-transform: uppercase;
-          color:$white-color;
+            color: set-text-color($white-color);
         }
       }
     }
@@ -220,7 +220,7 @@
   align-items: end;
   height:100%;
   p{
-  color:$white-color;
+    color: set-text-color($white-color);
   }
 }
 .right-section {
@@ -238,6 +238,12 @@
     height:76px;
     align-items: center;
     display: flex;
+    .text{
+      max-width:252px;
+      p{
+        color: set-text-color($white-color);
+      }
+    }
     .img-box{
       display: flex;
       align-items: flex-start;
@@ -248,10 +254,7 @@
         margin-right: -10px; 
       }
     }
-    .text{
-      max-width:252px;
-      color:$white-color;
-    }
+
   }
 }
 }
@@ -267,11 +270,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $white-color;
+    color: set-text-color($white-color);
     position: relative;
     overflow: hidden;
     .btn-empty{
-      color: $white-color;
+      color: set-text-color($white-color);
     }
   }
   .left-section, .right-section {
@@ -515,7 +518,7 @@
 }
 .select-items div,
 .select-selected {
-  color: $dgray-color;
+/*   color: set-text-color($white-color); */
   padding: 8px 16px;
   cursor: pointer;
 }
@@ -605,10 +608,10 @@ h5{
     }
     .btn{
       background:$lgray-color;
-      color:$dgray-color;
+      color: set-text-color($white-color);
       &:hover{
         background:$dgreen-color;
-        color:$white-color;
+          color: set-text-color($white-color);
       }
     }
     .btn-empty, p{
@@ -668,7 +671,6 @@ h5{
   .card {
     position: relative;
     padding: 0;
-    background: white;
     border-radius: 8px;
     overflow: hidden;
     transition: opacity 0.5s, transform 0.5s;
@@ -690,7 +692,6 @@ h5{
     left: 0;
     right: 0;
     background: $white-color;
-    color: $dgray-color;
     padding: 10px;
     opacity: 0;
     transform: translateY(100%);
@@ -900,7 +901,7 @@ section.featured-section{
     text-align: center; 
     gap:8px;
     &:hover{
-      color:$white-color;
+      color: set-text-color($white-color);
       background:$dgreen-color;
     }
   }
@@ -1126,7 +1127,7 @@ height: 200px;
 /*-------------------- FOOTER ---------------------*/
 .dot-slider{
   background:$dgreen-color;
-  color:$white-color;
+    color: set-text-color($white-color);
   padding:80px 120px;
   position: relative;
   .container{
@@ -1142,11 +1143,11 @@ height: 200px;
         height:100%;
         justify-content: center;
         p{
-          color:$white-color;
+            color: set-text-color($white-color);
           padding-bottom:64px;
         }
         .btn-empty{
-          color:$white-color;   
+            color: set-text-color($white-color);   
         }
       width:100%;
       }
@@ -1219,9 +1220,9 @@ height: 200px;
   .footer{
     background:$dgreen-color;
     padding: 120px 80px;
-    color:$white-color;
+      color: set-text-color($white-color);
     .btn-empty{
-      color:$white-color;
+        color: set-text-color($white-color);
     }
     .grid{
       grid-template-columns: repeat(2,1fr);
@@ -1257,7 +1258,7 @@ height: 200px;
   padding:20px;
   display:flex;
   justify-content: center;
-  color:$white-color;
+    color: set-text-color($white-color);
   flex-direction: column;
   p{
     font-size: $font-size-md;
@@ -1271,7 +1272,7 @@ height: 200px;
 
 .dropdown-btn {
   background-color: #026451;
-  color: white;
+  color: set-text-color($white-color);
   padding: 10px 20px;
   min-width: 160px;
   border: none;
@@ -1280,9 +1281,9 @@ height: 200px;
 }
 
 .dropdown-menu {
-  display: none; /* ✅ Closed by default */
+  display: none; 
   position: absolute;
-  background-color: white;
+  background-color: $white-color;
   min-width: 160px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
@@ -1290,14 +1291,14 @@ height: 200px;
 }
 
 .dropdown-menu a {
-  color: black;
+  color: $dgray-color;
   padding: 10px 16px;
   display: block;
   text-decoration: none;
 }
 
 .dropdown-menu a:hover {
-  background-color: #f1f1f1;
+  background-color: $lgray-color;
 }
 
 /* Show dropdown when "active" */

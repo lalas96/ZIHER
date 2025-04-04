@@ -7,6 +7,9 @@
   }
 }
 @media (max-width: 1200px) {
+  .select-row {
+    grid-template-columns: repeat(2, 1fr)!important;
+  }
   .featured-section .flex .text{
     padding: 35px!important;
   }

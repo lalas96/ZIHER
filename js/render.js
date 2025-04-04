@@ -135,7 +135,7 @@ ${index === 0 ? `
     </div>
     </div>
     <div class="input-data">
-      <input type="submit" class="btn-primary" value="Contact Agent" name="submit" >
+      <input type="submit" class="btn" value="Contact Agent" name="submit" >
     </div>
     </form>
     <p>By clicking on “Send message” you agree with our Terms and Conditions, meaning you agree to get back in touch with you based on provided infomations based filling your forms.</p>
