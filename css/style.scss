@@ -28,8 +28,8 @@
           color: set-text-color($white-color);
         height:100px;
         margin: 0 auto;
-        position: relative;
-
+        position: fixed;
+        background:$white-color;
         a{
         display:block;
         color:$gray-color;
@@ -530,6 +530,7 @@
   right: 0;
   z-index: 99; 
   border: 1px solid $lgray-color;
+  border-radius:8px;
   max-height: none; 
 /*   overflow-y: visible;  */
 }
@@ -635,6 +636,9 @@ h5{
 
 .featured-section .flex .text:first-child{
   padding-bottom:94px;
+}
+.featured-section .container{
+  padding: 35px;
 }
 .featured-section .flex{
   justify-content: space-between;
@@ -1077,7 +1081,7 @@ height: 200px;
     border-radius: 8px;
     .column:first-child{
       .text{
-        padding:20px;
+/*         padding: 35px; */
         h5{
           color:$dgreen-color;
         }

@@ -246,15 +246,12 @@ section {
   .select-row {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  .featured-section .flex .text {
-    padding: 35px !important;
-  }
   .nekretnina-details .grid {
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 48px;
   }
   .top-nekretnine .grid {
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 48px !important;
     padding: 35px;
   }
@@ -326,7 +323,9 @@ section {
     max-width: 100% !important;
     width: 100%;
   }
-  .section-ponuda .grid, .contact-team .grid {
+  .section-ponuda .grid,
+  .contact-team .grid,
+  .section-ponuda-showcase .grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
   .showcase .container {
@@ -343,17 +342,19 @@ section {
 }
 @media (max-width: 850px) {
   .nekretnina-details .grid {
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 48px;
   }
   .search-results .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
   .nekretnina-details .grid {
     grid-template-columns: 1fr !important;
     gap: 48px;
   }
-  .section-ponuda .grid, .contact-team .grid {
+  .section-ponuda .grid,
+  .contact-team .grid,
+  .section-ponuda-showcase .grid {
     grid-template-columns: 1fr !important;
   }
   .top-nekretnine .grid {
@@ -386,6 +387,9 @@ section {
   }
 }
 @media (max-width: 650px) {
+  .navbar .logo img {
+    height: 20px !important;
+  }
   .showcase .container {
     padding: 120px 60px 0px 60px !important;
     align-items: flex-start !important;
@@ -427,7 +431,8 @@ section {
   color: #ffffff;
   height: 100px;
   margin: 0 auto;
-  position: relative;
+  position: fixed;
+  background: #ffffff;
 }
 .navigation .navbar a {
   display: block;
@@ -940,6 +945,7 @@ section {
   right: 0;
   z-index: 99;
   border: 1px solid #EDE8E0;
+  border-radius: 8px;
   max-height: none;
   /*   overflow-y: visible;  */
 }
@@ -1049,6 +1055,10 @@ section {
 /*---------- TOP NEKRETNINE----------- */
 .featured-section .flex .text:first-child {
   padding-bottom: 94px;
+}
+
+.featured-section .container {
+  padding: 35px;
 }
 
 .featured-section .flex {
@@ -1490,7 +1500,7 @@ section.contact .contact-form .textarea textarea, .inquiry .contact-form .textar
   border-radius: 8px;
 }
 .inquiry .grid .column:first-child .text {
-  padding: 20px;
+  /*         padding: 35px; */
   padding-bottom: 32px;
 }
 .inquiry .grid .column:first-child .text h5 {

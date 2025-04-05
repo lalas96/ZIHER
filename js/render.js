@@ -194,17 +194,17 @@ const navBarHTML = `
       </li>
       </ul>
       </nav>
+
       
       <!-- Dropdown Container -->
        <div class="mobile-container">
       <div class="dropdown">
-        <button class="dropdown-btn">Select an option ▼</button>
+        <button class="dropdown-btn">Nekretnine ▼</button>
         <div class="dropdown-menu">
           <a href="all.html">Osiguranje</a>
         </div>
         </div>
-      
-      <!--  toggle -->
+         <!--  toggle -->
       <div class="mobile-menu-toggle" onclick="toggleNav()">
       <div class="hamburger">
       <svg
@@ -227,8 +227,9 @@ const navBarHTML = `
       </svg>
       </div>
       </div>
-      </div>
-    
+       </div>
+     
+     </div>
       </nav>
       
       <!--  toggle -->
