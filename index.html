@@ -4,72 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZIHER</title>
-    <link rel="shortcut icon" href="" type="image/x-icon" />
-    <script
-      src="https://kit.fontawesome.com/2bbac3a66c.js"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="shortcut icon" href="img/vector.svg" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/spinner.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap&text=Istaknute%20nekretnine">
+    </noscript>
   </head>
   <body>
-    
+    <style>
+   body {
+    font-family: 'DM Sans', sans-serif;
+  }
+  h1 {
+    font-size: 64px;
+    font-weight: 700;
+  }
+  .featured-section {
+    background:#fff;
+  }
+  .featured-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+    </style>
   
     <div id="navbar-container"></div>
-    <div id="header-container"></div>
-    <div id="search-bar-container"></div>
+    <div class="pt-40" id="header-container"></div>
+    <div id="filter-bar-container"></div>
     
-    <section class="section-ponuda">
-        <div class="container">
-          <div id="latest-nekretnine" class="grid"></div>
-          <div class="flex">
-            <p>Imamo <span class="lead-text total-number"></span> nekretnina za život u našoj bazi podataka</p>
-            <a class="btn-empty" href="all.html">
-              <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
-              </div>
-            </a>
-          </div>
-      
-        </div>
-    </section>
-    <section class="section-row-box">
-      <div class="container">
-      <div class="grid">
-        <div class="box">
-          <h4>Kuće</h4>
-          <p>Neki tekst za to...</p>
-          <a class="btn-empty" href="all.html">
-            <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
-            </div>
-          </a>
-        </div>
-        <div class="box">
-          <h4>Kuće</h4>
-          <p>Neki tekst za to...</p>
-          <a class="btn-empty" href="all.html">
-            <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
-            </div>
-          </a>
-        </div>
-      </div>
-      </div>
-    </section>
     <section class="featured-section">
       <div class="container">
-        <div class="flex">
+        <div class="header">
           <div class="text">
           <div class="box">
-            <h5>Naša ponuda</h5>
-            <h2>Istaknute
-              nekretnine</h2>
+            <h3>Naša ponuda</h3>
+            <h2>Izdvojene nekretnine</h2>
           </div>
         </div>
           <div class="box">
-            <h5>ZIHER je tu za vas!</h5>
-            <p>Zapitajte se što je bolje? Provodite vrijeme sa svojom obitelji ili tražite nekretnine iz dana u dan?
+            <h5>ZIHER je tu za tebe!</h5>
+            <p>Vrijeme je dragocjeno. Mi tražimo nekretnine umjesto tebe – pogledaj izdvojene ponude.
             </p>
-            <a href="all.html" class="btn">Pronađite svoj život iz snova</a>
           </div>
         </div>
       </div>
@@ -86,42 +70,32 @@
   </div>
         </div>
     </section>
-    <section class="dot-slider">
+    <section class="text-img">
       <div class="container">
       <div class="flex">
         <div class="box">
           <div class="text">
-          <h4>Agencija za stvarne ljude</h4>
-          <p>Vjerujemo da Ziher može učiniti svijet puno boljim odabirom pravih kuća za prave ljude.</p>
-          <a class="btn-empty" href="all.html">
-            <div class="flex-btn">Zašto Ziher<img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
+          <h2>Agencija za siguran odabir.</h2>
+          <p>Naš iskusni tim u Ziheru pretvara traženje nekretnina u siguran i jednostavan put do pravog rješenja.</p>
+          <a class="btn-empty" href="kontakt.html">
+            <div class="flex-btn">Kontaktiraj nas!<img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
             </div>
           </a>
         </div>
         </div>
         <div class="box">
-          <img src="./img/bazen.png" alt="">
-          <div class="text">
-            <p>lore</p>
-          </div>
+          <img src="./img/bazen.webp" alt="">
         </div>
       </div>
     </div>
     </section>
 <div id="contact-team-container"></div>
       <div id="footer-container"></div>
-    <div class="spinner"></div>
+      <div class="spinner"></div>
 
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
-    <!-- jQuery Form plugin -->
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous" defer></script>
     <script src="/js/js.js" defer></script>
     <script src="/js/render.js" defer></script>
     <script src="/js/js-search-func.js" defer></script>

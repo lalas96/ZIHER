@@ -6,6 +6,7 @@ $(document).ready(function () {
 
   function applyValidation($form) {
     const fields = ['name', 'surname', 'email', 'telefon', 'message'];
+
     $form.validate({
       rules: fields.reduce((acc, field) => {
         acc[field] = { required: true };
@@ -20,10 +21,9 @@ $(document).ready(function () {
 
     $form.ajaxForm({
       dataType: 'json',
-      beforeSubmit: function (formData, jqForm) {
+      beforeSubmit: function () {
         if (!$form.valid()) return false;
         $loader.show();
-        formData.push({ name: "property_id", value: jqForm.find("input[name='property_id']").val() });
       },
       success: function () {
         showMessage("Message sent successfully!", "success");
@@ -36,44 +36,22 @@ $(document).ready(function () {
 
   function showMessage(message, type) {
     $loader.hide();
-    $messageContainer.removeClass("alert-success alert-danger")
-      .addClass(`alert-${type}`).text(message).show();
+    $messageContainer
+      .removeClass("alert-success alert-danger")
+      .addClass(`alert-${type}`)
+      .text(message)
+      .show();
     setTimeout(() => $messageContainer.hide(), 3000);
   }
 
-  // Apply validation to existing forms
-  $(".form").each(function () {
-    applyValidation($(this));
-  });
-
-  // Watch for dynamically added forms
-  $(document).on("DOMNodeInserted", "#nekretnina-details", function () {
-    setTimeout(function () {
-      $("#nekretnina-details .form").each(function () {
-        if (!$.data(this, "validated")) {
-          applyValidation($(this));
-          $.data(this, "validated", true);
-        }
-      });
-    }, 500);
-  });
+  // Only target the form inside the #kontakt section
+  const $kontaktForm = $("#kontakt .form");
+  if ($kontaktForm.length) {
+    applyValidation($kontaktForm);
+    $.data($kontaktForm[0], "validated", true);
+  }
 });
 
-  // Apply validation to existing forms
-  $(".form").each(function () {
-    applyValidation($(this));
-  });
-  // Watch for dynamically added forms
-  $(document).on("DOMNodeInserted", "#nekretnina-details", function () {
-    setTimeout(function () {
-      $("#nekretnina-details .form").each(function () {
-        if (!$.data(this, "validated")) {
-          applyValidation($(this));
-          $.data(this, "validated", true); // Prevent duplicate validation
-        }
-      });
-    }, 500);
-  });
 //FORM
 //error alert for search
 function showAlert(message, className = "error") {
@@ -87,24 +65,27 @@ function showAlert(message, className = "error") {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-    const left = document.querySelector(".left");
-    const right = document.querySelector(".right");
-    const container = document.querySelector(".container");
-    
-    left.addEventListener("mouseenter", () => {
-      container.classList.add("hover-left");
+    // ACCORDION FUNCTION
+    let accordions = document.querySelectorAll('.accordion-wrapper .accordion');
+    accordions.forEach((acco) => {
+        acco.addEventListener('click', () => {
+            acco.classList.toggle('active');
+            let content = acco.nextElementSibling;
+            if (content) {
+                if (acco.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = null;
+                }
+            }
+            accordions.forEach((otherAcco) => {
+                if (otherAcco !== acco && otherAcco.classList.contains('active')) {
+                    otherAcco.classList.remove('active');
+                    let otherContent = otherAcco.nextElementSibling;
+                    if (otherContent) {
+                        otherContent.style.maxHeight = null;
+                    }
+                }
+            });
+        });
     });
-    
-    left.addEventListener("mouseleave", () => {
-      container.classList.remove("hover-left");
-    });
-    
-    right.addEventListener("mouseenter", () => {
-      container.classList.add("hover-right");
-    });
-    
-    right.addEventListener("mouseleave", () => {
-      container.classList.remove("hover-right");
-    });
-
-

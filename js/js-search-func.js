@@ -1,4 +1,5 @@
 
+
 const global = {
   currentPage: window.location.pathname,
   search: {
@@ -28,62 +29,143 @@ async function fetchLocalData() {
     hideSpinner();
   }
 }
-function generateCard(nekretnina) {
+
+//jedan generate card za sve nekretnine
+function generateCard(nekretnina, isTopNekretnina = false) {
   const firstImage = nekretnina.images?.[0] || '../images/no-image.jpg';
+  
   return `
     <div class="card">
-        <a href="nekretnina-details.html?id=${nekretnina.id}">
-            <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}" />
+ <a href="nekretnina-details.html?id=${nekretnina.id}">
+            <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}"  loading="lazy"/>
         </a>
         <div class="card-body">
             <div class="card-text">
-                <h5>${nekretnina.type}</h5>
-                <h4 class="card-title">${nekretnina.title}</h4>
-                <div class="flex">    
-                    <div class="flex">    
-                        <small>
-                            <img class="icon-img" src="../img/house.png" alt="">
-                            ${nekretnina.size} m²
-                        </small>
-                    </div>
-                    <div class="flex">
-                        <small>
-                            <img class="icon-img" src="../img/rooms.png" alt="">
-                            ${nekretnina.rooms}
-                        </small>
-                    </div>
+                <small>${nekretnina.type}</small>
+                <h5 class="card-title">${nekretnina.title}</h5>
+                <div class="column"> 
+                    <p> ${isTopNekretnina ? `${nekretnina.description}` : ''}</p>
                     <div class="flex"> 
-                        <small>$${addCommasToNumber(nekretnina.price)}</small>
+                       <small>
+                            <img class="icon-img" src="../img/rooms.svg" alt="">
+                            ${nekretnina.surface} m²
+                        </small>
+                        <small> 
+                        <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(nekretnina.price)}
+                        </small>
                     </div>
                 </div>
                 <div class="long-line"></div>
-                <div class="flex"> 
-                    <small>
+          
+                  <small>
+                        <div class="flex-icon"> 
                         <img class="icon-img" src="../img/place.png" alt="">
-                        <h5>${nekretnina.location}</h5>
-                    </small>
+                        <p>${nekretnina.location}</p>
+                           </div>
+                  ${isTopNekretnina ? `<a href="nekretnina-details.html?id=${nekretnina.id}" class="btn-empty">Vidi Više</a>` : ''}
+              </small>
+            </div>
+        </div>
+    </div>`;   
+}
+function generateTopNekretnineCard(nekretnina, isTopNekretnina = false) {
+  const firstImage = nekretnina.images?.[0] || '../images/no-image.jpg';
+  
+  return `
+    <div class="card">
+ <a>
+            <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}"  loading="lazy" />
+        </a>
+        <div class="card-body">
+            <div class="card-text">
+                <small>${nekretnina.type}</small>
+                <h5 class="card-title">${nekretnina.title}</h5>
+                <div class="column"> 
+                    <p> ${isTopNekretnina ? `${nekretnina.description}` : ''}</p>
+                    <div class="flex"> 
+                       <small>
+                            <img class="icon-img" src="../img/rooms.svg" alt="">
+                            ${nekretnina.surface} m²
+                        </small>
+                        <small> 
+                        <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(nekretnina.price)}
+                        </small>
+                    </div>
                 </div>
+                <div class="long-line"></div>
+          
+                  <small>
+                        <div class="flex-icon"> 
+                        <img class="icon-img" src="../img/place.png" alt="">
+                        <p>${nekretnina.location}</p>
+                           </div>
+                  ${isTopNekretnina ? `<a href="nekretnina-details.html?id=${nekretnina.id}" class="btn-empty">Vidi Više</a>` : ''}
+              </small>
             </div>
         </div>
     </div>`;
 }
+//Projekti generate card za sve projekte
+function generateProjektiCard(projekat) {
+  const firstImage = projekat.images?.[0] || "./images/no-image.jpg";
+  return `
+    <div class="projekti-card">
+      <a href="projekti-details.html?id=${projekat.id}" class="projekti-card-link">
+             <img src="${firstImage}" class="card-img-top" alt="${projekat.title}"  loading="lazy"/>
+     </a>   
+        <div class="card-body">
+          <div class="card-text">
+            <small>${projekat.type}</small>
+            <h5 class="card-title">${projekat.title}</h5>
+            <div class="column"> 
+              <ul class="card-list">
+                <li><p>Broj nekretnina</p>${projekat.propertyNumber}</li>
+                <li><p>Površina</p>${projekat.surface}</li>
+                <li><p>Cijena</p>${addCommasToNumber(projekat.price)}</li>
+                <li><p>Cijena/m2</p>${addCommasToNumber(projekat.priceSurface)}</li>
+                <li><p>Datum završetka</p>${projekat.date}</li>
+              </ul>
+              <p class="projekti-description">${projekat.description}</p>
+              <div class="long-line"></div>
+              <div class="flex"> 
+                <small>
+                   <div class="flex-icon"> 
+                        <img class="icon-img" src="../img/place.png" alt="">
+                        <p>${projekat.location}</p>
+                           </div>
+                </small>
+              </div>
+            </div> 
+          </div> 
+        </div> 
+    </div> 
+  `;
+}
 //generate cards
-async function createCards(data, containerId, filterType = null, page = 1) {
+async function createCards(data, containerId, filterType = null, page = 1, isTopNekretnina = false, cardGenerator = generateCard) {
   const ITEMS_PER_PAGE = 6;
-  const results = filterType
-    ? data.estate.filter(nekretnina => nekretnina.type === filterType)
-    : data.estate.slice(0);
+
+  const results = data.estate?.length
+    ? (filterType
+        ? data.estate.filter(n => n.type === filterType)
+        : data.estate)
+    : data.projectsArray;
 
   const paginatedResults = results.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  
+  
   const container = document.querySelector(`#${containerId}`);
   if (!container) return;
 
-  container.innerHTML = paginatedResults.map(generateCard).join("");
+  container.innerHTML = paginatedResults.map(item => cardGenerator(item, isTopNekretnina)).join("");
+
   displayPagination(results.length, ITEMS_PER_PAGE, page, containerId, filterType);
+
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 50); // last page with less than max items
 }
-
-
-//DISPLAY CARDS FOR DIFFERENT PAGES
+//display nekretnina cards for pages
 async function displayNekretnine(containerId, filterType = null, limit = null) {
   global.search.page = 1;
   const data = await fetchLocalData();
@@ -96,14 +178,124 @@ async function displayNekretnine(containerId, filterType = null, limit = null) {
   const totalItems = filteredData.length;
   if (limit) filteredData = filteredData.slice(0, limit); 
   await createCards({ estate: filteredData }, containerId, filterType, global.search.page);
-  document.querySelector(".total-number").textContent = totalItems;
+  const totalNumberEl = document.querySelector(".total-number");
+  if (totalNumberEl) {
+    totalNumberEl.textContent = totalItems;
+  }
+}
+//display projekti cards for pages
+async function displayProjekti(containerId, projektiData = null, limit = null){
+  global.search.page = 1;
+  const data = await fetchLocalData(); 
+  if (!data) return;
+
+  let filteredProjekti = data.projectsArray;
+  
+  if (limit) {
+    filteredProjekti = filteredProjekti.slice(0, limit);
+  }
+
+  const totalItems = filteredProjekti.length;
+
+  await createCards(
+    { projectsArray: filteredProjekti },
+    containerId,
+    null,
+    global.search.page,
+    false,
+    generateProjektiCard
+  );
+
+  const totalNumberEl = document.querySelector(".total-number");
+  if (totalNumberEl) {
+    totalNumberEl.textContent = totalItems;
+  }
 }
 
+displayProjekti("projekti");
 const displayAllNekretnine = () => displayNekretnine("all-nekretnine");
 const displayLatestNekretnine = () => displayNekretnine("latest-nekretnine", null, 3);
-const displayProdajaNekretnine = () => displayNekretnine("prodaja-nekretnine", "Prodaja");
-const displayNajamNekretnine = () => displayNekretnine("najam-nekretnine", "Najam");
+const displayLatestProjekti = () => displayProjekti("latest-projekti", null, 3);
 
+document.addEventListener("DOMContentLoaded", () => {
+  displayProjekti("projekti");
+  displayAllNekretnine("all-nekretnine");
+  displayLatestNekretnine();
+  displayLatestProjekti();
+});
+
+//TOP-NEKRETNINE
+let startIndex = 0;
+let interval;
+let nekretnine = [];
+
+async function fetchProperties() {
+  try {
+    const response = await fetch("nekretnine.json");
+    const data = await response.json();
+
+    if (!data || !data.estate || data.estate.length === 0) {
+      console.error("No properties found in JSON.");
+      return;
+    }
+    nekretnine = data.estate;
+    topNekretnineCards();
+    startRotation();
+    addHoverListeners(); 
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+  }
+}
+
+function topNekretnineCards() {
+  for (let i = 0; i < 5; i++) {
+    let cardElement = document.getElementById(`card${i + 1}`);
+    if (!cardElement) continue; 
+
+    let nekretnina = nekretnine[(startIndex + i) % nekretnine.length];
+
+    let cardHTML = generateTopNekretnineCard(nekretnina, true); 
+    cardElement.style.opacity = 0;
+    setTimeout(() => {
+      cardElement.innerHTML = cardHTML;
+      cardElement.style.opacity = 1;
+    }, 500);
+  }
+  startIndex = (startIndex + 1) % (nekretnine.length - 4);
+}
+
+function startRotation() {
+  interval = setInterval(topNekretnineCards, 6000);
+}
+function stopRotation() {
+  clearInterval(interval);
+}
+
+function addHoverListeners() {
+  for (let i = 1; i <= 5; i++) {
+    let card = document.getElementById(`card${i}`);
+    if (!card) continue;
+    // Desktop hover
+    card.addEventListener("mouseenter", stopRotation);
+    card.addEventListener("mouseleave", startRotation);
+
+    card.addEventListener("click", function (e) {
+      if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+        e.stopPropagation();
+
+        card.classList.toggle("active");
+
+        document.querySelectorAll(".grid .card").forEach(c => {
+          if (c !== card) c.classList.remove("active");
+        });
+      }
+    });
+  }
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".grid .card").forEach(c => c.classList.remove("active"));
+  });
+}
+document.addEventListener("DOMContentLoaded", fetchProperties);
 //SPINNER
 function showSpinner() {
   document.querySelector(".spinner").classList.add("show");
@@ -113,18 +305,16 @@ function hideSpinner() {
 }
 /*-------------------------- SEARCH------------------------------- */
 document.addEventListener("DOMContentLoaded", init);
+
 async function search() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  
-  const searchParams = ["type", "location", "category", "rooms", "min-price", "max-price", "min-surface", "max-surface", "pool", "parking"];
-  
+  const searchParams = ["type", "location", "category", "rooms", "price", "surface"];
   searchParams.forEach(param => global.search[param] = urlParams.get(param) || "");
-  
   global.search.term = urlParams.get('search-term') || "";
   global.search.id = urlParams.get('search-id') || "";
 
-  const hasSearchParams = ['term', 'id', 'type', 'location', 'category', 'rooms', 'min-price', 'max-price', 'min-surface', 'max-surface', 'pool', 'parking'].some(param => global.search[param]);
+  const hasSearchParams = ['term', 'id', 'type', 'location', 'category', 'rooms', "price", "surface"].some(param => global.search[param]);
 
   if (hasSearchParams) {
     showSpinner();
@@ -141,75 +331,163 @@ async function search() {
       showAlert("No results found for your search", "error");
       return;
     }
+
+    // Display the search results
     displaySearchResults(results, total_results); 
-    displaySearchPagination(total_results, page);
+  
+    displaySearchPagination(total_results, page); 
   } else {
     showAlert("Please enter a search term or select a filter");
   }
 }
+/*-------------------------- SEARCH PROJEKTI----------*/
+async function searchProjekti() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-
-
-function addCheckboxStateToURL() {
-  const poolChecked = document.getElementById("pool-checkbox").checked ? "true" : "false";
-  const parkingChecked = document.getElementById("parking-checkbox").checked ? "true" : "false";
-
-  const url = new URL(window.location.href);
-  url.searchParams.set("pool", poolChecked);
-  url.searchParams.set("parking", parkingChecked);
-  history.replaceState(null, "", url);
-
-  global.search.pool = poolChecked === "true";
-  global.search.parking = parkingChecked === "true";
-
-  search();
-}
-
-document.getElementById("pool-checkbox")?.addEventListener("change", addCheckboxStateToURL);
-document.getElementById("parking-checkbox")?.addEventListener("change", addCheckboxStateToURL);
-
-async function searchAPIData() {
-  const data = await fetchLocalData(); // Fetch data from local JSON file
-  if (!data) return { results: [], total_pages: 0, page: 1, total_results: 0 };
-
-  const { term, id, type, category, location, rooms, minPrice, maxPrice, minSurface, maxSurface, pool, parking } = global.search;
-
-  const isPoolChecked = pool;
-  const isParkingChecked = parking;
-
-  const minPriceValue = global.search["min-price"] ? parseFloat(global.search["min-price"]) : null;
-  const maxPriceValue = global.search["max-price"] ? parseFloat(global.search["max-price"]) : null;
+  const searchParams = ["category", "propertyNumber", "price", "surface"];
   
+  const location = urlParams.get("location")?.toLowerCase() || "";
+  const term = urlParams.get("search-term")?.toLowerCase() || "";
+
+  const filters = {};
+  searchParams.forEach(param => {
+    filters[param] = urlParams.get(param) || "";
+  });
+
+  const priceRanges = {
+    "1": [100000, 120000],
+    "2": [120001, 150000],
+    "3": [150001, 200000],
+    "4": [200001, 300000],
+  };
   
-  const minSurfaceValue = (!isNaN(parseFloat(global.search["min-surface"]))) ? parseFloat(global.search["min-surface"]) : null;
-  const maxSurfaceValue = (!isNaN(parseFloat(global.search["max-surface"]))) ? parseFloat(global.search["max-surface"]) : null;
+  const surfaceRanges = {
+    "1": [100, 150],
+    "2": [151, 200],
+    "3": [201, 300],
+  };
 
-  // Combine all data
-  const combinedData = [...data.estate];
-  const uniqueResults = Array.from(new Set(combinedData.map(item => item.id)))
-    .map(id => combinedData.find(item => item.id === id));
+  const data = await fetchLocalData();
+  if (!data || !data.projectsArray) return;
 
-  const filteredResults = uniqueResults.filter(item => {
+  const filteredProjects = data.projectsArray.filter(project => {
+    const matchesLocation = location ? project.location?.toLowerCase() === location : true;
+
+    const matchesTerm = term
+      ? Object.values(project).some(value =>
+          typeof value === "string" && value.toLowerCase().includes(term)
+        )
+      : true;
+
+      const matchesCategory = filters.category
+      ? project.category?.toLowerCase() === filters.category.toLowerCase()
+      : true;
+
+    const matchesPropertyNumber = filters.propertyNumber
+      ? project.propertyNumber?.toString().toLowerCase().includes(filters.propertyNumber.toLowerCase())
+      : true;
+
+    const matchesPrice = filters.price
+      ? (() => {
+          const range = priceRanges[filters.price];
+          const price = Number(project.price);
+          return range ? price >= range[0] && price <= range[1] : true;
+        })()
+      : true;
+
+    const matchesSurface = filters.surface
+      ? (() => {
+          const range = surfaceRanges[filters.surface];
+          const surface = Number(project.surface);
+          return range ? surface >= range[0] && surface <= range[1] : true;
+        })()
+      : true;
+
     return (
-      (term ? String(item.title).toLowerCase().includes(term.toLowerCase()) || item.location.toLowerCase().includes(term.toLowerCase()) : true) &&
-      (id ? String(item.id).toLowerCase().includes(id.toLowerCase()) : true) &&
-      (type ? item.type.toLowerCase() === type.toLowerCase() : true) &&
-      (category ? item.category.toLowerCase() === category.toLowerCase() : true) &&
-      (location ? item.location.toLowerCase() === location.toLowerCase() : true) &&
-      (rooms ? item.rooms === parseInt(rooms) : true) &&
-      (minPriceValue === null || item.price >= minPriceValue) && 
-      (maxPriceValue === null || item.price <= maxPriceValue) && 
-      (minSurfaceValue === null || item.size >= minSurfaceValue) &&  
-      (maxSurfaceValue === null || item.size <= maxSurfaceValue) &&  
-      (isPoolChecked ? item.pool : true) &&
-      (isParkingChecked ? item.parking : true)
+      matchesLocation &&
+      matchesTerm &&
+      matchesCategory &&
+      matchesPropertyNumber &&
+      matchesPrice &&
+      matchesSurface
     );
   });
 
-  // Pagination logic
+  if (filteredProjects.length === 0) {
+    document.querySelector("#search-results").innerHTML = "";
+    document.querySelector("#pagination").innerHTML = "";
+    showAlert("Nema rezultata za zadanu lokaciju", "error");
+    return;
+  }
+
+  displayProjectsResults(filteredProjects);
+  displaySearchPagination(filteredProjects.length, 1); // default to page 1
+  document.querySelector(".total-number").textContent = filteredProjects.length;
+}
+
+/*-------------------------- SEARCH PROJEKTI----------*/
+async function searchAPIData() {
+  const data = await fetchLocalData(); 
+  if (!data) return { results: [], total_pages: 0, page: 1, total_results: 0 };
+
+  const { term, id, type, category, location, rooms} = global.search;
+  const price = global.search.price;
+  const surface = global.search.surface;
+
+  const combinedData = [...data.estate];
+
+  const priceRanges = {
+    "1": [100000, 120000],
+    "2": [120001, 150000],
+    "3": [150001, 200000],
+    "4": [200001, 300000],
+  };
+  
+  const surfaceRanges = {
+    "1": [100, 150],
+    "2": [151, 200],
+    "3": [201, 300],
+  };
+  
+  const uniqueResults = Array.from(new Set(combinedData.map(item => item.id)))
+    .map(id => combinedData.find(item => item.id === id));
+
+    const filteredResults = uniqueResults.filter(item => {
+      const itemPrice = Number(item.price);
+      const itemSurface = Number(item.surface);
+    
+      const priceMatches = price
+        ? itemPrice >= priceRanges[price][0] && itemPrice <= priceRanges[price][1]
+        : true;
+    
+      const surfaceMatches = surface
+        ? itemSurface >= surfaceRanges[surface][0] && itemSurface <= surfaceRanges[surface][1]
+        : true;
+    
+      const DEFAULTS = {
+        type: "Prodaja", // Default on load
+        category: "Kuća",
+        rooms: "1",
+        price: "1",
+        surface: "1",
+      };
+    
+      return (
+        (term ? item.title.toLowerCase().includes(term.toLowerCase()) || item.location.toLowerCase().includes(term.toLowerCase()) : true) &&
+        (id ? String(item.id).toLowerCase().includes(id.toLowerCase()) : true) &&
+        (type && type !== DEFAULTS.type ? item.type.toLowerCase() === type.toLowerCase() : item.type.toLowerCase() === DEFAULTS.type.toLowerCase()) && // Prodaja by default
+        (category ? item.category.toLowerCase() === category.toLowerCase() : true) &&
+        (location ? item.location.toLowerCase() === location.toLowerCase() : true) &&
+        (rooms ? item.rooms === parseInt(rooms) : true) &&
+        priceMatches && surfaceMatches
+      );
+    });
+
+  // Pagination setup
   const resultsPerPage = 6;
   const totalPages = Math.ceil(filteredResults.length / resultsPerPage);
-  const currentPage = global.search.page;
+  const currentPage = global.search.page || 1;
 
   const results = filteredResults.slice(
     (currentPage - 1) * resultsPerPage,
@@ -219,114 +497,304 @@ async function searchAPIData() {
   return { results, total_pages: totalPages, page: currentPage, total_results: filteredResults.length };
 }
 
-// Displaying results
+// display results
 function displaySearchResults(results, totalResults) {
-  // Clear previous results
-  document.querySelector("#search-results").innerHTML = "";
-  document.querySelector("#pagination").innerHTML = "";
+  const container = document.querySelector("#search-results");
+  const pagination = document.querySelector("#pagination");
+  
+  container.innerHTML = "";
+  pagination.innerHTML = "";
 
   document.querySelector(".total-number").textContent = totalResults;
 
-  results.forEach((result) => {
-    const div = document.createElement("div");
-    div.classList.add("card");
+  container.innerHTML = results.map(nekretnina => generateCard(nekretnina, false)).join(""); // generira card filter za 4 category koje su na index
 
-    const firstImage = result.images && result.images.length > 0 
-      ? result.images[0]
-      : "../images/no-image.jpg";
-
-    div.innerHTML = `
-      <a href="nekretnina-details.html?id=${result.id}">
-        <img src="${firstImage}" class="card-img-top" alt="${result.title}" />
-      </a>
-      <div class="card-body">
-        <h5 class="card-title">${result.title}</h5>
-        <p class="card-text">
-          <small>Lokacija: ${result.location}</small>
-          <small>Površina: ${result.size}</small>
-          <small>Broj soba: ${result.rooms}</small>
-          <small>Broj soba: ${result.category}</small>
-          <small>Bazen: ${result.pool ? "Da" : "Ne"}</small>
-          <small>Parking: ${result.parking ? "Da" : "Ne"}</small>
-          <small>Tip nekretnine: ${result.type}</small>
-          <small>Cijena: $${result.price}</small>
-        </p>
-      </div>
-    `;
-    document.querySelector("#search-results").appendChild(div);
-  });
-
-  // Display pagination
   displaySearchPagination(totalResults, global.search.page);
 }
-// Pagination for search results
+// display projekti results
+function displayProjectsResults(results) {
+  const container = document.querySelector("#search-results");
+  container.innerHTML = results.map(projekat => generateProjektiCard(projekat)).join("");
+}
+
+// Pagination 
 function displaySearchPagination(totalResults, currentPage) {
   const ITEMS_PER_PAGE = 6;
   const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE);
   const paginationContainer = document.querySelector("#pagination");
 
-  paginationContainer.innerHTML = `
-    <div class="pagination">
-      <button id="prev" class="btn btn-primary" ${currentPage === 1 ? "disabled" : ""}>Prev</button>
-      <span>Page ${currentPage} of ${totalPages}</span>
-      <button id="next" class="btn btn-primary" ${currentPage === totalPages ? "disabled" : ""}>Next</button>
-    </div>
-  `;
+  paginationContainer.innerHTML = "";
 
-  document.querySelector("#prev").addEventListener("click", async () => {
-    if (currentPage > 1) {
-      global.search.page--;
-      await search();
-    }
+
+  if (totalPages <= 1) return;
+
+  const paginationDiv = document.createElement("div");
+  paginationDiv.classList.add("pagination");
+
+
+  const select = document.createElement("select");
+  select.id = "page-select";
+  select.classList.add("form-select");
+
+  for (let i = 1; i <= totalPages; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `Page ${i}`;
+    if (i === currentPage) option.selected = true;
+    select.appendChild(option);
+  }
+
+
+  const goButton = document.createElement("button");
+  goButton.textContent = "Show Page";
+  goButton.classList.add("btn", "btn-primary", "ml-2");
+
+  goButton.addEventListener("click", () => {
+    const selectedPage = parseInt(document.querySelector("#page-select").value, 10);
+    changePage(selectedPage, "search-results", global.search.filterType); 
   });
 
-  document.querySelector("#next").addEventListener("click", async () => {
-    if (currentPage < totalPages) {
-      global.search.page++;
-      await search();
-    }
-  });
+
+  const pageInfo = document.createElement("span");
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+  pageInfo.classList.add("mx-2");
+
+
+  paginationDiv.appendChild(select);
+  paginationDiv.appendChild(goButton);
+  paginationDiv.appendChild(pageInfo);
+
+
+  paginationContainer.appendChild(paginationDiv);
 }
-function displayPagination(totalItems, itemsPerPage, currentPage, containerId, filterType = null) {
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const paginationContainer = document.querySelector("#pagination");
-    if (!paginationContainer) return;
 
-    paginationContainer.innerHTML = ""; // Clear previous pagination
-    
-    if (totalPages <= 1) return;
-  
-    const paginationDiv = document.createElement("div");
-    paginationDiv.classList.add("pagination");
- 
-    const prevButton = document.createElement("button");
-    prevButton.textContent = "Prev";
-    prevButton.classList.add("btn", "btn-primary"); 
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener("click", () => changePage(currentPage - 1, containerId, filterType));
-    paginationDiv.appendChild(prevButton);
-
-    const pageInfo = document.createElement("span");
-    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-    paginationDiv.appendChild(pageInfo);
-  
-    const nextButton = document.createElement("button");
-    nextButton.textContent = "Next";
-    nextButton.classList.add("btn", "btn-primary"); 
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener("click", () => changePage(currentPage + 1, containerId, filterType));
-    paginationDiv.appendChild(nextButton);
-
-    paginationContainer.appendChild(paginationDiv);
-}
 
 function changePage(newPage, containerId, filterType) {
-    global.search.page = newPage;
-    fetchLocalData().then(data => {
-        if (!data) return;
-        createCards(data, containerId, filterType, newPage);
+  global.search.page = newPage;
+
+
+  const container = document.querySelector("#search-results");
+  if (container) {
+    container.innerHTML = ""; 
+  }
+
+
+  fetchLocalData().then(data => {
+    if (!data) return;
+
+    if (global.currentPage.includes("projekti")) {
+      createCards(
+        { projectsArray: data.projectsArray },
+        containerId,
+        null,
+        newPage,
+        false,
+        generateProjektiCard
+      );
+    } else {
+      createCards(
+        { estate: data.estate },
+        containerId,
+        filterType,
+        newPage
+      );
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+};
+function displayPagination(totalItems, itemsPerPage, currentPage, containerId, filterType = null) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const paginationContainer = document.querySelector("#pagination");
+  if (!paginationContainer) return;
+
+  paginationContainer.innerHTML = ""; 
+  if (totalPages <= 1) return;
+
+  const paginationDiv = document.createElement("div");
+  paginationDiv.classList.add("pagination");
+
+
+  const selectWrapper = document.createElement("div");
+  selectWrapper.classList.add("pagination-custom-select");
+  selectWrapper.style.position = "relative";
+
+
+  const selectedPageDiv = document.createElement("div");
+  selectedPageDiv.classList.add("selected-page");
+  selectedPageDiv.textContent = `Page ${currentPage}`;
+  selectedPageDiv.dataset.value = currentPage;
+
+
+  const arrow = document.createElement("span");
+  arrow.classList.add("custom-select-arrow");
+  arrow.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#004F96"/>
+    </svg>
+  `;
+
+
+  const dropdownMenu = document.createElement("ul");
+  dropdownMenu.classList.add("custom-dropdown-menu");
+
+
+  for (let i = 1; i <= totalPages; i++) {
+    const li = document.createElement("li");
+    li.textContent = `Page ${i}`;
+    li.dataset.value = i;
+    dropdownMenu.appendChild(li);
+
+ 
+    li.addEventListener("click", () => {
+      selectedPageDiv.textContent = `Page ${i}`;
+      selectedPageDiv.dataset.value = i;
+      dropdownMenu.style.display = "none"; 
     });
+  }
+
+  selectedPageDiv.addEventListener("click", (e) => {
+    e.stopPropagation(); 
+    dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+  });
+
+
+  document.addEventListener("click", (e) => {
+    if (!selectWrapper.contains(e.target)) {
+      dropdownMenu.style.display = "none"; 
+    }
+  });
+
+  selectWrapper.appendChild(selectedPageDiv);
+  selectWrapper.appendChild(arrow);
+  selectWrapper.appendChild(dropdownMenu);
+
+
+  const goButton = document.createElement("button");
+  goButton.textContent = "Pokaži Više";
+  goButton.classList.add("btn", "btn-primary", "ml-2");
+
+  goButton.addEventListener("click", () => {
+    const selectedPage = parseInt(selectedPageDiv.dataset.value, 10);
+    changePage(selectedPage, containerId, filterType);
+  });
+
+
+  const pageInfo = document.createElement("span");
+  pageInfo.textContent = `Stranica ${currentPage} of ${totalPages}`;
+  pageInfo.classList.add("mx-2");
+
+
+  paginationDiv.appendChild(selectWrapper);
+  paginationDiv.appendChild(goButton);
+  paginationDiv.appendChild(pageInfo);
+
+  paginationContainer.appendChild(paginationDiv);
 }
 
 
+function addCommasToNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
+  //-------------------ROUTER
+
+  function init() {
+    switch (global.currentPage) {
+      
+      case "/":
+      case "/landing.html":
+        
+        break;
+      case "/index.html":
+        renderNavBar(navListNekretnineHTML);
+        renderFilterBar();
+        displayLatestNekretnine();
+        renderTeam();
+        renderFooter();
+        break;
+      case "/nekretnina-details.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBar();
+        displayNekretnineDetails();
+        displayLatestNekretnine();
+        renderTeam();
+        renderFooter();
+        break;
+      case "/projekti-details.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBar();
+        displayProjektiDetails();
+        displayLatestProjekti();
+        renderTeam();
+        renderFooter();
+        break;
+      case "/search.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBar();
+        renderSearchResults();
+        search();
+        renderFooter();
+        break;
+        case "/search-projekti.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBarProjekti();
+        searchProjekti();
+        renderFooter();
+        break;
+      case "/search-filter.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBar();
+        renderSearchResults();
+        search();
+        renderFooter();
+        break;
+      case "/nekretnine.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBar();
+        displayAllNekretnine();
+        renderFooter();
+        break;
+      case "/projekti.html":
+        renderNavBar(navListNekretnineHTML);
+        renderSearchBarProjekti();
+        displayProjekti();
+        renderFooter();
+        break;
+      case "/onama.html":
+        renderNavBar(navListNekretnineHTML);
+        renderTeam();
+        renderFooter();
+        break;
+      case "/onama-osiguranje.html":
+        renderNavBar(navListOsiguranjeHTML);
+        renderHeaderOsiguranje();
+        renderTeam();
+        renderFooterOsiguranje();
+        break;
+      case "/osiguranje.html":
+        renderNavBar(navListOsiguranjeHTML);
+        renderHeader();
+        renderTeam();
+        renderFooterOsiguranje();
+        break;
+      case "/kontakt.html":
+        renderNavBar(navListNekretnineHTML);
+        renderHeader();
+        renderContactform();
+        renderTeamShort();
+        renderFooter();
+        break;
+      case "/kontakt-osiguranje.html":
+        renderNavBar(navListOsiguranjeHTML);
+        renderHeaderOsiguranje();
+        renderContactform();
+        renderTeamShort();
+        renderFooterOsiguranje();
+        break;
+    }
+  
+    highlightActiveLink();
+  }
+    
+  
