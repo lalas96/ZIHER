@@ -26,9 +26,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .desktop-nav {
-    display: none;
-  }
   .mobile-menu-toggle {
     display: block;
   }
@@ -89,6 +86,51 @@
     grid-row: span 1 !important;
   }
 @media (max-width: 1000px) {
+  section{
+    padding:40px 24px!important;
+  }
+  .featured-section .container {
+    padding:40px 35px;
+  }
+  .section-filter-bar .flex-total p {
+    padding-bottom: 16px!important;
+  }
+  .text-img .flex {
+    gap:  40px;
+  }
+  .text-row{
+   .flex{
+    gap:32px;
+   }
+  }
+  .text-img .flex .box .text p {
+    padding-top: 8px;
+    padding-bottom: 32px;
+  }
+  .showcase .container{
+    padding: 78px 0px 0px 0px !important;
+  }
+  .top-nekretnine .grid {
+    margin-bottom: 40px!important;
+  }
+  .mobile-container .custom-select,
+  .desktop-nav {
+    display: none;
+  }
+  .contact-team .grid, .contact-team-short .grid {
+    gap:  40px;
+  }
+/*   .contact-team .box p, .contact-team-short .box p {
+    padding-bottom: 12px;
+  } */
+   
+  .footer-top .footer-nav {
+    padding-bottom: 24px;
+  }
+
+  .section-filter-bar .flex-total {
+    margin-top: 32.5px;
+  }
     .split-page {
       .container {
         flex-direction: column !important;
@@ -120,6 +162,7 @@
           width:100%;
         }
       }
+     
     }
   .filter-group {
     flex-direction: column;
@@ -177,11 +220,26 @@
     width: 100%;
     align-items: start;
   }
-
+  .osiguranje-grid .column .grid {
+    gap:  40px!important;
+    padding-bottom: 40px!important;
+  }
   .osiguranje-grid{
     .grid{
       grid-template-columns: repeat(2, 1fr);
     }
+    .flex{
+      padding-bottom: 40px;
+    }
+  }
+  .section-ponuda .flex{
+    padding-bottom:24px;
+  }
+  .showcase-onama-osiguranje{
+    padding-top:49px!important;
+  }
+  .showcase-osiguranje{
+    padding-top:49px!important;
   }
 
   .section-row-box .container .grid {
@@ -268,6 +326,17 @@
     }
     }   
   }
+  .section-flex{
+    h6{
+     padding-bottom:32px;
+    }
+    .flex{
+      gap:60px;
+    }
+  }
+  .accordion-container h6 {
+    padding-bottom: 32px;
+  }
   .nekretnina-details {
     height: 100%;
   }
@@ -280,13 +349,22 @@
     }
   };
 
+  .about .content {
+    padding-top: 40px;
+  }
+  .inquiry {
+    padding:40px 0px;
+      padding-bottom: 0;
+  }
+
   .inquiry .grid {
     padding: 80px 35px;
     gap:  40px;
   }
-  .osiguranje-grid{
-    padding-top:100px;
-  } 
+  .inquiry .grid {
+    padding:40px 32px !important;
+  }
+
   .footer-bottom .grid {
     grid-template-columns: 1fr !important;
   }
@@ -301,8 +379,15 @@
       }
     }
   }
+  .contact-team .title, .contact-team-short .title {
+    padding-bottom: 40px;
+  }
 }
-
+.footer-top {
+  .flex {
+    padding-top: 16px;
+  }
+  }
 @media (max-width: 850px) {
   .section-ponuda .flex,
   .search-results .flex{
@@ -362,6 +447,7 @@
   .inquiry .grid .column:nth-child(2) {
     align-items: center;
   }
+
   .footer-bottom .grid .box:last-child {
     align-items: start!important;
   
@@ -402,9 +488,7 @@
   .grid{
     grid-template-columns: repeat(2, 1fr);
   }
-  .inquiry .grid {
-    padding: 48px 32px !important;
-  } 
+
   .contact-team-short .grid {
     grid-template-columns: 1fr;
   .box:first-child{
@@ -436,13 +520,9 @@
     h2{
       font-size:$font-size-2xl;
     }
-  section{
-    padding:80px 24px!important;
-  }
+
   
-  .section-filter-bar .flex-total p {
-    padding-bottom: 16px!important;
-  }
+
   .section-filter-bar .flex-total {
     justify-content: space-between;
     display: flex;
@@ -476,13 +556,9 @@
   .contact-team-short .box h3 {
     padding-bottom: 16px;
   }
-  section.contact-team {
+/*   section.contact-team {
     padding-top: 60px !important;
-  }
-
-  .featured-section .container {
-    padding:80px 24px;
-  }
+  } */
   .featured-section .top-nekretnine .grid {
     gap:32px;
   }
@@ -506,7 +582,7 @@
     }
 
   .showcase .container {
-    padding: 192px 0px 0px 0px !important;
+/*     padding: 192px 0px 0px 0px !important; */
     align-items: flex-start !important;
     h1 {
    /*    font-size: $font-size-6xl; */
@@ -551,6 +627,9 @@
     color: $dgray-color;
     padding-bottom: 35px;
   }
+  .section-filter-bar > .container > p:first-of-type {
+    padding-bottom: 8px;
+  }
 
   .featured-section .container p {
     max-width: 100%;
@@ -559,6 +638,7 @@
   .featured-section .container .header .text .box h2 {
     font-size: $font-size-5xl;
   }
+  
   .inquiry .grid {
     padding:  35px;
     gap:40px;
@@ -682,5 +762,9 @@
     height: 100%;
    flex-direction: column;
   }
+  .showcase .container {
+    padding:116px 0px 0px 0px !important;
+  }
+
 }
 

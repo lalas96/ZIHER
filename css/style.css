@@ -29,6 +29,10 @@
   background: #004f96 !important;
 }
 
+.nav_list-osiguranje .nav_link:hover {
+  color: #005245 !important;
+}
+
 .pt-40 {
   padding-top: 40px;
 }
@@ -347,6 +351,9 @@ input.btn-primary:hover {
 .btn-green {
   background-color: #005245;
 }
+.btn-green:hover {
+  background-color: #12705e;
+}
 
 .btn-empty {
   background-color: transparent;
@@ -388,11 +395,15 @@ button.flex-btn {
   color: #000;
   background: #ede8e0;
 }
+.section-ponuda .btn-primary:hover {
+  background: #004f96 !important;
+  color: #ffffff;
+}
 
 .pagination-custom-select {
   position: relative;
   display: inline-block;
-  z-index: 100;
+  /*   z-index: 100; */
   width: 140px;
 }
 
@@ -429,7 +440,6 @@ button.flex-btn {
   background: #FFF;
   list-style: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  z-index: 9999;
   border-radius: 6px;
 }
 
@@ -447,6 +457,16 @@ button.flex-btn {
 }
 
 /* PAGINATION */
+.osiguranje-page .select-items div:hover {
+  color: #005245;
+  background: rgba(0, 82, 69, 0.1);
+}
+
+.osiguranje-page .navigation .navbar .nav_item .active {
+  border-radius: 6px;
+  background-color: #005245;
+}
+
 /*---------- NAVIGATION----------- */
 .navigation {
   position: fixed;
@@ -489,7 +509,7 @@ button.flex-btn {
   position: relative;
 }
 .navigation .navbar .nav_item .active {
-  color: #ffffff;
+  color: #ffffff !important;
   border-radius: 6px;
   background-color: #004f96;
   box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15) inset, 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
@@ -533,11 +553,6 @@ button.flex-btn {
   height: 0;
   overflow: hidden;
   transition: height 0.5s ease;
-}
-
-.mobile-menu-toggle {
-  background: #004f96;
-  padding: 14px 10px;
 }
 
 .hamburger {
@@ -587,35 +602,54 @@ button.flex-btn {
 .overlay ul li {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: start;
   left: 0;
 }
 .overlay .overlay-content {
   position: relative;
   left: 0 !important;
   top: 0;
-  justify-content: flex-end;
+  justify-content: start;
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   margin-top: 30px;
 }
 .overlay .overlay-content .nav_list {
-  width: 100% !important;
-  margin-top: 170px !important;
+  margin-top: 120px !important;
 }
-.overlay .overlay-content .nav_list li a {
-  margin-bottom: 35px;
-  font-size: 16px;
-  text-transform: uppercase;
+.overlay .overlay-content .nav_list-2 {
+  margin-top: 85px !important;
+}
+.overlay .overlay-content .nav_list, .overlay .overlay-content .nav_list-2 {
+  width: 100% !important;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.overlay .overlay-content .nav_list li a, .overlay .overlay-content .nav_list-2 li a {
+  margin-bottom: 48px;
+  font-size: 24px;
   color: #000;
   -webkit-tap-highlight-color: transparent;
   -webkit-focus-ring-color: rgba(0, 0, 0, 0);
   outline: none;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.48px;
 }
-.overlay .overlay-content .nav_list li a:hover {
+.overlay .overlay-content .nav_list li a:hover, .overlay .overlay-content .nav_list-2 li a:hover {
   color: #004f96;
+}
+.overlay .overlay-content .nav_list-2 h4 {
+  padding-bottom: 32px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 157.143% */
+  letter-spacing: 0.1px;
+  color: rgba(27, 27, 27, 0.5);
 }
 .overlay .overlay-content a {
   display: flex;
@@ -627,6 +661,9 @@ button.flex-btn {
 .overlay .overlay-content ul li {
   left: 0 !important;
   display: flex;
+}
+.overlay .overlay-content .mobile-nav .column {
+  height: 100%;
 }
 
 .hidden {
@@ -648,6 +685,10 @@ button.flex-btn {
   color: #004f96;
 }
 
+body.osiguranje-page .nav_list-2 .nav_link:hover {
+  color: #005245 !important;
+}
+
 /*---------- NAVIGATION----------- */
 /*---------- HEADER----------- */
 .showcase-onama {
@@ -659,7 +700,7 @@ button.flex-btn {
   gap: 64px;
 }
 .showcase-onama .container .left-section .content h3 {
-  color: #004f96;
+  color: #005245;
   margin-bottom: 8px;
 }
 .showcase-onama .container .right-section .column h5 {
@@ -1005,6 +1046,7 @@ button.flex-btn {
   gap: 16px;
   height: 100%;
   align-items: center;
+  max-width: 894px;
 }
 
 section.section-search-bar {
@@ -1154,7 +1196,7 @@ section.section-search-bar {
 .select-items div,
 .select-selected {
   /*   color: set-text-color($white-color); */
-  padding: 12px 16px;
+  padding: 12px;
   cursor: pointer;
 }
 
@@ -1168,15 +1210,16 @@ section.section-search-bar {
   border: 1px solid #ede8e0;
   border-radius: 8px;
   max-height: none;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.07);
 }
 
 .select-hide {
   display: none;
 }
 
-.select-items div:hover,
-.same-as-selected {
-  background-color: rgba(0, 0, 0, 0.1);
+.select-items div:hover {
+  color: #004f96;
+  background-color: #ede8e0;
 }
 
 /*---------- DROPDOWN----------- */
@@ -2214,13 +2257,15 @@ section.contact-team {
 }
 
 .text-row {
-  background: #004f96;
+  background: #005245;
   color: #ffffff;
 }
 .text-row .flex {
   display: flex;
+  gap: 80px;
 }
 .text-row .flex .column:first-child {
+  max-width: 500px;
   width: 100%;
 }
 .text-row .flex .column:first-child h6 {
@@ -2231,11 +2276,13 @@ section.contact-team {
   align-items: center;
   gap: 4px;
   padding-bottom: 12px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
 }
 .text-row .flex li svg {
   margin-right: 12px;
+}
+.text-row strong {
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 .text-row p {
   font-size: 20px;
@@ -2248,7 +2295,7 @@ section.contact-team {
 }
 
 .section-flex h6 {
-  padding-bottom: 64px;
+  padding-bottom: 32px;
 }
 .section-flex .flex {
   gap: 120px;
@@ -2285,9 +2332,6 @@ section.contact-team {
 @media (max-width: 1200px) {
   .select-row {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .desktop-nav {
-    display: none;
   }
   .mobile-menu-toggle {
     display: block;
@@ -2343,6 +2387,47 @@ section.contact-team {
   }
 }
 @media (max-width: 1100px) and (max-width: 1000px) {
+  section {
+    padding: 40px 24px !important;
+  }
+  .featured-section .container {
+    padding: 40px 35px;
+  }
+  .section-filter-bar .flex-total p {
+    padding-bottom: 16px !important;
+  }
+  .text-img .flex {
+    gap: 40px;
+  }
+  .text-row .flex {
+    gap: 32px;
+  }
+  .text-img .flex .box .text p {
+    padding-top: 8px;
+    padding-bottom: 32px;
+  }
+  .showcase .container {
+    padding: 78px 0px 0px 0px !important;
+  }
+  .top-nekretnine .grid {
+    margin-bottom: 40px !important;
+  }
+  .mobile-container .custom-select,
+  .desktop-nav {
+    display: none;
+  }
+  .contact-team .grid, .contact-team-short .grid {
+    gap: 40px;
+  }
+  /*   .contact-team .box p, .contact-team-short .box p {
+      padding-bottom: 12px;
+    } */
+  .footer-top .footer-nav {
+    padding-bottom: 24px;
+  }
+  .section-filter-bar .flex-total {
+    margin-top: 32.5px;
+  }
   .split-page .container {
     flex-direction: column !important;
   }
@@ -2418,8 +2503,24 @@ section.contact-team {
     width: 100%;
     align-items: start;
   }
+  .osiguranje-grid .column .grid {
+    gap: 40px !important;
+    padding-bottom: 40px !important;
+  }
   .osiguranje-grid .grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .osiguranje-grid .flex {
+    padding-bottom: 40px;
+  }
+  .section-ponuda .flex {
+    padding-bottom: 24px;
+  }
+  .showcase-onama-osiguranje {
+    padding-top: 49px !important;
+  }
+  .showcase-osiguranje {
+    padding-top: 49px !important;
   }
   .section-row-box .container .grid {
     gap: 80px !important;
@@ -2493,6 +2594,15 @@ section.contact-team {
     grid-template-columns: repeat(2, 1fr);
     gap: 160px;
   }
+  .section-flex h6 {
+    padding-bottom: 32px;
+  }
+  .section-flex .flex {
+    gap: 60px;
+  }
+  .accordion-container h6 {
+    padding-bottom: 32px;
+  }
   .nekretnina-details {
     height: 100%;
   }
@@ -2502,12 +2612,19 @@ section.contact-team {
   .text-img .flex .box:last-child img {
     max-width: 100%;
   }
+  .about .content {
+    padding-top: 40px;
+  }
+  .inquiry {
+    padding: 40px 0px;
+    padding-bottom: 0;
+  }
   .inquiry .grid {
     padding: 80px 35px;
     gap: 40px;
   }
-  .osiguranje-grid {
-    padding-top: 100px;
+  .inquiry .grid {
+    padding: 40px 32px !important;
   }
   .footer-bottom .grid {
     grid-template-columns: 1fr !important;
@@ -2520,6 +2637,14 @@ section.contact-team {
   }
   .text-row .flex h6 {
     padding-bottom: 16px;
+  }
+  .contact-team .title, .contact-team-short .title {
+    padding-bottom: 40px;
+  }
+}
+@media (max-width: 1100px) {
+  .footer-top .flex {
+    padding-top: 16px;
   }
 }
 @media (max-width: 1100px) and (max-width: 850px) {
@@ -2607,9 +2732,6 @@ section.contact-team {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .inquiry .grid {
-    padding: 48px 32px !important;
-  }
   .contact-team-short .grid {
     grid-template-columns: 1fr;
   }
@@ -2638,12 +2760,6 @@ section.contact-team {
   }
   h2 {
     font-size: 24px;
-  }
-  section {
-    padding: 80px 24px !important;
-  }
-  .section-filter-bar .flex-total p {
-    padding-bottom: 16px !important;
   }
   .section-filter-bar .flex-total {
     justify-content: space-between;
@@ -2678,12 +2794,9 @@ section.contact-team {
   .contact-team-short .box h3 {
     padding-bottom: 16px;
   }
-  section.contact-team {
-    padding-top: 60px !important;
-  }
-  .featured-section .container {
-    padding: 80px 24px;
-  }
+  /*   section.contact-team {
+      padding-top: 60px !important;
+    } */
   .featured-section .top-nekretnine .grid {
     gap: 32px;
   }
@@ -2703,7 +2816,7 @@ section.contact-team {
     padding-left: 20px;
   }
   .showcase .container {
-    padding: 192px 0px 0px 0px !important;
+    /*     padding: 192px 0px 0px 0px !important; */
     align-items: flex-start !important;
   }
   .showcase .container h1 {
@@ -2743,6 +2856,9 @@ section.contact-team {
   .section-filter-bar .flex-total p {
     color: #000;
     padding-bottom: 35px;
+  }
+  .section-filter-bar > .container > p:first-of-type {
+    padding-bottom: 8px;
   }
   .featured-section .container p {
     max-width: 100%;
@@ -2859,5 +2975,8 @@ section.contact-team {
   .navigation .navbar {
     height: 100%;
     flex-direction: column;
+  }
+  .showcase .container {
+    padding: 116px 0px 0px 0px !important;
   }
 }/*# sourceMappingURL=style.css.map */

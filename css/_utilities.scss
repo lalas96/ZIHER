@@ -63,6 +63,10 @@ $dgreen-color: #005245;
     background: $lblue-color !important;
   }
 }
+
+.nav_list-osiguranje .nav_link:hover{
+  color: $dgreen-color!important;
+}
 .pt-40 {
   padding-top: 40px;
 }

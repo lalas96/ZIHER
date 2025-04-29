@@ -281,8 +281,12 @@ function generateDropdownHTML() {
     optionsHTML += `<option value="osiguranje.html">Osiguranje</option>`;
   }
 
-  return `
-    <div class="custom-select">
+  const dropdownStyle = (path.includes("osiguranje.html") || path.includes("onama-osiguranje.html") || path.includes("kontakt-osiguranje.html"))
+    ? 'style="background-color:#005245;"' 
+    : '';
+
+    return `
+    <div class="custom-select ${path.includes("osiguranje") ? 'osiguranje-page' : ''}" ${dropdownStyle}>
       <small>${currentLabel}</small>
       <select name="${name}" id="${id}">
         <option value="" selected hidden></option>
@@ -290,24 +294,25 @@ function generateDropdownHTML() {
       </select>
       <div class="arrow">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 7.5L10 12.5L15 7.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
     </div>
   `;
 }
-
 const mobileToggleHTML = `
 <div class="mobile-menu-toggle" onclick="toggleNav()">
   <div class="hamburger">
-    ${[...Array(3)]
-      .map(
-        () => `
-      <svg class="line" width="18" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect height="2" fill="#2A71BF" />
-      </svg>`
-      )
-      .join("")}
+
+   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="mask0_755_4936" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
+    <rect width="40" height="40" fill="#D9D9D9"/>
+  </mask>
+  <g mask="url(#mask0_755_4936)">
+    <path d="M6.6665 28.7821V27.1154H33.3332V28.7821H6.6665ZM6.6665 20.8333V19.1666H33.3332V20.8333H6.6665ZM6.6665 12.8846V11.2179H33.3332V12.8846H6.6665Z" fill="#1B1B1B"/>
+  </g>
+</svg>
+
   </div>
 </div>
 `;
@@ -318,26 +323,37 @@ function generateMobileOverlay(navListHTML) {
       <div class="overlay-content">
         <nav class="mobile-nav">
           ${navListHTML}
+
         </nav>
+                  <ul class="nav-list nav_list-2">
+<li><h4>Naše usluge</h4></li>
+<li class="nav_item"><a class="nav_link" href="nekretnine.html">Nekretnine</a></li>
+<li class="nav_item"><a class="nav_link" href="osiguranje.html">Osiguranje</a></li>
+</ul>
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"></a>
       </div>
+    </div>
     </div>
   `;
 }
 const navListNekretnineHTML = `
+<div class="column">
 <ul class="nav_list">
 <li class="nav_item"><a class="nav_link" href="onama.html">O nama</a></li>
 <li class="nav_item"><a class="nav_link" href="nekretnine.html">Nekretnine</a></li>
 <li class="nav_item"><a class="nav_link" href="projekti.html">Projekti</a></li>
 <li class="nav_item"><a class="nav_link" href="kontakt.html">Kontakt</a></li>
 </ul>
-`;
 
+</div>
+`;
 const navListOsiguranjeHTML = `
-<ul class="nav_list">
+<div class="column">
+<ul class="nav_list nav_list-osiguranje">
 <li class="nav_item"><a class="nav_link" href="onama-osiguranje.html">O nama</a></li>
 <li class="nav_item"><a class="nav_link" href="kontakt-osiguranje.html">Kontakt</a></li>
 </ul>
+</div>
 `;
 let logoHTML = `
 <a href="index.html" class="logo">${logoSVG}</a>
@@ -386,8 +402,10 @@ document.addEventListener("DOMContentLoaded", function () {
     path.includes("onama-osiguranje.html") ||
     path.includes("kontakt-osiguranje.html")
   ) {
+    document.body.classList.add("osiguranje-page");
     logoHTML = `<a href="osiguranje.html" class="logo">${logoSVG}</a>`;
     renderNavBar(navListOsiguranjeHTML);
+    
   } else {
     logoHTML = `<a href="index.html" class="logo">${logoSVG}</a>`;
     renderNavBar(navListNekretnineHTML);
@@ -442,10 +460,8 @@ function renderHeader() {
   let headingText = `Sigurno<br> dobar <span class="lead-text">odabir</span>.`;
   let paragraphText = `<strong>ZIHER</strong> agencija pronalazi nekretnine koje odgovaraju tvojim životnim ciljevima!`;
 
-  // Get current path
   const path = window.location.pathname.toLowerCase();
 
-  // Update heading based on path
   if (path.includes("nekretnine.html")) {
     headingText = `Potraži svoju idealnu <span class="lead-text">nekretninu</span>.`;
     paragraphText = `Pronađi svoj prostor iz snova. Pronađi svoj novi dom. Pronađi idealnu nekretninu.`;
@@ -457,7 +473,6 @@ function renderHeader() {
     headingText = `Javi nam se,<br>tu smo <span class="lead-text">za tebe</span>.`;
   }
 
-  // Build the full header HTML
   const headerHTML = `
     <header class="showcase">
       <div class="container">
@@ -482,7 +497,6 @@ function renderHeader() {
     </header>
   `;
 
-  // Inject into the container
   const container = document.getElementById("header-container");
   if (container) {
     container.innerHTML = headerHTML;
@@ -1157,54 +1171,55 @@ function renderTeamShort() {
   }
 }
 function renderContactform() {
+  const path = window.location.pathname;
+  const isOsiguranjePage = path.includes("osiguranje");
+
+  const buttonClass = isOsiguranjePage ? "btn-green" : "btn-blue";
+
   const TeamHTML = `
     <div class="container">
-    <div class="grid">
-    <div class="column">
-      <div class="text">
-      <p>Prosječno vrijeme odgovora je 24 radna sata. Radno vrijeme: PON – SUB (08:00 –
-20:00)</p>
+      <div class="grid">
+        <div class="column">
+          <div class="text">
+            <p>Prosječno vrijeme odgovora je 24 radna sata. Radno vrijeme: PON – SUB (08:00 – 20:00)</p>
           </div>
           <div class="contact-form">
             <div class="form-container">
               <form role="form" enctype="multipart/form-data" method="POST" class="form">
-              <div class="flex">
-            <div class="input-data">
-            <input type="text" name="name" id="username" placeholder="Ime">
+                <div class="flex">
+                  <div class="input-data">
+                    <input type="text" name="name" id="username" placeholder="Ime">
+                  </div>
+                  <div class="input-data">
+                    <input type="text" name="surname" id="prezime" placeholder="Prezime">
+                  </div>
+                </div>
+                <div class="input-data">
+                  <input name="email" id="email" type="text" placeholder="E-mail">
+                </div>
+                <div class="input-data">
+                  <input name="telefon" id="telefon" type="text" placeholder="Broj telefona">
+                </div>
+                <div class="textarea">
+                  <div class="input-data">
+                    <textarea name="message" id="message" placeholder="Upit"></textarea>
+                  </div>
+                </div>
+                <div class="input-data">
+                  <input type="submit" class="${buttonClass}" value="Pošalji Upit!" name="submit">
+                </div>
+              </form>
             </div>
-            <div class="input-data">
-            <input type="text" name="surname" id="prezime" placeholder="Prezime">
           </div>
         </div>
-          <div class="input-data">
-            <input name="email" id="email" type="text" placeholder="E-mail">
+        <div class="column">
+          <div class="content">
+            <img src="img/agentica.jpg" alt="">
           </div>
-          <div class="input-data">
-            <input name="telefon" id="telefon" type="text" placeholder="Broj telefona">
-          </div>
-            <div class="textarea" >
-            <div class="input-data">
-            <textarea name="message" id="message" placeholder="Upit"></textarea>
-            </div>
-            </div>
-            <div class="input-data">
-              <input type="submit" class="btn-primary" value="Pošalji Upit!" name="submit" >
-            </div>
-            </form>
-            </div>
         </div>
+      </div>
     </div>
-    <div class="column">
-      <div class="content">
-      <img src="img/agentica.jpg" alt="">
-       </div>
-      </div>
-      </div>
-      </div>
-    </div> 
-    </div> 
-    </div> 
-`;
+  `;
 
   const container = document.getElementById("contact-form-container");
   if (container) {
@@ -1312,13 +1327,6 @@ function renderFooterOsiguranje() {
     <span class="logo-img">
       <img src="/img/logo.svg" alt="Logo">
       </span>
-      <div class="flex">
-      <p class="h7">© 2025 ZIHER</p>
-      <div class="box">
-      <a class="h7" href="nekretnine.html">Nekretnine</a>
-      <a class="h7 nav_link" href="projekti.html">Projekti</a>
-      </div>
-    </div>
       </div>
 </div>
     <section class="footer-bottom blue">
