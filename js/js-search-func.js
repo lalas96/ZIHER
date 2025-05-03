@@ -35,75 +35,73 @@ function generateCard(nekretnina, isTopNekretnina = false) {
   const firstImage = nekretnina.images?.[0] || '../images/no-image.jpg';
   
   return `
-    <div class="card">
- <a href="nekretnina-details.html?id=${nekretnina.id}">
-            <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}"  loading="lazy"/>
-        </a>
-        <div class="card-body">
-            <div class="card-text">
-                <small>${nekretnina.type}</small>
-                <h5 class="card-title">${nekretnina.title}</h5>
-                <div class="column"> 
-                    <p> ${isTopNekretnina ? `${nekretnina.description}` : ''}</p>
-                    <div class="flex"> 
-                       <small>
-                            <img class="icon-img" src="../img/rooms.svg" alt="">
-                            ${nekretnina.surface} m²
-                        </small>
-                        <small> 
-                        <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(nekretnina.price)}
-                        </small>
-                    </div>
-                </div>
-                <div class="long-line"></div>
-          
-                  <small>
-                        <div class="flex-icon"> 
-                        <img class="icon-img" src="../img/place.png" alt="">
-                        <p>${nekretnina.location}</p>
-                           </div>
-                  ${isTopNekretnina ? `<a href="nekretnina-details.html?id=${nekretnina.id}" class="btn-empty">Vidi Više</a>` : ''}
-              </small>
-            </div>
+   <a href="nekretnina-details.html?id=${nekretnina.id}" class="card-link-wrapper">
+  <div class="card">
+    <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}" loading="lazy" />
+    <div class="card-body">
+      <div class="card-text">
+        <small>${nekretnina.type}</small>
+        <h5 class="card-title">${nekretnina.title}</h5>
+        <div class="column"> 
+          <p>${isTopNekretnina ? `${nekretnina.description}` : ''}</p>
+          <div class="flex"> 
+            <small>
+              <img class="icon-img" src="../img/rooms.svg" alt="">
+              ${nekretnina.surface} m²
+            </small>
+            <small> 
+              <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(nekretnina.price)}
+            </small>
+          </div>
         </div>
-    </div>`;   
+        <div class="long-line"></div>
+        <small>
+          <div class="flex-icon"> 
+            <img class="icon-img" src="../img/place.png" alt="">
+            <p>${nekretnina.location}</p>
+          </div>
+          ${isTopNekretnina ? `<div class="btn-empty">Vidi Više</div>` : ''}
+        </small>
+      </div>
+    </div>
+  </div>
+</a>
+`;   
 }
 function generateTopNekretnineCard(nekretnina, isTopNekretnina = false) {
   const firstImage = nekretnina.images?.[0] || '../images/no-image.jpg';
-  
+  const link = `nekretnina-details.html?id=${nekretnina.id}`;
   return `
-    <div class="card">
- <a>
-            <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}"  loading="lazy" />
-        </a>
+  <a href="${link}" class="card card-link-wrapper">
+        <img src="${firstImage}" class="card-img-top" alt="${nekretnina.title}" loading="lazy" />
+
         <div class="card-body">
             <div class="card-text">
                 <small>${nekretnina.type}</small>
                 <h5 class="card-title">${nekretnina.title}</h5>
                 <div class="column"> 
-                    <p> ${isTopNekretnina ? `${nekretnina.description}` : ''}</p>
+                    <p>${isTopNekretnina ? `${nekretnina.description}` : ''}</p>
                     <div class="flex"> 
                        <small>
                             <img class="icon-img" src="../img/rooms.svg" alt="">
                             ${nekretnina.surface} m²
                         </small>
                         <small> 
-                        <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(nekretnina.price)}
+                            <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(nekretnina.price)}
                         </small>
                     </div>
                 </div>
                 <div class="long-line"></div>
-          
-                  <small>
-                        <div class="flex-icon"> 
+                <small>
+                    <div class="flex-icon"> 
                         <img class="icon-img" src="../img/place.png" alt="">
                         <p>${nekretnina.location}</p>
-                           </div>
-                  ${isTopNekretnina ? `<a href="nekretnina-details.html?id=${nekretnina.id}" class="btn-empty">Vidi Više</a>` : ''}
-              </small>
+                    </div>
+                    ${isTopNekretnina ? `<span class="btn-empty">Vidi Više</span>` : ''}
+                </small>
             </div>
         </div>
-    </div>`;
+    </a>`;
 }
 //Projekti generate card za sve projekte
 function generateProjektiCard(projekat) {
@@ -310,9 +308,9 @@ async function search() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const searchParams = ["type", "location", "category", "rooms", "price", "surface"];
+
   searchParams.forEach(param => global.search[param] = urlParams.get(param) || "");
   global.search.term = urlParams.get('search-term') || "";
-  global.search.id = urlParams.get('search-id') || "";
 
   const hasSearchParams = ['term', 'id', 'type', 'location', 'category', 'rooms', "price", "surface"].some(param => global.search[param]);
 
@@ -344,7 +342,6 @@ async function search() {
 async function searchProjekti() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-
   const searchParams = ["category", "propertyNumber", "price", "surface"];
   
   const location = urlParams.get("location")?.toLowerCase() || "";
@@ -414,6 +411,15 @@ async function searchProjekti() {
     );
   });
 
+  const resultsPerPage = 6; // 6 results per page
+  const totalPages = Math.ceil(filteredProjects.length / resultsPerPage);
+  const currentPage = global.search.page || 1;
+
+  const resultsToShow = filteredProjects.slice(
+    (currentPage - 1) * resultsPerPage,
+    currentPage * resultsPerPage
+  );
+
   if (filteredProjects.length === 0) {
     document.querySelector("#search-results").innerHTML = "";
     document.querySelector("#pagination").innerHTML = "";
@@ -421,8 +427,8 @@ async function searchProjekti() {
     return;
   }
 
-  displayProjectsResults(filteredProjects);
-  displaySearchPagination(filteredProjects.length, 1); // default to page 1
+  displayProjectsResults(resultsToShow);
+  displaySearchPagination(filteredProjects.length, currentPage);
   document.querySelector(".total-number").textContent = filteredProjects.length;
 }
 
@@ -466,7 +472,7 @@ async function searchAPIData() {
         : true;
     
       const DEFAULTS = {
-        type: "Prodaja", // Default on load
+        type: "Prodaja",
         category: "Kuća",
         rooms: "1",
         price: "1",
@@ -501,15 +507,20 @@ async function searchAPIData() {
 function displaySearchResults(results, totalResults) {
   const container = document.querySelector("#search-results");
   const pagination = document.querySelector("#pagination");
-  
+
   container.innerHTML = "";
   pagination.innerHTML = "";
 
   document.querySelector(".total-number").textContent = totalResults;
 
-  container.innerHTML = results.map(nekretnina => generateCard(nekretnina, false)).join(""); // generira card filter za 4 category koje su na index
+  if (!results || results.length === 0) {
+    container.innerHTML = "<p>No results found</p>";
+    return;
+  }
 
-  displaySearchPagination(totalResults, global.search.page);
+  container.innerHTML = results.map(nekretnina => generateCard(nekretnina, false)).join(""); 
+
+  displaySearchPagination(totalResults, global.search.page); 
 }
 // display projekti results
 function displayProjectsResults(results) {
@@ -523,61 +534,88 @@ function displaySearchPagination(totalResults, currentPage) {
   const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE);
   const paginationContainer = document.querySelector("#pagination");
 
-  paginationContainer.innerHTML = "";
-
+  paginationContainer.innerHTML = ""; 
 
   if (totalPages <= 1) return;
 
   const paginationDiv = document.createElement("div");
   paginationDiv.classList.add("pagination");
 
+  const selectWrapper = document.createElement("div");
+  selectWrapper.classList.add("pagination-custom-select");
+  selectWrapper.style.position = "relative";
 
-  const select = document.createElement("select");
-  select.id = "page-select";
-  select.classList.add("form-select");
+  const selectedPageDiv = document.createElement("div");
+  selectedPageDiv.classList.add("selected-page");
+  selectedPageDiv.textContent = `Page ${currentPage}`;
+  selectedPageDiv.dataset.value = currentPage;
+
+  const arrow = document.createElement("span");
+  arrow.classList.add("custom-select-arrow");
+  arrow.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#004F96"/>
+    </svg>
+  `;
+
+  const dropdownMenu = document.createElement("ul");
+  dropdownMenu.classList.add("custom-dropdown-menu");
 
   for (let i = 1; i <= totalPages; i++) {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = `Page ${i}`;
-    if (i === currentPage) option.selected = true;
-    select.appendChild(option);
+    const li = document.createElement("li");
+    li.textContent = `Page ${i}`;
+    li.dataset.value = i;
+    dropdownMenu.appendChild(li);
+
+    li.addEventListener("click", () => {
+      selectedPageDiv.textContent = `Page ${i}`;
+      selectedPageDiv.dataset.value = i;
+      dropdownMenu.style.display = "none"; 
+    });
   }
 
+  selectedPageDiv.addEventListener("click", (e) => {
+    e.stopPropagation(); 
+    dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!selectWrapper.contains(e.target)) {
+      dropdownMenu.style.display = "none"; 
+    }
+  });
+
+  selectWrapper.appendChild(selectedPageDiv);
+  selectWrapper.appendChild(arrow);
+  selectWrapper.appendChild(dropdownMenu);
 
   const goButton = document.createElement("button");
   goButton.textContent = "Show Page";
   goButton.classList.add("btn", "btn-primary", "ml-2");
 
   goButton.addEventListener("click", () => {
-    const selectedPage = parseInt(document.querySelector("#page-select").value, 10);
-    changePage(selectedPage, "search-results", global.search.filterType); 
+    const selectedPage = parseInt(selectedPageDiv.dataset.value, 10);
+    changePage(selectedPage, "search-results", global.search.filterType);
   });
-
 
   const pageInfo = document.createElement("span");
   pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
   pageInfo.classList.add("mx-2");
 
-
-  paginationDiv.appendChild(select);
+  paginationDiv.appendChild(selectWrapper);
   paginationDiv.appendChild(goButton);
   paginationDiv.appendChild(pageInfo);
-
 
   paginationContainer.appendChild(paginationDiv);
 }
 
-
 function changePage(newPage, containerId, filterType) {
   global.search.page = newPage;
 
-
-  const container = document.querySelector("#search-results");
+  const container = document.querySelector(`#${containerId}`);
   if (container) {
     container.innerHTML = ""; 
   }
-
 
   fetchLocalData().then(data => {
     if (!data) return;
@@ -602,7 +640,7 @@ function changePage(newPage, containerId, filterType) {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-};
+}
 function displayPagination(totalItems, itemsPerPage, currentPage, containerId, filterType = null) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const paginationContainer = document.querySelector("#pagination");
@@ -694,107 +732,9 @@ function displayPagination(totalItems, itemsPerPage, currentPage, containerId, f
 
 
 function addCommasToNumber(number) {
+  if (typeof number !== 'number' || isNaN(number)) {
+    return ''; 
+  }
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
   //-------------------ROUTER
-
-  function init() {
-    switch (global.currentPage) {
-      
-      case "/":
-      case "/landing.html":
-        
-        break;
-      case "/index.html":
-        renderNavBar(navListNekretnineHTML);
-        renderFilterBar();
-        displayLatestNekretnine();
-        renderTeam();
-        renderFooter();
-        break;
-      case "/nekretnina-details.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBar();
-        displayNekretnineDetails();
-        displayLatestNekretnine();
-        renderTeam();
-        renderFooter();
-        break;
-      case "/projekti-details.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBar();
-        displayProjektiDetails();
-        displayLatestProjekti();
-        renderTeam();
-        renderFooter();
-        break;
-      case "/search.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBar();
-        renderSearchResults();
-        search();
-        renderFooter();
-        break;
-        case "/search-projekti.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBarProjekti();
-        searchProjekti();
-        renderFooter();
-        break;
-      case "/search-filter.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBar();
-        renderSearchResults();
-        search();
-        renderFooter();
-        break;
-      case "/nekretnine.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBar();
-        displayAllNekretnine();
-        renderFooter();
-        break;
-      case "/projekti.html":
-        renderNavBar(navListNekretnineHTML);
-        renderSearchBarProjekti();
-        displayProjekti();
-        renderFooter();
-        break;
-      case "/onama.html":
-        renderNavBar(navListNekretnineHTML);
-        renderTeam();
-        renderFooter();
-        break;
-      case "/onama-osiguranje.html":
-        renderNavBar(navListOsiguranjeHTML);
-        renderHeaderOsiguranje();
-        renderTeam();
-        renderFooterOsiguranje();
-        break;
-      case "/osiguranje.html":
-        renderNavBar(navListOsiguranjeHTML);
-        renderHeader();
-        renderTeam();
-        renderFooterOsiguranje();
-        break;
-      case "/kontakt.html":
-        renderNavBar(navListNekretnineHTML);
-        renderHeader();
-        renderContactform();
-        renderTeamShort();
-        renderFooter();
-        break;
-      case "/kontakt-osiguranje.html":
-        renderNavBar(navListOsiguranjeHTML);
-        renderHeaderOsiguranje();
-        renderContactform();
-        renderTeamShort();
-        renderFooterOsiguranje();
-        break;
-    }
-  
-    highlightActiveLink();
-  }
-    
-  

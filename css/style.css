@@ -29,6 +29,14 @@
   background: #004f96 !important;
 }
 
+.link-green:hover {
+  color: #005245 !important;
+}
+
+.pb-48 {
+  padding-bottom: 48px !important;
+}
+
 .nav_list-osiguranje .nav_link:hover {
   color: #005245 !important;
 }
@@ -39,6 +47,34 @@
 
 .lead-text {
   color: #004f96;
+}
+
+.section-search-bar .search-form .filter-items .select-row {
+  display: flex;
+  justify-content: space-between !important;
+  width: 100%;
+}
+.section-search-bar .search-form .filter-items .select-row .box .custom-select {
+  max-width: 220px;
+}
+
+.select-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-flex {
+  flex: 1;
+  /*  max-width: 50%; */
+}
+
+.box-projekti {
+  justify-content: flex-end;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
 }
 
 small {
@@ -244,8 +280,8 @@ section {
 }
 
 .sl-wrapper .sl-image img {
-  height: 800px !important;
-  max-width: 800px !important;
+  height: 500px !important;
+  max-width: 100% !important;
   width: 100% !important;
   object-fit: cover;
   margin: 0 auto;
@@ -271,6 +307,14 @@ body.prevent-clicks::before {
 
 .sl-wrapper {
   z-index: 10000 !important;
+}
+
+.sl-wrapper .sl-close {
+  top: 80px !important;
+}
+
+.sl-counter {
+  top: 80px !important;
 }
 
 .search-flex .btn {
@@ -745,7 +789,7 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
 }
 .showcase .right-section p,
 .showcase-osiguranje .right-section p,
@@ -830,11 +874,33 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
   max-width: 253px;
 }
 
+.showcase-onama-osiguranje .right-section .content .text {
+  max-width: 378px;
+}
+.showcase-onama-osiguranje .right-section .content .text p {
+  max-width: 100%;
+}
+
+.showcase-onama-osiguranje .showcase .container {
+  align-items: center;
+}
+
+.showcase-onama .container {
+  justify-content: center;
+  /*   align-items: center !important; */
+  display: flex;
+}
+
+.showcase-onama-osiguranje .showcase .container .right-section {
+  align-items: flex-end !important;
+}
 .showcase-onama-osiguranje .showcase .container .right-section .content {
   background: #005245;
   color: #ffffff;
   height: 100%;
   padding: 32px;
+  max-width: 460px !important;
+  width: 100%;
 }
 .showcase-onama-osiguranje .showcase .container .right-section .content .text h4 {
   padding-bottom: 16px;
@@ -1132,6 +1198,15 @@ section.section-search-bar {
   padding: 80px 24px;
 }
 
+.search-results .container {
+  overflow: visible !important;
+}
+
+.search-results .flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*---------- DROPDOWN ----------- */
 .custom-select {
   position: relative;
@@ -1333,11 +1408,10 @@ input:-webkit-autofill {
   color: #000;
 }
 
-.section-ponuda .flex,
-.search-results .flex {
+.section-ponuda .flex {
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 48px;
+  /*   padding-bottom:48px; */
 }
 
 .section-ponuda .container h1,
@@ -1369,6 +1443,12 @@ input:-webkit-autofill {
 }
 
 /*---------- TOP NEKRETNINE----------- */
+.card-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .featured-section .flex .text:first-child {
   padding-bottom: 94px;
 }
@@ -1530,7 +1610,7 @@ section.featured-section {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding: 48px 72px;
+  padding: 48px 0px;
   align-items: start;
   gap: 30px;
 }
@@ -1552,7 +1632,7 @@ section.featured-section {
 .card-top-container .card-title .flex {
   align-items: center;
   gap: 24px;
-  color: #005245;
+  color: #004f96;
 }
 .card-top-container .card-title .column h1:last-child {
   color: rgba(27, 27, 27, 0.5);
@@ -1606,7 +1686,7 @@ section.featured-section {
   font-size: 13px;
 }
 .projekti-card .card-text .long-line, .card .card-text .long-line {
-  margin: 17px 0;
+  margin: 12px 0;
 }
 .projekti-card .card-text .line, .card .card-text .line {
   padding: 4px 0 4px 0;
@@ -1775,7 +1855,7 @@ section.featured-section {
   display: flex;
   max-width: 1440px;
   width: 100%;
-  padding: 24px 120px;
+  padding: 24px 0px;
   align-items: flex-start;
   gap: 32px;
   color: rgba(27, 27, 27, 0.5);
@@ -1978,51 +2058,47 @@ section.contact-team {
   padding-top: 120px;
 }
 
-.contact-team .grid, .contact-team-short .grid {
+.contact-team .grid {
   gap: 80px;
 }
-.contact-team .box:first-child, .contact-team-short .box:first-child {
+.contact-team .box:first-child {
   border-right: 1px #ede8e0 solid;
   max-width: 380px;
   padding-right: 80px;
 }
-.contact-team .box, .contact-team-short .box {
+.contact-team .box {
   display: flex;
   flex-direction: column;
   justify-content: start;
   max-width: 320px;
   width: 100%;
 }
-.contact-team .box p, .contact-team-short .box p {
+.contact-team .box p {
   padding-bottom: 32px;
   letter-spacing: 0.1px;
 }
-.contact-team .box h3, .contact-team-short .box h3 {
+.contact-team .box h3 {
   padding-bottom: 16px;
   letter-spacing: -0.48px;
   font-weight: 700;
 }
-.contact-team .box .btn, .contact-team-short .box .btn {
+.contact-team .box .btn {
   max-width: 149px;
   padding: 12px 24px;
 }
-.contact-team .box .btn-empty, .contact-team-short .box .btn-empty {
+.contact-team .box .btn-empty {
   padding-top: 12px;
 }
-.contact-team .title, .contact-team-short .title {
+.contact-team .title {
   align-items: flex-start;
   padding-bottom: 80px;
 }
 
-.contact-team-short .grid {
+.kontakt-osiguranje .contact-team .grid {
   grid-template-columns: repeat(2, 1fr);
 }
-.contact-team-short .box {
+.kontakt-osiguranje .contact-team .grid .box {
   max-width: 100%;
-}
-.contact-team-short .box:first-child {
-  max-width: 100%;
-  padding-right: 80px;
 }
 
 .footer-bottom {
@@ -2080,7 +2156,7 @@ section.contact-team {
 .footer-top {
   height: 100%;
   width: 100%;
-  padding: 80px 80px 32px 80px;
+  padding: 48px 24px 48px 24px;
 }
 .footer-top .container {
   display: flex;
@@ -2237,6 +2313,10 @@ section.contact-team {
     transform: scaleY(0);
   }
 }
+.osiguranje-page .right-section {
+  align-items: center;
+}
+
 .osiguranje-grid {
   padding-top: 200px;
 }
@@ -2251,6 +2331,9 @@ section.contact-team {
 .osiguranje-grid .column .grid {
   gap: 80px;
   padding-bottom: 80px;
+}
+.osiguranje-grid .column .grid .box h3 {
+  padding-bottom: 16px;
 }
 .osiguranje-grid .column .btn-blue {
   margin: 32px 0px;
@@ -2320,15 +2403,30 @@ section.contact-team {
 }
 @media (max-width: 1220px) {
   .navigation .navbar {
-    padding: 21px 35px;
+    padding: 21px 24px;
   }
-  .showcase, .showcase-onama {
+  .showcase {
     padding: 0px 24px;
+  }
+  .search-flex {
+    order: 2 !important;
+  }
+  .section-search-bar .search-form .filter-items .select-row .box .custom-select {
+    max-width: 100%;
   }
   .filter-items .select-row {
     flex-direction: column;
   }
+  .box-projekti, .flex-end {
+    justify-content: flex-start !important;
+  }
 }
+/* .search-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+} */
 @media (max-width: 1200px) {
   .select-row {
     grid-template-columns: repeat(2, 1fr);
@@ -2344,6 +2442,21 @@ section.contact-team {
   }
 }
 @media (max-width: 1100px) {
+  .section-search-bar .search-form .filter-items .select-row .box .custom-select {
+    max-width: 100%;
+  }
+  .showcase-onama {
+    display: block;
+  }
+  .filter-group {
+    max-width: 100%;
+  }
+  .showcase-onama-osiguranje .showcase .container .right-section {
+    align-items: start !important;
+  }
+  .card-top-container {
+    margin-top: 40px;
+  }
   .inquiry {
     padding-bottom: 0;
   }
@@ -2385,10 +2498,14 @@ section.contact-team {
     grid-column: span 1 !important;
     grid-row: span 1 !important;
   }
-}
-@media (max-width: 1100px) and (max-width: 1000px) {
   section {
     padding: 40px 24px !important;
+  }
+  .split-page .left-section:hover::before {
+    background: rgba(0, 39, 77, 0.9) !important;
+  }
+  .split-page .right-section:hover::before {
+    background: rgba(0, 82, 69, 0.9) !important;
   }
   .featured-section .container {
     padding: 40px 35px;
@@ -2416,12 +2533,9 @@ section.contact-team {
   .desktop-nav {
     display: none;
   }
-  .contact-team .grid, .contact-team-short .grid {
+  .contact-team .grid {
     gap: 40px;
   }
-  /*   .contact-team .box p, .contact-team-short .box p {
-      padding-bottom: 12px;
-    } */
   .footer-top .footer-nav {
     padding-bottom: 24px;
   }
@@ -2453,6 +2567,9 @@ section.contact-team {
   .split-page .btn-empty .flex {
     max-width: 160px;
     width: 100%;
+  }
+  .split-page .content-bottom {
+    padding: 50px 60px;
   }
   .filter-group {
     flex-direction: column;
@@ -2490,7 +2607,7 @@ section.contact-team {
     max-width: 360px;
   }
   .showcase-onama .container .content h1 {
-    max-width: 360px;
+    /*     max-width: 360px; */
     width: 100%;
   }
   .showcase-onama .container {
@@ -2519,7 +2636,7 @@ section.contact-team {
   .showcase-onama-osiguranje {
     padding-top: 49px !important;
   }
-  .showcase-osiguranje {
+  .showcase-osiguranje, .showcase-contact-osiguranje {
     padding-top: 49px !important;
   }
   .section-row-box .container .grid {
@@ -2638,17 +2755,25 @@ section.contact-team {
   .text-row .flex h6 {
     padding-bottom: 16px;
   }
-  .contact-team .title, .contact-team-short .title {
+  .contact-team .title {
     padding-bottom: 40px;
   }
 }
-@media (max-width: 1100px) {
-  .footer-top .flex {
-    padding-top: 16px;
-  }
+.footer-top .flex {
+  padding-top: 16px;
 }
-@media (max-width: 1100px) and (max-width: 850px) {
-  .section-ponuda .flex,
+
+.split-page .left-section:hover::before {
+  background: rgba(0, 39, 77, 0.9);
+}
+.split-page .right-section:hover::before {
+  background: rgba(0, 82, 69, 0.9);
+}
+
+@media (max-width: 850px) {
+  .pb-48 {
+    padding-bottom: 24px !important;
+  }
   .search-results .flex {
     align-items: start;
     flex-direction: column;
@@ -2680,8 +2805,9 @@ section.contact-team {
     grid-template-columns: 1fr !important;
     gap: 48px;
   }
-}
-@media (max-width: 1100px) {
+  .projekti-card .flex, .card .flex {
+    gap: 16px;
+  }
   .property-info {
     padding: 24px 72px;
   }
@@ -2705,10 +2831,13 @@ section.contact-team {
     gap: 16px;
   }
   .footer-top {
-    padding: 40px 24px 32px 24px;
+    padding: 48px 24px 96px 24px;
   }
 }
 @media (max-width: 768px) {
+  .section-search-bar .search-form .filter-items .select-row .box .custom-select {
+    max-width: 100%;
+  }
   .select-row {
     width: 100%;
     max-width: 100%;
@@ -2731,6 +2860,9 @@ section.contact-team {
   }
   .grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .card-top-container .column-info .flex {
+    justify-content: flex-start;
   }
   .contact-team-short .grid {
     grid-template-columns: 1fr;
@@ -2867,6 +2999,10 @@ section.contact-team {
   .featured-section .container .header .text .box h2 {
     font-size: 40px;
   }
+  .image-wrapper .btn {
+    left: 0;
+    transform: translate(12%, -70%);
+  }
   .inquiry .grid {
     padding: 35px;
     gap: 40px;
@@ -2899,7 +3035,15 @@ section.contact-team {
     gap: 8px;
   }
   .footer-top .footer-nav .nav_list .h8 {
-    font-size: 15px;
+    font-size: 20px;
+  }
+}
+@media (max-width: 540px) {
+  .footer-top .footer-nav .nav_list {
+    gap: 8px;
+  }
+  .footer-top .footer-nav .nav_list .h8 {
+    font-size: 16px;
   }
 }
 @media (max-width: 480px) {
@@ -2968,7 +3112,21 @@ section.contact-team {
     gap: 4px;
   }
   .footer-top .footer-nav .nav_list .h8 {
-    font-size: 12px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 365px) {
+  .footer-top .footer-nav .nav_list {
+    gap: 4px;
+  }
+  .footer-top .footer-nav .nav_list .h8 {
+    font-size: 11px;
+    flex-wrap: nowrap;
+    display: flex;
+    white-space: nowrap;
+  }
+  .footer-top {
+    padding: 40px 12px 32px 12px !important;
   }
 }
 @media (max-width: 340px) {

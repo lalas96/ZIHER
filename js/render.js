@@ -22,7 +22,6 @@ function renderPropertyDetails(
   container.innerHTML = "";
   container.appendChild(div);
 
-  // 👇 Replace default init with custom config
   const galleryBtn = container.querySelector(".gallery-btn");
   if (galleryBtn) {
     galleryBtn.addEventListener("click", () => {
@@ -34,9 +33,9 @@ function renderPropertyDetails(
         disableScroll: true,
       });
 
-      lightbox.open(); // 👈 open immediately on button click
+      lightbox.open();
 
-      // Optional listeners
+
       lightbox.on("shown.simplelightbox", () => {
         document.body.classList.add("prevent-clicks");
       });
@@ -110,7 +109,6 @@ function renderTopCard(item) {
     </div>
   `;
 }
-
 function renderMainDetails(item, images, galleryKey) {
   return `
     <div class="nekretnina-details">
@@ -445,6 +443,19 @@ function closeNav() {
     document.body.classList.remove("no-scroll");
   }
 }
+document.addEventListener("click", function (event) {
+  const navOverlay = document.getElementById("toggleMobileNav");
+  if (!navOverlay) return;
+
+  const isLink = event.target.closest("a");
+  const isInsideOverlay = event.target.closest("#toggleMobileNav");
+  const isOverlayOpen = navOverlay.style.height === "100%";
+
+  // If overlay is open, click is inside overlay, and not on a link — close it
+  if (isOverlayOpen && isInsideOverlay && !isLink) {
+    closeNav();
+  }
+});
 //highlight active link
 function highlightActiveLink() {
   const links = document.querySelectorAll(".nav_link");
@@ -458,7 +469,7 @@ function highlightActiveLink() {
 function renderHeader() {
   // Default heading
   let headingText = `Sigurno<br> dobar <span class="lead-text">odabir</span>.`;
-  let paragraphText = `<strong>ZIHER</strong> agencija pronalazi nekretnine koje odgovaraju tvojim životnim ciljevima!`;
+  let paragraphText = `<strong>ZIHER</strong> agencija za nekretnine koja razumije vaš budući život.`;
 
   const path = window.location.pathname.toLowerCase();
 
@@ -565,17 +576,6 @@ function renderHeaderContact() {
 function renderSearchBarProjekti() {
   const selectsTop = [
     createSelect({
-      label: "Broj Nekretnina",
-      name: "propertyNumber",
-      id: "propertyNumber",
-      options: [
-        ["1", "1"],
-        ["2", "2"],
-        ["3", "3"],
-        ["4", "4"],
-      ],
-    }),
-    createSelect({
       label: "Cijena",
       name: "price",
       id: "Price",
@@ -608,11 +608,6 @@ function renderSearchBarProjekti() {
     ],
   });
 
-  const checkboxes = [
-    createCheckbox("pool", "Bazen"),
-    createCheckbox("parking", "Parking"),
-  ];
-
   const searchBarHTML = `
     <section class="section-search-bar">
       <div class="container">
@@ -621,33 +616,23 @@ function renderSearchBarProjekti() {
           <form action="/search-projekti.html" class="search-form" method="GET">
             <div class="filter-items">
               <div class="select-row">
-                <div class="box">${selectsTop[0]}</div>
-                <div class="box">${selectsTop[1]}${selectsTop[2]}</div>
-              </div>
-             <div class="search-flex">
+                 <div class="search-flex">
                 <div class="flex-location-icon">
                   <img src="/img//locationblue.svg" alt="">
                   <small>Lokacija</small>
                   <input type="text" placeholder="Koju lokaciju tražite?" name="search-term" id="search-term" />
                 </div>
-                <button class="btn" type="submit">
+              </div>
+                <div class="box box-projekti">${selectsTop[1]}${selectsTop[0]}</div>
+              </div>
+                    <div class="flex-end">
+              <button class="btn" type="submit">
                   <div class="flex">
                     <i class="fas fa-search"></i>
                     <h5>Pretraži</h5>
                   </div>
                 </button>
-              </div>
-              <div class="additional">
-                <div class="wrapper">
-                  <div class="search">
-                    <input class="id-search" type="text" name="search-id" id="search-id" placeholder="ID nekretnine" />
-                    ${locationSelect}
-                  </div>
-                  <div class="checkbox-column">
-                    ${checkboxes.join("")}
-                  </div>
-                </div>
-              </div>
+            </div>
             </div>
           </form>
         </div>
@@ -723,12 +708,6 @@ function renderSearchBar() {
       ],
     }),
   ];
-
-  const checkboxes = [
-    createCheckbox("pool", "Bazen"),
-    createCheckbox("parking", "Parking"),
-  ];
-
   const searchBarHTML = `
     <section class="section-search-bar">
       <div class="container">
@@ -761,9 +740,6 @@ function renderSearchBar() {
                 <div class="wrapper">
                   <div class="search">
                     <input class="id-search" type="text" name="search-id" id="search-id" placeholder="ID nekretnine" />
-                  </div>
-                  <div class="checkbox-column">
-                    ${checkboxes.join("")}
                   </div>
                 </div>
               </div>
@@ -799,15 +775,6 @@ function createSelect({ label, name, id, options }) {
           <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#026451"/>
         </svg>
       </div>
-    </div>
-  `;
-}
-
-function createCheckbox(name, label) {
-  return `
-    <div class="checkbox-option">
-      <input type="checkbox" name="${name}" id="${name}-checkbox" value="true" />
-      <label for="${name}-checkbox">${label}</label>
     </div>
   `;
 }
@@ -1014,10 +981,10 @@ function renderFilterBar() {
 //------------------------------------------------------------------------FILTERBAR END
 //------------------------------------------------------------------------SEARCHRESULTS
 function renderSearchResults() {
-  const TeamHTML = `
+  const SearchResultsHTML = `
   <div class="search-results">
     <div class="container">
-      <div class="flex">
+      <div class="flex pb-48">
         <h1>Rezultati pretraživanja</h1>
         <div class="flex-total">
           <p>Imamo preko <span class="lead-text total-number"></span> <span class="lead-text">nekretnina</span>  za tebe</p>
@@ -1029,8 +996,10 @@ function renderSearchResults() {
 
   const container = document.getElementById("search-results-container");
   if (container) {
-    container.innerHTML = TeamHTML;
+    container.innerHTML = SearchResultsHTML;
+    initializeCustomSelects();
   }
+
 }
 //------------------------------------------------------------------------SEARCHRESULTS END
 function displayFilteredHomepageCards() {
@@ -1066,110 +1035,80 @@ function displayFilteredHomepageCards() {
   });
 }
 //-------------------TEAM
-function renderTeam() {
-  const TeamHTML = `
-<section class="contact-team">
-  <div class="container">
-    <div class="title">
-      <h6>Kontaktiraj nas!</h6>
-    </div>
-    
-  <div class="grid">
+function renderTeam({ containerId = "contact-team-container", showEmail = true, showQuery = true } = {}) {
+  const currentPage = window.location.pathname;
+
+  const isOsiguranje = currentPage.includes("osiguranje.html");
+  const isKontaktOsiguranje = currentPage.includes("kontakt-osiguranje.html");
+
+  if (isKontaktOsiguranje) {
+    showQuery = false;
+    showEmail = true;
+  }
+
+  const heading = isOsiguranje ? "Kontaktiraj nas!" : "Obrati nam se s povjerenjem!";
+  const queryText = isOsiguranje
+    ? "Nisi siguran koje osiguranje ti treba? Piši nam preko weba – zajedno ćemo pronaći najbolje osiguranje za tebe."
+    : "Nisi siguran odakle krenuti? Piši nam preko našeg weba – zajedno ćemo naći pravi prostor za tebe.";
+
+  const btnClass = isOsiguranje ? "btn btn-green" : "btn btn-primary";
+
+  let boxes = "";
+  if (showQuery) {
+    boxes += `
       <div class="box">
         <h3>Pošalji upit</h3>
-        <p id="contact-query-text">Nisi siguran odakle krenuti? Piši nam preko našeg weba – zajedno ćemo naći pravi prostor za tebe.</p>
-        <a class="btn" href="kontakt.html">Pošalji upit</a>
+        <p id="contact-query-text">${queryText}</p>
+        <a class="${btnClass}" href="kontakt.html">Pošalji upit</a>
       </div>
-      <div class="box">
-        <h3>Nazovi nas</h3>
-        <p>Slobodno nas nazovi tijekom radnog vremena. PON – SUB (08:00 – 20:00). Rado ćemo odgovoriti na sva tvoja pitanja.</p>
-        <a class="btn-empty" href="tel:+1234567893">
-          <div class="flex-btn">
-            +1 234 567 893
-            <img class="icon-img" src="../img/arrowblack.png" alt="arrow">
-          </div>
-        </a>
-      </div>
+    `;
+  }
+  boxes += `
+    <div class="box">
+      <h3>Nazovi nas</h3>
+      <p>Slobodno nas nazovi tijekom radnog vremena. <br>PON – SUB (08:00 – 20:00). Rado ćemo odgovoriti na sva tvoja pitanja.</p>
+      <a class="btn-empty" href="tel:+385 98 359 876">
+        <div class="flex-btn">
+          +385 98 359 876
+          <img class="icon-img" src="../img/arrowblack.png" alt="arrow">
+        </div>
+      </a>
+    </div>
+  `;
+  if (showEmail) {
+    boxes += `
       <div class="box">
         <h3>Pošalji e-mail</h3>
-        <p>Nema potrebe za ispunjavanjem obrazaca. Skoči na svoj e-mail i pošaljemo što god trebaš. Tu smo da pomognemo.</p>
-        <a class="btn-empty" href="mailto:support@ziher.com">
+        <p>Nema potrebe za ispunjavanjem obrazaca. Skoči na svoj e-mail i pošalji nam što god trebaš. Tu smo da pomognemo.</p>
+        <a class="btn-empty" href="mailto:ivor@ziher-partner.hr">
           <div class="flex-btn">
-            support@ziher.com
+            ivor@ziher-partner.hr
             <img class="icon-img" src="../img/arrowblack.png" alt="arrow">
           </div>
         </a>
       </div>
-    </div>
-  </div>
-</section>
-`;
-
-  const container = document.getElementById("contact-team-container");
-  if (container) {
-    container.innerHTML = TeamHTML;
+    `;
   }
-  const currentPage = window.location.pathname;
-  const buttons = document.querySelectorAll(".btn");
-  const contactQueryText = document.getElementById("contact-query-text");
 
-  if (currentPage.includes("osiguranje.html")) {
-    buttons.forEach((button) => {
-      button.classList.add("btn-green");
-      button.classList.remove("btn-primary");
-    });
-
-    if (contactQueryText) {
-      contactQueryText.textContent =
-        "Nisi siguran koje osiguranje ti treba? Piši nam preko weba – zajedno ćemo pronaći najbolje osiguranje za tebe.";
-    }
-  } else {
-    buttons.forEach((button) => {
-      button.classList.add("btn-primary");
-    });
-    if (contactQueryText) {
-      contactQueryText.textContent =
-        "Nisi siguran odakle krenuti? Piši nam preko našeg weba – zajedno ćemo naći pravi prostor za tebe.";
-    }
-  }
-}
-
-function renderTeamShort() {
   const TeamHTML = `
-<section class="contact-team-short">
-<div class="container">
-  <div class="title">
-    <h6>Contact our Team</h6>
-  </div>
-  <div class="grid">
-   <div class="box">
-      <h3>Nazovi nas</h3>
-      <p>Slobodno nas nazovi tijekom radnog vremena. PON – SUB (08:00 – 20:00). Rado
-ćemo odgovoriti na sva tvoja pitanja.</p>
-             <a class="btn-empty" href="tel:+1234567893">
-            <div class="flex-btn">+1 234 567 893<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
-            </div>
-          </a>
-    </div>
+    <section class="contact-team">
+      <div class="container">
+        <div class="title">
+          <h6>${heading}</h6>
+        </div>
+        <div class="grid">
+          ${boxes}
+        </div>
+      </div>
+    </section>
+  `;
 
-    <div class="box">
-      <h3>Pošalji e-mail</h3>
-       <p>Nema potrebe za ispunjavanjem obrazaca. Skoči na svoj e-mail i pošalji nam što god trebaš. Tu smo da pomognemo.</p>
-           <a class="btn-empty" href="mailto:support@ziher.com">
-            <div class="flex-btn">support@ziher.com<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
-            </div>
-          </a>
-    </div>
-  </div>
-</div>
-</section>
-`;
-
-  const container = document.getElementById("contact-team-short-container");
+  const container = document.getElementById(containerId);
   if (container) {
     container.innerHTML = TeamHTML;
   }
 }
+
 function renderContactform() {
   const path = window.location.pathname;
   const isOsiguranjePage = path.includes("osiguranje");
@@ -1181,7 +1120,7 @@ function renderContactform() {
       <div class="grid">
         <div class="column">
           <div class="text">
-            <p>Prosječno vrijeme odgovora je 24 radna sata. Radno vrijeme: PON – SUB (08:00 – 20:00)</p>
+            <p>Prosječno vrijeme odgovora je 24 sata. <br>Radno vrijeme: PON – SUB (08:00 – 20:00)</p>
           </div>
           <div class="contact-form">
             <div class="form-container">
@@ -1214,7 +1153,7 @@ function renderContactform() {
         </div>
         <div class="column">
           <div class="content">
-            <img src="img/agentica.jpg" alt="">
+            <img src="img/ZIHER - kontakt - nekretnine - osiguranja.webp" alt="">
           </div>
         </div>
       </div>
@@ -1230,67 +1169,115 @@ window.onload = renderContactform;
 //-------------------TEAM
 //-------------------FOOTER
 function renderFooter() {
-  const footerHTML = `
-<div class="footer-top">
-  <div class="container">
-    <div class="footer-nav">
-    <ul class="nav_list">
-      <li class="nav_item">
-        <a class="h8 nav_link" href="O nama.html">O nama</a>
-      </li>
-      <li><img src="/img/dot.svg"></img></li>
-      <li class="nav_item">
-        <a class="h8 nav_link" href="index.html">Naslovna</a>
-      </li>
-      <li><img src="/img/dot.svg"></img></li>
-      <li class="nav_item">
-        <a class="h8 nav_link" href="nekretnine.html">Nekretnine</a>
-      </li>
-      <li><img src="/img/dot.svg"></img></li>
-      <li class="nav_item">
-        <a class="h8 nav_link" href="projekti.html">Projekti</a>
-      </li>
-      <li><img src="/img/dot.svg"></img></li>
-      <li class="nav_item">
-        <a class="h8 nav_link" href="kontakt.html">Kontakt</a>
-      </li>
-      </ul>
-      </div>
-    <span class="logo-img">
-      <img src="/img/logo.svg" alt="Logo">
-      </span>
-      </div>
-</div>
-  <section class="footer-bottom">
-<div class="container">
-    <div class="grid">
-      <div class="box">
-        <div class="column">
-          <p>Usluge osiguranja</p>
-          <h1>Osiguranje</h1>
-        </div>
-      </div>
-      <div class="box">
-        <div class="column">
-        <h3 class="h8">Tekst</h3>
-          <p>Otkrijte našu ponudu osiguranja. Pametan korak za bolju budućnost.</p>
-          <a class="btn-empty" href=""><div class="flex">Pogledaj stranicu ZIHER nekretnine
-          <img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
+  const currentPage = window.location.pathname;
+  const isOsiguranje = currentPage.includes("osiguranje");
+
+  const topNavLinks = isOsiguranje
+    ? `
+      <ul class="nav_list">
+        <li class="nav_item">
+          <a class="h8 nav_link" href="O nama.html">O nama</a>
+        </li>
+        <li><img src="/img/dot.svg" alt="dot"></li>
+        <li class="nav_item">
+          <a class="h8 nav_link" href="index.html">Naslovna</a>
+        </li>
+      </ul>`
+    : `
+      <ul class="nav_list">
+        <li class="nav_item">
+          <a class="h8 nav_link" href="O nama.html">O nama</a>
+        </li>
+        <li><img src="/img/dot.svg" alt="dot"></li>
+        <li class="nav_item">
+          <a class="h8 nav_link" href="index.html">Naslovna</a>
+        </li>
+        <li><img src="/img/dot.svg" alt="dot"></li>
+        <li class="nav_item">
+          <a class="h8 nav_link" href="nekretnine.html">Nekretnine</a>
+        </li>
+        <li><img src="/img/dot.svg" alt="dot"></li>
+        <li class="nav_item">
+          <a class="h8 nav_link" href="projekti.html">Projekti</a>
+        </li>
+        <li><img src="/img/dot.svg" alt="dot"></li>
+        <li class="nav_item">
+          <a class="h8 nav_link" href="kontakt.html">Kontakt</a>
+        </li>
+      </ul>`;
+
+  const bottomSection = isOsiguranje
+    ? `
+      <section class="footer-bottom blue">
+        <div class="container">
+          <div class="grid">
+            <div class="box">
+              <div class="column">
+                <p>Usluge nekretnina</p>
+                <h1>Nekretnine</h1>
+              </div>
+            </div>
+            <div class="box">
+              <div class="column">
+                <h3 class="h8">Pronađi nekretninu</h3>
+                <p>Otkrijte našu ponudu nekretnina. Sigurno dobar odabir.</p>
+                <a class="btn-empty" href="nekretnine.html">
+                  <div class="flex-btn">Pogledaj stranicu ZIHER nekretnina
+                    <img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
-        </a>
         </div>
+      </section>`
+    : `
+      <section class="footer-bottom">
+        <div class="container">
+          <div class="grid">
+            <div class="box">
+              <div class="column">
+                <p>Usluge osiguranja</p>
+                <h1>Osiguranje</h1>
+              </div>
+            </div>
+            <div class="box">
+              <div class="column">
+                <h3 class="h8">Osiguraj se</h3>
+                <p>Otkrijte našu ponudu osiguranja. Pametan korak za bolju budućnost.</p>
+                <a class="btn-empty" href="osiguranje.html">
+                  <div class="flex">Pogledaj stranicu ZIHER osiguranje
+                    <img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>`;
+
+  const footerHTML = `
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-nav">
+          ${topNavLinks}
+        </div>
+        <span class="logo-img">
+          <img src="/img/logo.svg" alt="Logo">
+        </span>
       </div>
     </div>
-  </div>
-  </section>
-`;
+    ${bottomSection}
+  `;
 
   const container = document.getElementById("footer-container");
   if (container) {
     container.innerHTML = footerHTML;
   }
+
   handleFooterScroll();
 }
+
 function handleFooterScroll() {
   const footerTop = document.querySelector(".footer-top");
   const footerBottom = document.querySelector(".footer-bottom");
@@ -1308,73 +1295,6 @@ function handleFooterScroll() {
 }
 
 window.onload = renderFooter;
-
-function renderFooterOsiguranje() {
-  const footerHTML = `
-<div class="footer-top">
-  <div class="container">
-    <div class="footer-nav">
-    <ul class="nav_list">
-      <li class="nav_item">
-        <a class="h8 nav_link" href="O nama.html">O nama</a>
-      </li>
-      <li><img src="/img/dot.svg"></img></li>
-      <li class="nav_item">
-        <a class="h8 nav_link" href="index.html">Naslovna</a>
-      </li>
-      </ul>
-      </div>
-    <span class="logo-img">
-      <img src="/img/logo.svg" alt="Logo">
-      </span>
-      </div>
-</div>
-    <section class="footer-bottom blue">
-<div class="container">
-  <div class="grid">
-    <div class="box">
-      <div class="column">
-        <p>Usluge nekretnina</p>
-        <h1>Nekretnine</h1>
-      </div>
-    </div>
-    <div class="box">
-      <div class="column">
-        <p>Otkrijte našu ponudu nekretnina. Sigurno dobar odabir.</p>
-        <a class="btn-empty" href="search-filter.html?category=Kuća">
-            <div class="flex-btn">Pogledaj stranicu ZIHER nekretnina<img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
-            </div>
-          </a>
-      </div>
-    </div>
-  </div>
-</div>
-    </section>
-  `;
-
-  const container = document.getElementById("footer-osiguranje-container");
-  if (container) {
-    container.innerHTML = footerHTML;
-  }
-  handleFooterScroll();
-}
-function handleFooterScroll() {
-  const footerTop = document.querySelector(".footer-top");
-  const footerBottom = document.querySelector(".footer-bottom");
-
-  if (!footerTop || !footerBottom) return;
-
-  window.addEventListener("scroll", function () {
-    const footerTopBottomPosition = footerTop.getBoundingClientRect().bottom;
-    if (footerTopBottomPosition <= window.innerHeight + 300) {
-      footerBottom.classList.add("show-footer");
-    } else {
-      footerBottom.classList.remove("show-footer");
-    }
-  });
-}
-
-window.onload = renderFooterOsiguranje;
 //-------------------FOOTER
 
 //initialize on page load
@@ -1388,4 +1308,204 @@ document.addEventListener("DOMContentLoaded", renderHeaderOsiguranje);
 document.addEventListener("DOMContentLoaded", renderContactform);
 document.addEventListener("DOMContentLoaded", renderTeam);
 document.addEventListener("DOMContentLoaded", renderFooter);
-document.addEventListener("DOMContentLoaded", renderFooterOsiguranje);
+
+function init() {
+  switch (global.currentPage) {
+    
+    case "/":
+    case "/landing.html":
+      
+      break;
+    case "/index.html":
+      renderNavBar(navListNekretnineHTML);
+      renderFilterBar();
+      displayLatestNekretnine();
+      renderTeam();
+      renderFooter();
+      break;
+    case "/nekretnina-details.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBar();
+      displayNekretnineDetails();
+      displayLatestNekretnine();
+      renderTeam();
+      renderFooter();
+      break;
+    case "/projekti-details.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBar();
+      displayProjektiDetails();
+      displayLatestProjekti();
+      renderTeam();
+      renderFooter();
+      break;
+    case "/search.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBar();
+      renderSearchResults();
+      search();
+      renderFooter();
+      break;
+      case "/search-projekti.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBarProjekti();
+      searchProjekti();
+      renderFooter();
+      break;
+    case "/search-filter.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBar();
+      renderSearchResults();
+      search();
+      renderFooter();
+      break;
+    case "/nekretnine.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBar();
+      displayAllNekretnine();
+      renderFooter();
+      break;
+    case "/projekti.html":
+      renderNavBar(navListNekretnineHTML);
+      renderSearchBarProjekti();
+      displayProjekti();
+      renderFooter();
+      break;
+    case "/onama.html":
+      renderNavBar(navListNekretnineHTML);
+      renderTeam();
+      renderFooter();
+      break;
+    case "/onama-osiguranje.html":
+      renderNavBar(navListOsiguranjeHTML);
+      renderHeaderOsiguranje();
+      renderTeam();
+      renderFooter();
+      break;
+    case "/osiguranje.html":
+      renderNavBar(navListOsiguranjeHTML);
+      renderHeader();
+      renderTeam();
+      renderFooter();
+      break;
+    case "/kontakt.html":
+      renderNavBar(navListNekretnineHTML);
+      renderHeader();
+      renderContactform();
+      renderTeam();
+      renderFooter();
+      break;
+    case "/kontakt-osiguranje.html":
+      renderNavBar(navListOsiguranjeHTML);
+      renderHeaderOsiguranje();
+      renderContactform();
+      renderTeam();
+      renderFooter();
+      break;
+  }
+
+  highlightActiveLink();
+}
+  
+document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener(
+    "touchstart",
+    function () {
+      document.body.classList.add("no-hover");
+    },
+    { once: true }
+  );
+});
+
+//FORM
+$(document).ready(function () {
+  const $loader = $("#loader").hide();
+  const $messageContainer = $("#messageContainer");
+
+  function applyValidation($form) {
+    const fields = ["name", "surname", "email", "telefon", "message"];
+
+    $form.validate({
+      rules: fields.reduce((acc, field) => {
+        acc[field] = { required: true };
+        if (field === "email") acc[field].email = true;
+        return acc;
+      }, {}),
+      messages: fields.reduce((acc, field) => {
+        acc[field] = `Please enter your ${
+          field === "telefon" ? "phone number" : field
+        }`;
+        return acc;
+      }, {}),
+    });
+
+    $form.ajaxForm({
+      dataType: "json",
+      beforeSubmit: function () {
+        if (!$form.valid()) return false;
+        $loader.show();
+      },
+      success: function () {
+        showMessage("Message sent successfully!", "success");
+      },
+      error: function () {
+        showMessage("Mail failed, try again", "danger");
+      },
+    });
+  }
+
+  function showMessage(message, type) {
+    $loader.hide();
+    $messageContainer
+      .removeClass("alert-success alert-danger")
+      .addClass(`alert-${type}`)
+      .text(message)
+      .show();
+    setTimeout(() => $messageContainer.hide(), 3000);
+  }
+
+  // Only target the form inside the #kontakt section
+  const $kontaktForm = $("#kontakt .form");
+  if ($kontaktForm.length) {
+    applyValidation($kontaktForm);
+    $.data($kontaktForm[0], "validated", true);
+  }
+});
+
+//FORM
+//error alert for search
+function showAlert(message, className = "error") {
+  const alertEl = document.createElement("div");
+  alertEl.classList.add("alert", className);
+  alertEl.appendChild(document.createTextNode(message));
+  document.querySelector("#alert").appendChild(alertEl);
+  setTimeout(() => alertEl.remove(), 3000);
+}
+function addCommasToNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// ACCORDION FUNCTION
+let accordions = document.querySelectorAll(".accordion-wrapper .accordion");
+accordions.forEach((acco) => {
+  acco.addEventListener("click", () => {
+    acco.classList.toggle("active");
+    let content = acco.nextElementSibling;
+    if (content) {
+      if (acco.classList.contains("active")) {
+        content.style.maxHeight = content.scrollHeight + "px";
+      } else {
+        content.style.maxHeight = null;
+      }
+    }
+    accordions.forEach((otherAcco) => {
+      if (otherAcco !== acco && otherAcco.classList.contains("active")) {
+        otherAcco.classList.remove("active");
+        let otherContent = otherAcco.nextElementSibling;
+        if (otherContent) {
+          otherContent.style.maxHeight = null;
+        }
+      }
+    });
+  });
+});

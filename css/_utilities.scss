@@ -63,7 +63,12 @@ $dgreen-color: #005245;
     background: $lblue-color !important;
   }
 }
-
+.link-green:hover{
+color:$dgreen-color!important;
+}
+.pb-48{
+  padding-bottom:48px!important;
+}
 .nav_list-osiguranje .nav_link:hover{
   color: $dgreen-color!important;
 }
@@ -74,6 +79,42 @@ $dgreen-color: #005245;
 .lead-text {
   color: $lblue-color;
 }
+
+.section-search-bar {
+  .search-form {
+    .filter-items {
+      .select-row {
+          display:flex;
+          justify-content: space-between!important;
+          width:100%;
+          .box{
+            .custom-select{
+              max-width:220px;
+            }
+          }
+         
+        } 
+      }
+    }
+ 
+  }
+  .select-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .search-flex {
+    flex: 1;
+   /*  max-width: 50%; */
+  }
+  .box-projekti{
+    justify-content: flex-end;
+  }
+  .flex-end{
+    display:flex;
+    justify-content: flex-end;
+  }
+
 
 small {
   font-size: 15px;
@@ -254,8 +295,8 @@ section {
 }
 
 .sl-wrapper .sl-image img {
-  height: 800px !important;
-  max-width: 800px !important;
+  height: 500px !important;
+  max-width: 100% !important;
   width: 100% !important;
   object-fit: cover;
   margin: 0 auto;
@@ -278,4 +319,12 @@ body.prevent-clicks::before {
 }
 .sl-wrapper {
   z-index: 10000 !important;
+}
+
+
+.sl-wrapper .sl-close {
+  top: 80px!important;
+}
+.sl-counter{
+  top: 80px!important;
 }

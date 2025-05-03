@@ -10,10 +10,7 @@
       "type": "Prodaja",
       "category": "Zemljište",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 1,
-      "pool":false,
-      "parking":true,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
+      "rooms": 1
     },
     {
       "id": "2",
@@ -25,10 +22,7 @@
       "type": "Prodaja",
       "category": "Kuća",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 3,
-      "pool":false,
-      "parking":false,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
+      "rooms": 3
     },
     {
       "id": "3",
@@ -40,12 +34,7 @@
       "type": "Najam",
       "category": "Poslovni Prostor",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 4,
-      "pool":true,
-      "parking":false,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
-
-
+      "rooms": 4
     },
     {
       "id": "4",
@@ -57,10 +46,7 @@
       "type": "Prodaja",
       "category": "Kuća",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
+      "rooms": 2
     },
     {
     "id": "5",
@@ -72,10 +58,7 @@
     "type": "Najam",
     "category": "Kuća",
     "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-    "rooms": 3,
-    "pool":false,
-    "parking":false,
-    "map": "https://www.google.com/maps/search/?api=1&query=Split"
+    "rooms": 3
   },
     {
       "id": "6",
@@ -87,10 +70,7 @@
       "type": "Prodaja",
       "category": "Poslovni Prostor",
       "description": "Spacious modern villa with a private pool.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":true,
-      "parking":true,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
+      "rooms": 2
     },
     {
       "id": "7",
@@ -102,10 +82,7 @@
       "type": "Prodaja",
       "category": "Kuća",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 4,
-      "pool":true,
-      "parking":true,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
+      "rooms": 4
     },
     {
       "id": "8",
@@ -117,10 +94,8 @@
       "type": "Prodaja",
       "category": "Zemljište",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 5,
-      "pool":false,
-      "parking":false,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
+      "rooms": 5
+
     },
     {
       "id": "9",
@@ -132,10 +107,7 @@
       "type": "Prodaja",
       "category": "Kuća",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
+      "rooms": 2
     },
     {
       "id": "10",
@@ -147,11 +119,7 @@
       "type": "Prodaja",
       "category": "Kuća",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 3,
-      "pool":false,
-      "parking":true,
-      "map": "https://www.google.com/maps/search/?api=1&query=Split"
-      
+      "rooms": 3     
     },
     {
       "id": "11",
@@ -163,12 +131,7 @@
       "type": "Najam",
       "category": "Stan",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
-
-
+      "rooms": 2
     },
     {
       "id": "12",
@@ -180,12 +143,7 @@
       "type": "Najam",
       "category": "Stan",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":false,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
-
-
+      "rooms": 2
     },
     {
       "id": "13",
@@ -197,10 +155,7 @@
       "type": "Najam",
       "category": "Stan",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
+      "rooms": 2
     },
     {
       "id": "14",
@@ -212,10 +167,7 @@
       "type": "Prodaja",
       "category": "Stan",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
+      "rooms": 2
     },
     {
       "id": "15",
@@ -227,10 +179,7 @@
       "type": "Prodaja",
       "category": "Stan",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
+      "rooms": 2
     },
     {
       "id": "16",
@@ -242,10 +191,67 @@
       "type": "Prodaja",
       "category": "Stan",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
-      "rooms": 2,
-      "pool":false,
-      "parking":true,
-        "map": "https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Zagreb"
+      "rooms": 2
+    },
+    {
+      "id": "17",
+      "title": "Luxury Apartment",
+      "images": ["./img/zagreb1.webp", "./img/zagreb9.jpg"],
+      "surface": "200",
+      "location": "Zagreb",
+      "price": "150000",
+      "type": "Najam",
+      "category": "Stan",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2
+    },
+    {
+      "id": "18",
+      "title": "Luxury Apartment",
+      "images": ["./img/zagreb3.webp", "./img/zagreb1.webp"],
+      "surface": "200",
+      "location": "Zagreb",
+      "price": "150000",
+      "type": "Prodaja",
+      "category": "Stan",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2
+    },
+    {
+      "id": "19",
+      "title": "Luxury Apartment",
+      "images": ["./img/zagreb5.jpg", "./img/zagreb2.jpg"],
+      "surface": "200",
+      "location": "Zagreb",
+      "price": "150000",
+      "type": "Prodaja",
+      "category": "Stan",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2
+    },
+    {
+      "id": "120",
+      "title": "Luxury Apartment",
+      "images": ["./img/zagreb7.jpg", "./img/zagreb4.jpg"],
+      "surface": "200",
+      "location": "Zagreb",
+      "price": "150000",
+      "type": "Prodaja",
+      "category": "Stan",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2
+    },
+    {
+      "id": "121",
+      "title": "Luxury Apartment",
+      "images": ["./img/zagreb7.jpg", "./img/zagreb4.jpg"],
+      "surface": "200",
+      "location": "Zagreb",
+      "price": "150000",
+      "type": "Prodaja",
+      "category": "Stan",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2
     }
   ],
 
@@ -339,6 +345,93 @@
       "date":"12.1.2026",
       "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
       "location": "Split",
+      "type":"Projekti"
+    }, {
+      "id": "24",
+      "title": "Luxury Zemljište",
+      "images": ["./img/zagreb1.webp", "./img/zagreb6.jpg", "./img/zagreb3.webp", "./img/zagreb8.jpg" ],
+      "surface": "100",
+      "location": "Zagreb",
+      "price": "100000",
+      "category": "Prodaja",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 1,
+       "type":"Projekti"
+    },
+    {
+      "id": "25",
+      "title": "Modern Villa",
+      "images": ["./img/split1.webp", "./img/split2.jpg", "./img/split3.jpeg", "./img/split13.webp"],
+      "surface": "200",
+      "location": "Split",
+      "price": "400000",
+      "category": "Kuća",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 3,
+       "type":"Projekti"
+    },
+    {
+      "id": "26",
+      "title": "Luxury Poslovni Prostor",
+      "images": ["./img/zagreb1.webp", "./img/zagreb2.jpg", "./img/zagreb5.jpg", "./img/zagreb6.jpg"],
+      "surface": "100",
+      "location": "Zagreb",
+      "price": "150000",
+      "category": "Poslovni Prostor",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 4,
+       "type":"Projekti"
+    },
+    {
+      "id": "27",
+      "title": "Modern Villa",
+      "images": ["./img/split4.jpg", "./img/split5.jpg", "./img/split8.jpg"],
+      "surface": "100",
+      "location": "Split",
+      "price": "200000",
+      "category": "Kuća",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2,
+      "type":"Projekti"
+    },
+    {
+    "id": "28",
+    "title": "Modern Villa",
+    "images": ["./img/split6.jpg", "./img/split7.jpg"],
+    "surface": "100",
+    "location": "Split",
+    "price": "300000",
+    "category": "Kuća",
+    "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+    "rooms": 3,
+    "type":"Projekti"
+  },
+    {
+      "id": "29",
+      "title": "Modern Poslovni Prostor",
+      "images": ["./img/split8.jpg", "./img/split9.jpeg"],
+      "surface": "100",
+      "location": "Split",
+      "price": "200000",
+      "category": "Poslovni Prostor",
+      "description": "Spacious modern villa with a private pool.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 2,
+      "pool":true,
+      "parking":true,
+      "type":"Projekti"
+    },
+    {
+      "id": "30",
+      "title": "Modern Villa",
+      "images": ["./img/split10.webp", "./img/split11.webp"],
+      "surface": "500",
+      "location": "Split",
+      "price": "200000",
+      "category": "Kuća",
+      "description": "Spacious modern villa.Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore impedit nobis est repellendus error nihil.",
+      "rooms": 4,
+      "pool":true,
+      "parking":true,
       "type":"Projekti"
     }
       ]

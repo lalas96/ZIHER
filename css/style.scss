@@ -284,7 +284,7 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
     height: 100%;
     width: 100%;
     display: flex;
-    align-items: end;
+    align-items:flex-end;
     p {
       color: set-text-color($white-color);
     }
@@ -350,19 +350,40 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
     max-width:253px;
   }
 }
+.showcase-onama-osiguranje .right-section .content .text{
+  max-width: 378px;
+  p{
+    max-width:100%;
+  }
+}
+.showcase-onama-osiguranje .showcase .container {
+  align-items: center;
+}
+.showcase-onama .container{
+  justify-content: center;
+/*   align-items: center !important; */
+  display: flex;
+  
+}
 .showcase-onama-osiguranje{
   .showcase .container{ 
-  .right-section .content{
-    background:$dgreen-color;
-    color:$white-color;
-    height: 100%;
-    padding: 32px;
-    .text{
-      h4{
-        padding-bottom:16px;
+  .right-section{
+    
+    align-items: flex-end!important;
+    .content{
+      background:$dgreen-color;
+      color:$white-color;
+      height: 100%;
+      padding: 32px;
+      max-width:460px!important;
+      width:100%;
+      .text{
+        h4{
+          padding-bottom:16px;
+        }
       }
     }
-  }
+  } 
 }
 }
 /*---------- HEADER----------- */
@@ -523,6 +544,8 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
     background: rgba(0, 82, 69, 1); 
   }
 }
+
+
 /* LANDING */
 
 /*---------- PONUDA----------- */
@@ -606,6 +629,7 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
     display:flex;
     gap: 16px;
     width: 100%;
+    
   }
   .box:first-child{
     min-width:660px;
@@ -651,6 +675,13 @@ body.osiguranje-page .nav_list-2 .nav_link:hover {
 //SEARCH-RESULTS SA RESULTS HTML
 .search-results{
   padding: 80px 24px;
+}
+.search-results .container{
+  overflow: visible !important;
+}
+.search-results .flex{
+  display:flex;
+  justify-content: space-between;
 }
 //SEARCH-RESULTS SA RESULTS HTML
 /*---------- DROPDOWN ----------- */
@@ -842,11 +873,10 @@ input:-webkit-autofill {
     }
   }
 }
-.section-ponuda .flex,
-.search-results .flex{
+.section-ponuda .flex{
   align-items: center;
   justify-content: space-between;
-  padding-bottom:48px;
+/*   padding-bottom:48px; */
 }
 .section-ponuda .container h1,
 .search-results .container h1{
@@ -875,6 +905,11 @@ letter-spacing:0;
  }
 }
 /*---------- TOP NEKRETNINE----------- */
+.card-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
 .featured-section .flex .text:first-child {
   padding-bottom: 94px;
@@ -924,6 +959,7 @@ letter-spacing:0;
 }
 .featured-section .top-nekretnine {
   height: 100%;
+  
   .card {
     position: relative;
     padding: 0;
@@ -955,6 +991,7 @@ letter-spacing:0;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     border-radius: 8px;
     .card-text{
+    
       .column{
         p{
           padding-bottom:8px;
@@ -1040,7 +1077,7 @@ section.featured-section {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding: 48px 72px;
+  padding: 48px 0px;
   align-items: start;
   gap: 30px;
   .column-info {
@@ -1050,6 +1087,7 @@ section.featured-section {
       justify-content: flex-end;
     }
   }
+ 
   .card-title {
     gap: 8px;
     display: flex;
@@ -1061,7 +1099,7 @@ section.featured-section {
     .flex {
       align-items: center;
       gap: 24px;
-      color: $dgreen-color;
+      color: $lblue-color;
     }
     .column h1:last-child {
       color: $gray-color;
@@ -1114,7 +1152,7 @@ section.featured-section {
       font-size: 13px;
     }
     .long-line {
-      margin: 17px 0;
+      margin: 12px 0;
     }
     .line {
       padding: 4px 0 4px 0;
@@ -1280,7 +1318,7 @@ h5{
   display: flex;
   max-width: 1440px;
   width: 100%;
-  padding: 24px 120px;
+  padding: 24px 0px;
   align-items: flex-start;
   gap: 32px;
   color: $gray-color;
@@ -1484,7 +1522,7 @@ justify-content: center;
 section.contact-team{
   padding-top:120px;
 }
-.contact-team, .contact-team-short {
+.contact-team {
   .grid {
     gap: 80px;
   }
@@ -1521,18 +1559,16 @@ section.contact-team{
     padding-bottom: 80px;
   }
 }
-.contact-team-short{
-  .grid{
-    grid-template-columns: repeat(2,1fr);
-  }
- .box {
-    max-width: 100%;
-  }
- .box:first-child {
-    max-width: 100%;
-    padding-right: 80px;
+
+.kontakt-osiguranje .contact-team {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    .box{
+      max-width:100%;
+    }
   }
 }
+
 .footer-bottom {
   background: $dgreen-color;
   padding: 120px 80px;
@@ -1588,7 +1624,7 @@ section.contact-team{
 .footer-top {
   height: 100%;
   width: 100%;
-  padding: 80px 80px 32px 80px;
+  padding: 48px 24px 48px 24px;
   .container {
     display: flex;
     flex-direction: column;
@@ -1737,7 +1773,11 @@ height: 24px;
     transform: scaleY(0);
   }
 }
-
+.osiguranje-page{
+  .right-section{
+    align-items: center;
+  }
+}
 .osiguranje-grid{
 padding-top:200px;
   .flex{
@@ -1750,6 +1790,11 @@ padding-top:200px;
   .grid{
     gap:80px;
     padding-bottom:80px;
+    .box{
+      h3{
+        padding-bottom:16px;
+      }
+    }
   }
   .btn-blue{
     margin:32px 0px;
