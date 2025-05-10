@@ -1,3 +1,207 @@
+//jedan generate card za sve nekretnine
+function generateCard(nekretnina, isTopNekretnina = false) {
+  const firstImage = nekretnina.images?.[0] || "../images/no-image.jpg";
+
+  return `
+   <a href="nekretnina-details.html?id=${
+     nekretnina.id
+   }" class="card-link-wrapper">
+  <div class="card">
+    <img src="${firstImage}" class="card-img-top" alt="${
+    nekretnina.title
+  }" loading="lazy" />
+    <div class="card-body">
+      <div class="card-text">
+        <small>${nekretnina.type}</small>
+        <h5 class="card-title">${nekretnina.title}</h5>
+        <div class="column"> 
+          <p>${isTopNekretnina ? `${nekretnina.description}` : ""}</p>
+          <div class="flex"> 
+            <small>
+              <img class="icon-img" src="../img/rooms.svg" alt="">
+              ${nekretnina.surface} m²
+            </small>
+            <small> 
+              <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(
+                nekretnina.price
+              )}
+            </small>
+          </div>
+        </div>
+        <div class="long-line"></div>
+        <small>
+          <div class="flex-icon"> 
+            <img class="icon-img" src="../img/place.svg" alt="">
+            <p>${nekretnina.location}</p>
+          </div>
+          ${isTopNekretnina ? `<div class="btn-empty">Vidi Više</div>` : ""}
+        </small>
+      </div>
+    </div>
+  </div>
+</a>
+`;
+}
+function generateTopNekretnineCard(nekretnina, isTopNekretnina = false) {
+  const firstImage = nekretnina.images?.[0] || "../images/no-image.jpg";
+  const link = `nekretnina-details.html?id=${nekretnina.id}`;
+  return `
+  <a href="${link}" class="card card-link-wrapper">
+        <img src="${firstImage}" class="card-img-top" alt="${
+    nekretnina.title
+  }" loading="lazy" />
+
+        <div class="card-body">
+            <div class="card-text">
+                <small>${nekretnina.type}</small>
+                <h5 class="card-title">${nekretnina.title}</h5>
+                <div class="column"> 
+                    <p>${isTopNekretnina ? `${nekretnina.description}` : ""}</p>
+                    <div class="flex"> 
+                       <small>
+                            <img class="icon-img" src="../img/rooms.svg" alt="">
+                            ${nekretnina.surface} m²
+                        </small>
+                        <small> 
+                            <img class="icon-img" src="../img/euro.svg" alt="">${addCommasToNumber(
+                              nekretnina.price
+                            )}
+                        </small>
+                    </div>
+                </div>
+                <div class="long-line"></div>
+                <small>
+                    <div class="flex-icon"> 
+                        <img class="icon-img" src="../img/place.svg" alt="">
+                        <p>${nekretnina.location}</p>
+                    </div>
+                    ${
+                      isTopNekretnina
+                        ? `<span class="btn-empty">Vidi Više</span>`
+                        : ""
+                    }
+                </small>
+            </div>
+        </div>
+    </a>`;
+}
+//Projekti generate card za sve projekte
+function generateProjektiCard(projekat) {
+  const firstImage = projekat.images?.[0] || "./images/no-image.jpg";
+  return `
+    <div class="projekti-card">
+      <a href="projekti-details.html?id=${
+        projekat.id
+      }" class="projekti-card-link">
+             <img src="${firstImage}" class="card-img-top" alt="${
+    projekat.title
+  }"  loading="lazy"/>
+     </a>   
+        <div class="card-body">
+          <div class="card-text">
+            <small>${projekat.type}</small>
+            <h5 class="card-title">${projekat.title}</h5>
+            <div class="column"> 
+              <ul class="card-list">
+                <li><p>Broj nekretnina</p>${projekat.propertyNumber}</li>
+                <li><p>Površina</p>${projekat.surface}</li>
+                <li><p>Cijena</p>${addCommasToNumber(projekat.price)}</li>
+                <li><p>Cijena/m2</p>${addCommasToNumber(
+                  projekat.priceSurface
+                )}</li>
+                <li><p>Datum završetka</p>${projekat.date}</li>
+              </ul>
+              <p class="projekti-description">${projekat.description}</p>
+              <div class="long-line"></div>
+              <div class="flex"> 
+                <small>
+                   <div class="flex-icon"> 
+                        <img class="icon-img" src="../img/place.svg" alt="">
+                        <p>${projekat.location}</p>
+                           </div>
+                </small>
+              </div>
+            </div> 
+          </div> 
+        </div> 
+    </div> 
+  `;
+}
+//TOP-NEKRETNINE
+let startIndex = 0;
+let interval;
+let nekretnine = [];
+
+async function fetchProperties() {
+  try {
+    const response = await fetch("nekretnine.json");
+    const data = await response.json();
+
+    if (!data || !data.estate || data.estate.length === 0) {
+      console.error("No properties found in JSON.");
+      return;
+    }
+    nekretnine = data.estate;
+    topNekretnineCards();
+    startRotation();
+    addHoverListeners();
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+  }
+}
+
+function topNekretnineCards() {
+  for (let i = 0; i < 5; i++) {
+    let cardElement = document.getElementById(`card${i + 1}`);
+    if (!cardElement) continue;
+
+    let nekretnina = nekretnine[(startIndex + i) % nekretnine.length];
+
+    let cardHTML = generateTopNekretnineCard(nekretnina, true);
+    cardElement.style.opacity = 0;
+    setTimeout(() => {
+      cardElement.innerHTML = cardHTML;
+      cardElement.style.opacity = 1;
+    }, 500);
+  }
+  startIndex = (startIndex + 1) % (nekretnine.length - 4);
+}
+
+function startRotation() {
+  interval = setInterval(topNekretnineCards, 6000);
+}
+function stopRotation() {
+  clearInterval(interval);
+}
+
+function addHoverListeners() {
+  for (let i = 1; i <= 5; i++) {
+    let card = document.getElementById(`card${i}`);
+    if (!card) continue;
+    card.addEventListener("mouseenter", stopRotation);
+    card.addEventListener("mouseleave", startRotation);
+
+    card.addEventListener("click", function (e) {
+      if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+        e.stopPropagation();
+
+        card.classList.toggle("active");
+
+        document.querySelectorAll(".grid .card").forEach((c) => {
+          if (c !== card) c.classList.remove("active");
+        });
+      }
+    });
+  }
+  document.addEventListener("click", () => {
+    document
+      .querySelectorAll(".grid .card")
+      .forEach((c) => c.classList.remove("active"));
+  });
+}
+document.addEventListener("DOMContentLoaded", fetchProperties);
+//TOP-NEKRETNINE
+
 function renderPropertyDetails(
   item,
   containerSelector,
@@ -22,10 +226,16 @@ function renderPropertyDetails(
   container.innerHTML = "";
   container.appendChild(div);
 
-  const galleryBtn = container.querySelector(".gallery-btn");
-  if (galleryBtn) {
-    galleryBtn.addEventListener("click", () => {
-      const lightbox = new SimpleLightbox(`a[data-title="${item.title}"]`, {
+  div.addEventListener("click", (e) => {
+    const clickedImageLink = e.target.closest("a[data-title]");
+    const clickedGalleryBtn = e.target.closest(".gallery-btn");
+
+    if (!clickedImageLink && !clickedGalleryBtn) return;
+
+    e.preventDefault();
+
+    if (!lightboxInstance) {
+      lightboxInstance = new SimpleLightbox("a[data-title]", {
         animationSlide: false,
         animationSpeed: 0,
         fadeSpeed: 0,
@@ -33,18 +243,15 @@ function renderPropertyDetails(
         disableScroll: true,
       });
 
-      lightbox.open();
-
-
-      lightbox.on("shown.simplelightbox", () => {
+      lightboxInstance.on("shown.simplelightbox", () => {
         document.body.classList.add("prevent-clicks");
       });
 
-      lightbox.on("closed.simplelightbox", () => {
+      lightboxInstance.on("closed.simplelightbox", () => {
         document.body.classList.remove("prevent-clicks");
       });
 
-      lightbox.on("change.simplelightbox", () => {
+      lightboxInstance.on("change.simplelightbox", () => {
         const waitForImage = () => {
           const img = document.querySelector(".sl-wrapper .sl-image img");
           if (!img) {
@@ -65,8 +272,9 @@ function renderPropertyDetails(
 
         requestAnimationFrame(waitForImage);
       });
-    });
-  }
+    }
+    lightboxInstance.open();
+  });
 
   initializeGalleryLayout();
 }
@@ -97,8 +305,6 @@ function renderTopCard(item) {
             <li><p>Cijena:</p><p>$${addCommasToNumber(item.price)}</p></li>
             <li><p>Površina:</p><p>${item.surface}</p></li>
             <li><p>Broj soba:</p><p>${item.rooms}</p></li>
-            <li><p>Bazen:</p><p>${item.pool ? "Da" : "Ne"}</p></li>
-            <li><p>Parking:</p><p>${item.parking ? "Da" : "Ne"}</p></li>
             <li><p>ID:</p><p>${item.id}</p></li>
           </ul>
         </div>
@@ -170,8 +376,6 @@ function renderMainDetails(item, images, galleryKey) {
             <li><p>Površina:</p><p>${item.surface}</p></li> 
             <li><p>Broj soba:</p><p>${item.rooms}</p></li> 
             <li><p>ID:</p><p>${item.id}</p></li> 
-            <li><p>Bazen:</p><p>${item.pool ? "Da" : "Ne"}</p></li> 
-            <li><p>Parking:</p><p>${item.parking ? "Da" : "Ne"}</p></li> 
           </ul>
         </div>
       </div>
@@ -180,6 +384,7 @@ function renderMainDetails(item, images, galleryKey) {
     </div>
   `;
 }
+let lightboxInstance = null;
 
 async function displayNekretnineDetails() {
   const id = new URLSearchParams(window.location.search).get("id");
@@ -234,7 +439,6 @@ function initializeGalleryLayout() {
     remainingImages[remainingImages.length - 1].classList.add("stretch-span-2");
   }
 
-  //  stretch the last image
   if (remainingImages.length === 4 || remainingImages.length === 5) {
     remainingImages[remainingImages.length - 1].classList.add("stretch-span-1");
   }
@@ -243,17 +447,7 @@ function initializeGalleryLayout() {
 //NAVIGATION  START
 
 const logoSVG = `
-  <svg width="131" height="30" viewBox="0 0 131 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M94.6477 15.4974V14.9991V14.7847V13.8482V13.7353V13.237H84.416V0.5H74.9629V0.712503L76.5162 2.8883V27.1098L74.9629 29.2837V29.4981H84.416V15.4974H94.6477Z" fill="#231F20"/>
-    <path d="M87.7656 28.2604V29.4978H95.8786L99.7562 19.0664H98.8615L87.7656 28.2604Z" fill="#231F20"/>
-    <path d="M98.5898 10.3729L95.3595 0.5H87.5605V1.76373L97.6761 10.3729H98.5898Z" fill="#231F20"/>
-    <path d="M29.0762 0.712503L30.6295 2.8883V27.1098L29.0762 29.2856V29.4981H40.0826V29.2856L38.5293 27.1098V2.8883L40.0826 0.712503V0.5H29.0762V0.712503Z" fill="#231F20"/>
-    <path d="M60.847 0.712503L62.4004 2.8883V13.237H52.6445V2.8883L54.1979 0.712503V0.5H43.1914V0.712503L44.7447 2.8883V27.1098L43.1914 29.2856V29.4981H54.1979V29.2856L52.6445 27.1098V15.4974H62.4004V27.1098L60.847 29.2856V29.4981H71.8535V29.2856L70.3002 27.1098V2.8883L71.8535 0.712503V0.5H60.847V0.712503Z" fill="#231F20"/>
-    <path d="M25.7268 0.5H16.0147V1.76373L0 29.1145V29.4981H9.6968V28.2607L25.7268 0.883634V0.5Z" fill="#231F20"/>
-    <path d="M14 28.2604V29.4978H22.172L26.3485 19.0664H25.4538L14 28.2604Z" fill="#231F20"/>
-    <path d="M11.7046 1.76373V0.5H3.77999L0.730469 10.3767H1.64609L11.7046 1.76373Z" fill="#231F20"/>
-    <path d="M121.588 15.9375C125.818 14.828 128.149 12.3363 128.149 9.05282C128.149 4.78773 124.135 0.501953 116.797 0.501953H101.629V0.714456L103.184 2.89025V27.1118L101.629 29.2857V29.4982H112.637V29.2857L111.084 27.1118V2.76238H114.467C118.135 2.76238 119.517 4.87424 119.517 9.35183C119.517 13.5737 118.093 15.5558 114.64 15.5558H113.128V16.4942L122.108 29.5001H130.999V29.3722L121.588 15.9394V15.9375Z" fill="#231F20"/>
-  </svg>
+<img class="logo-nav" src="img/logo.png" alt="Logo">
 `;
 
 function generateDropdownHTML() {
@@ -279,17 +473,26 @@ function generateDropdownHTML() {
     optionsHTML += `<option value="osiguranje.html">Osiguranje</option>`;
   }
 
-  const dropdownStyle = (path.includes("osiguranje.html") || path.includes("onama-osiguranje.html") || path.includes("kontakt-osiguranje.html"))
-    ? 'style="background-color:#005245;"' 
-    : '';
+  const dropdownStyle =
+    path.includes("osiguranje.html") ||
+    path.includes("onama-osiguranje.html") ||
+    path.includes("kontakt-osiguranje.html")
+      ? 'style="background-color:#005245;"'
+      : "";
 
-    return `
-    <div class="custom-select ${path.includes("osiguranje") ? 'osiguranje-page' : ''}" ${dropdownStyle}>
+  return `
+    <div class="custom-select ${
+      path.includes("osiguranje") ? "osiguranje-page" : ""
+    }" ${dropdownStyle}>
       <small>${currentLabel}</small>
       <select name="${name}" id="${id}">
         <option value="" selected hidden></option>
         ${optionsHTML}
       </select>
+      <div class="select-selected">Select Category</div>
+      <div class="select-items select-hide">
+        ${optionsHTML}
+      </div>
       <div class="arrow">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5 7.5L10 12.5L15 7.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -298,19 +501,20 @@ function generateDropdownHTML() {
     </div>
   `;
 }
+
 const mobileToggleHTML = `
 <div class="mobile-menu-toggle" onclick="toggleNav()">
   <div class="hamburger">
 
-   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <mask id="mask0_755_4936" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
-    <rect width="40" height="40" fill="#D9D9D9"/>
-  </mask>
-  <g mask="url(#mask0_755_4936)">
+<div class="menu-toggle" onclick="this.classList.toggle('open')">
+  <svg class="icon icon-menu" viewBox="0 0 40 40" width="40" height="40">
     <path d="M6.6665 28.7821V27.1154H33.3332V28.7821H6.6665ZM6.6665 20.8333V19.1666H33.3332V20.8333H6.6665ZM6.6665 12.8846V11.2179H33.3332V12.8846H6.6665Z" fill="#1B1B1B"/>
-  </g>
-</svg>
+  </svg>
 
+ <svg class="icon icon-close" viewBox="0 0 40 40" width="40" height="40">
+    <path d="M10.6669 30.5129L9.4873 29.3333L18.8206 20L9.4873 10.6667L10.6669 9.48709L20.0002 18.8204L29.3336 9.48709L30.5131 10.6667L21.1798 20L30.5131 29.3333L29.3336 30.5129L20.0002 21.1796L10.6669 30.5129Z" fill="#1B1B1B"/>
+  </svg>
+</div>
   </div>
 </div>
 `;
@@ -379,8 +583,6 @@ function renderNavBar(navListHTML) {
   const container = document.getElementById("navbar-container");
   if (container) {
     container.innerHTML = navBarHTML;
-  } else {
-    console.warn("Navbar container not found!");
   }
   initializeCustomSelects();
   attachDropdownEvents();
@@ -389,7 +591,16 @@ function renderNavBar(navListHTML) {
     .getElementById("category-select")
     .addEventListener("change", function () {
       const url = this.value;
-      window.location.href = url;
+
+      const dropdown = this.closest(".custom-select");
+      if (dropdown) {
+        dropdown.style.visibility = "hidden";
+      }
+      document.body.classList.add("fade-out");
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 10);
     });
 }
 document.addEventListener("DOMContentLoaded", function () {
@@ -403,44 +614,61 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("osiguranje-page");
     logoHTML = `<a href="osiguranje.html" class="logo">${logoSVG}</a>`;
     renderNavBar(navListOsiguranjeHTML);
-    
   } else {
     logoHTML = `<a href="index.html" class="logo">${logoSVG}</a>`;
     renderNavBar(navListNekretnineHTML);
   }
 });
 function attachDropdownEvents() {
-  const dropdown = document.querySelector(".dropdown");
-  const dropdownBtn = document.querySelector(".dropdown-btn");
+  const dropdown = document.querySelector(".custom-select");
+  const dropdownBtn = dropdown ? dropdown.querySelector(".arrow") : null;
 
   if (dropdown && dropdownBtn) {
     dropdownBtn.addEventListener("click", function (event) {
-      dropdown.classList.toggle("show");
       event.stopPropagation();
+
+      const optionsContainer = dropdown.querySelector(".select-items");
+      if (optionsContainer) {
+        optionsContainer.classList.toggle("select-hide");
+      }
+
+      dropdown.classList.toggle("select-arrow-active");
     });
 
     document.addEventListener("click", function (event) {
       if (!dropdown.contains(event.target)) {
-        dropdown.classList.remove("show");
+        const optionsContainer = dropdown.querySelector(".select-items");
+        if (optionsContainer) {
+          optionsContainer.classList.add("select-hide");
+        }
+        dropdown.classList.remove("select-arrow-active");
       }
     });
-  } else {
-    console.warn("Dropdown or Dropdown button not found!");
   }
 }
 // Toggle mobile
 window.toggleNav = () => {
   const navOverlay = document.getElementById("toggleMobileNav");
+  const menuToggle = document.querySelector(".menu-toggle");
   if (!navOverlay) return;
+
   const isOpen = navOverlay.style.height === "100%";
   navOverlay.style.height = isOpen ? "0%" : "100%";
   document.body.classList.toggle("no-scroll", !isOpen);
+
+  if (menuToggle) {
+    menuToggle.classList.toggle("open", !isOpen);
+  }
 };
 function closeNav() {
   const navOverlay = document.getElementById("toggleMobileNav");
+  const menuToggle = document.querySelector(".menu-toggle");
   if (navOverlay) {
     navOverlay.style.height = "0%";
     document.body.classList.remove("no-scroll");
+  }
+  if (menuToggle) {
+    menuToggle.classList.remove("open");
   }
 }
 document.addEventListener("click", function (event) {
@@ -451,12 +679,42 @@ document.addEventListener("click", function (event) {
   const isInsideOverlay = event.target.closest("#toggleMobileNav");
   const isOverlayOpen = navOverlay.style.height === "100%";
 
-  // If overlay is open, click is inside overlay, and not on a link — close it
   if (isOverlayOpen && isInsideOverlay && !isLink) {
     closeNav();
   }
 });
-//highlight active link
+
+function toggleDropdown(selectWrapper) {
+  const selected = selectWrapper.querySelector(".select-selected");
+  const optionsContainer = selectWrapper.querySelector(".select-items");
+
+  closeAllSelect(selectWrapper);
+
+  optionsContainer.classList.toggle("select-hide");
+
+  selected.classList.toggle("select-arrow-active");
+
+  const customSelect = selectWrapper.closest(".custom-select");
+  if (customSelect) {
+    customSelect.classList.toggle("open");
+  }
+}
+
+function closeAllSelect(current) {
+  const customSelects = document.querySelectorAll(".custom-select");
+
+  customSelects.forEach((selectWrapper) => {
+    const selected = selectWrapper.querySelector(".select-selected");
+    const optionsContainer = selectWrapper.querySelector(".select-items");
+
+    if (current !== selectWrapper) {
+      selected.classList.remove("select-arrow-active");
+      optionsContainer.classList.add("select-hide");
+      selectWrapper.classList.remove("open");
+    }
+  });
+}
+
 function highlightActiveLink() {
   const links = document.querySelectorAll(".nav_link");
   links.forEach((link) => {
@@ -467,21 +725,20 @@ function highlightActiveLink() {
 }
 //NAVIGATION END
 function renderHeader() {
-  // Default heading
-  let headingText = `Sigurno<br> dobar <span class="lead-text">odabir</span>.`;
+  let headingText = `100%<br> dobar <span class="lead-text">odabir</span>.`;
   let paragraphText = `<strong>ZIHER</strong> agencija za nekretnine koja razumije vaš budući život.`;
 
   const path = window.location.pathname.toLowerCase();
 
-  if (path.includes("nekretnine.html")) {
-    headingText = `Potraži svoju idealnu <span class="lead-text">nekretninu</span>.`;
-    paragraphText = `Pronađi svoj prostor iz snova. Pronađi svoj novi dom. Pronađi idealnu nekretninu.`;
+  if (path.includes("nekretnine.html") || path.includes("projekti.html")) {
+    headingText = `Potražite idealnu <span class="lead-text">nekretninu</span>.`;
+    paragraphText = `<strong>ZIHER</strong> agencija za nekretnine koja razumije vaš budući život.`;
   } else if (path.includes("kuce")) {
     headingText = `Nova<br>kuća je <span class="lead-text">blizu</span>.`;
   } else if (path.includes("zemljiste")) {
-    headingText = `Nađi savršeno<br><span class="lead-text">zemljište</span>.`;
+    headingText = `Pronađite savršeno<br><span class="lead-text">zemljište</span>.`;
   } else if (path.includes("kontakt")) {
-    headingText = `Javi nam se,<br>tu smo <span class="lead-text">za tebe</span>.`;
+    headingText = `Javi nam se,<br>tu smo <span class="lead-text">za vas</span>.`;
   }
 
   const headerHTML = `
@@ -514,35 +771,7 @@ function renderHeader() {
   }
 }
 
-function renderHeaderOsiguranje() {
-  const headerHTML = `
-  <header class="showcase-osiguranje">
-  <div class="showcase">
-  <div class="container">
-  <div class="left-section">
-  <div class="content">
-  <h3>Što vam nudimo</h3>
-  <h1>Posrednik u osiguranju.</h1>
-  </div>
-  </div>
-  <div class="right-section">
-  <div class="content">
-  <div class="text">
-  <p>ZIHER najbolja agencija za traženje kuća i stanova za vaš budući život!
-  </p>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </header>
-  `;
 
-  const container = document.getElementById("header-osiguranje-container");
-  if (container) {
-    container.innerHTML = headerHTML;
-  }
-}
 function renderHeaderContact() {
   const headerHTML = `
   <header class="showcase-osiguranje">
@@ -618,7 +847,7 @@ function renderSearchBarProjekti() {
               <div class="select-row">
                  <div class="search-flex">
                 <div class="flex-location-icon">
-                  <img src="/img//locationblue.svg" alt="">
+                  <img src="/img/locationblue.svg" alt="">
                   <small>Lokacija</small>
                   <input type="text" placeholder="Koju lokaciju tražite?" name="search-term" id="search-term" />
                 </div>
@@ -628,7 +857,7 @@ function renderSearchBarProjekti() {
                     <div class="flex-end">
               <button class="btn" type="submit">
                   <div class="flex">
-                    <i class="fas fa-search"></i>
+                     <img src="/img/search.svg" alt="">
                     <h5>Pretraži</h5>
                   </div>
                 </button>
@@ -731,7 +960,7 @@ function renderSearchBar() {
                 </div>
                 <button class="btn" type="submit">
                   <div class="flex">
-                    <i class="fas fa-search"></i>
+                       <img src="/img/search.svg" alt="">
                     <h5>Pretraži</h5>
                   </div>
                 </button>
@@ -772,7 +1001,7 @@ function createSelect({ label, name, id, options }) {
       </select>
       <div class="arrow">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#026451"/>
+          <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#004f96"/>
         </svg>
       </div>
     </div>
@@ -785,7 +1014,6 @@ function initializeCustomSelects() {
   customSelects.forEach((selectWrapper) => {
     const select = selectWrapper.querySelector("select");
 
-    // Cleanup previous custom elements if they exist
     selectWrapper
       .querySelectorAll(".select-selected, .select-items")
       .forEach((el) => el.remove());
@@ -798,7 +1026,7 @@ function initializeCustomSelects() {
     optionsContainer.className = "select-items select-hide";
 
     function renderOptions(excludeIndex) {
-      optionsContainer.innerHTML = ""; // Clear old options
+      optionsContainer.innerHTML = "";
 
       Array.from(select.options).forEach((option, index) => {
         if (index !== excludeIndex) {
@@ -809,11 +1037,10 @@ function initializeCustomSelects() {
             select.selectedIndex = index;
             selected.textContent = option.textContent;
 
-            // Re-render options excluding the new selection
             renderOptions(index);
 
             select.dispatchEvent(new Event("change"));
-            selected.click(); // Close dropdown
+            selected.click();
           });
 
           optionsContainer.appendChild(optionDiv);
@@ -825,36 +1052,33 @@ function initializeCustomSelects() {
 
     selected.addEventListener("click", (e) => {
       e.stopPropagation();
-      closeAllSelect(selected);
-      optionsContainer.classList.toggle("select-hide");
-      selected.classList.toggle("select-arrow-active");
+      toggleDropdown(selectWrapper);
+    });
+
+    const arrow = selectWrapper.querySelector(".arrow");
+    arrow.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleDropdown(selectWrapper);
     });
 
     selectWrapper.appendChild(selected);
     selectWrapper.appendChild(optionsContainer);
   });
 
-  document.addEventListener("click", closeAllSelect);
-}
-
-function closeAllSelect(current) {
-  document.querySelectorAll(".select-selected").forEach((el) => {
-    if (el !== current) el.classList.remove("select-arrow-active");
-  });
-
-  document.querySelectorAll(".select-items").forEach((el) => {
-    if (!el.previousSibling || el.previousSibling !== current) {
-      el.classList.add("select-hide");
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".custom-select")) {
+      closeAllSelect();
     }
   });
 }
+
 //------------------------------------------------------------------------SEARCHBAR END
 //------------------------------------------------------------------------FILTERHBAR
 function renderFilterBar() {
   const filterBarHTML = `
      <section class="section-filter-bar">
           <div class="container">
-          <p>Reci nam što tražiš</p>
+          <p>Recite nam što tražite</p>
           <div class="filter-bar">
             <form id="filter-form" class="filter-form">
               <div class="filter-group">
@@ -868,7 +1092,7 @@ function renderFilterBar() {
                 </select>
                    <div class="arrow">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#026451"/>
+                    <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#004f96"/>
                     </svg>
                     </div>
                     </div>
@@ -880,7 +1104,7 @@ function renderFilterBar() {
                 </select>
                    <div class="arrow">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#026451"/>
+                  <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#004f96"/>
                   </svg>
                   </div>
                 </div>
@@ -892,7 +1116,7 @@ function renderFilterBar() {
                 </select>
                 <div class="arrow">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#026451"/>
+                  <path d="M3.75 7.5L10 13.75L16.25 7.5H3.75Z" fill="#004f96"/>
                   </svg>
                 </div>
                 </div>
@@ -901,7 +1125,7 @@ function renderFilterBar() {
             <div id="propertyGrid" class="grid"></div>
             <div class="flex-total">
             <p>Imamo preko <span class="lead-text total-number"></span> <span class="lead-text">nekretnina</span> za život u našoj bazi podataka</p>
-              <button class="flex-btn" type="submit">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
+              <button class="flex-btn btn-empty" type="submit">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
               </button>
               </form>
           </div>
@@ -912,7 +1136,7 @@ function renderFilterBar() {
       <div class="grid">
         <div class="box">
           <h3>Kuće</h3>
-          <p>Pronađi savršen dom za svoj životni stil.</p>
+          <p>Pronađite savršen dom za vaš životni stil.</p>
           <a class="btn-empty" href="search-filter.html?category=Ku%C4%87a">
             <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
             </div>
@@ -920,7 +1144,7 @@ function renderFilterBar() {
         </div>
         <div class="box">
           <h3>Stanovi</h3>
-          <p>Stanovi koji odgovaraju tvojim željama i potrebama.</p>
+          <p>Stanovi koji odgovaraju vašim željama i potrebama.</p>
           <a class="btn-empty" href="search-filter.html?category=Stan">
             <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
             </div>
@@ -928,15 +1152,15 @@ function renderFilterBar() {
         </div>
         <div class="box">
           <h3>Zemljišta</h3>
-          <p>Zemljišta s potencijalom za tvoju budućnost.</p>
+          <p>Zemljišta s potencijalom za vašu budućnost.</p>
           <a class="btn-empty" href="search-filter.html?category=Zemlji%C5%A1te">
             <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
             </div>
           </a>
         </div>
         <div class="box">
-          <h3>Projekti</h3>
-          <p>Pronađite svoj idealan stan u kvalitetnim stambenim projektima.</p>
+          <h3>Poslovni prostori</h3>
+          <p>Pronađite vaš idealan poslovni prostor.</p>
           <a class="btn-empty" href="search-filter.html?category=Poslovni+Prostor">
             <div class="flex-btn">Vidi sve<img class="icon-img" src="../img/arrowblack.png" alt="arrow">
             </div>
@@ -951,7 +1175,6 @@ function renderFilterBar() {
   if (container) {
     container.innerHTML = filterBarHTML;
 
-    // Add event listeners after rendering the filter bar
     const typeSelect = document.getElementById("filter-type");
     const categorySelect = document.getElementById("filter-category");
     const locationSelect = document.getElementById("filter-location");
@@ -987,7 +1210,7 @@ function renderSearchResults() {
       <div class="flex pb-48">
         <h1>Rezultati pretraživanja</h1>
         <div class="flex-total">
-          <p>Imamo preko <span class="lead-text total-number"></span> <span class="lead-text">nekretnina</span>  za tebe</p>
+          <p>Imamo preko <span class="lead-text total-number"></span> <span class="lead-text">nekretnina</span>  za vas</p>
         </div>
       </div>
     <div id="search-results" class="grid"></div>
@@ -999,7 +1222,6 @@ function renderSearchResults() {
     container.innerHTML = SearchResultsHTML;
     initializeCustomSelects();
   }
-
 }
 //------------------------------------------------------------------------SEARCHRESULTS END
 function displayFilteredHomepageCards() {
@@ -1035,38 +1257,45 @@ function displayFilteredHomepageCards() {
   });
 }
 //-------------------TEAM
-function renderTeam({ containerId = "contact-team-container", showEmail = true, showQuery = true } = {}) {
-  const currentPage = window.location.pathname;
+function renderTeam({
+  containerId = "contact-team-container",
+  showEmail = true,
+  showQuery = true,
+} = {}) {
+  const currentPage = window.location.pathname.split("/").pop();
 
-  const isOsiguranje = currentPage.includes("osiguranje.html");
-  const isKontaktOsiguranje = currentPage.includes("kontakt-osiguranje.html");
+  const isKontakt = currentPage === "kontakt.html";
+  const isKontaktOsiguranje = currentPage === "kontakt-osiguranje.html";
 
-  if (isKontaktOsiguranje) {
+  if (isKontakt || isKontaktOsiguranje) {
     showQuery = false;
     showEmail = true;
   }
 
-  const heading = isOsiguranje ? "Kontaktiraj nas!" : "Obrati nam se s povjerenjem!";
-  const queryText = isOsiguranje
-    ? "Nisi siguran koje osiguranje ti treba? Piši nam preko weba – zajedno ćemo pronaći najbolje osiguranje za tebe."
-    : "Nisi siguran odakle krenuti? Piši nam preko našeg weba – zajedno ćemo naći pravi prostor za tebe.";
+  const heading = isKontaktOsiguranje
+    ? "Kontaktiraj nas!"
+    : "Obratite nam se s povjerenjem!";
 
-  const btnClass = isOsiguranje ? "btn btn-green" : "btn btn-primary";
+  const queryText = isKontaktOsiguranje
+    ? "Niste sigurni koje osiguranje vam treba? Pišite nam preko weba – zajedno ćemo pronaći najbolje osiguranje za vas."
+    : "Niste sigurni odakle krenuti? Pišite nam preko našeg weba – zajedno ćemo naći pravi prostor za vas.";
+
+  const btnClass = isKontaktOsiguranje ? "btn btn-green" : "btn btn-primary";
 
   let boxes = "";
   if (showQuery) {
     boxes += `
       <div class="box">
-        <h3>Pošalji upit</h3>
+        <h3>Pošaljite upit</h3>
         <p id="contact-query-text">${queryText}</p>
-        <a class="${btnClass}" href="kontakt.html">Pošalji upit</a>
+        <a class="${btnClass}" href="kontakt.html">Pošaljite upit</a>
       </div>
     `;
   }
   boxes += `
     <div class="box">
-      <h3>Nazovi nas</h3>
-      <p>Slobodno nas nazovi tijekom radnog vremena. <br>PON – SUB (08:00 – 20:00). Rado ćemo odgovoriti na sva tvoja pitanja.</p>
+      <h3>Nazovite nas</h3>
+      <p>Slobodno nas nazovite tijekom radnog vremena. PON – SUB (08:00 – 20:00). Rado ćemo odgovoriti na sva vaša pitanja.</p>
       <a class="btn-empty" href="tel:+385 98 359 876">
         <div class="flex-btn">
           +385 98 359 876
@@ -1078,8 +1307,8 @@ function renderTeam({ containerId = "contact-team-container", showEmail = true, 
   if (showEmail) {
     boxes += `
       <div class="box">
-        <h3>Pošalji e-mail</h3>
-        <p>Nema potrebe za ispunjavanjem obrazaca. Skoči na svoj e-mail i pošalji nam što god trebaš. Tu smo da pomognemo.</p>
+        <h3>Pošaljite e-mail</h3>
+        <p>Nema potrebe za ispunjavanjem obrazaca. Skočite na vaš e-mail i pošaljite nam što god trebate. Tu smo da pomognemo.</p>
         <a class="btn-empty" href="mailto:ivor@ziher-partner.hr">
           <div class="flex-btn">
             ivor@ziher-partner.hr
@@ -1115,6 +1344,10 @@ function renderContactform() {
 
   const buttonClass = isOsiguranjePage ? "btn-green" : "btn-blue";
 
+  const imageSrc = isOsiguranjePage
+    ? "img/sloganzelena.png"
+    : "img/sloganplava.png";
+
   const TeamHTML = `
     <div class="container">
       <div class="grid">
@@ -1145,7 +1378,7 @@ function renderContactform() {
                   </div>
                 </div>
                 <div class="input-data">
-                  <input type="submit" class="${buttonClass}" value="Pošalji Upit!" name="submit">
+                  <input type="submit" class="${buttonClass}" value="Pošaljite upit" name="submit">
                 </div>
               </form>
             </div>
@@ -1153,7 +1386,7 @@ function renderContactform() {
         </div>
         <div class="column">
           <div class="content">
-            <img src="img/ZIHER - kontakt - nekretnine - osiguranja.webp" alt="">
+        <img src="${imageSrc}" alt="Kontakt Slogan">
           </div>
         </div>
       </div>
@@ -1174,7 +1407,7 @@ function renderFooter() {
 
   const topNavLinks = isOsiguranje
     ? `
-      <ul class="nav_list">
+      <ul class="nav_list osiguranje-nav">
         <li class="nav_item">
           <a class="h8 nav_link" href="O nama.html">O nama</a>
         </li>
@@ -1206,55 +1439,43 @@ function renderFooter() {
         </li>
       </ul>`;
 
-  const bottomSection = isOsiguranje
-    ? `
-      <section class="footer-bottom blue">
-        <div class="container">
-          <div class="grid">
-            <div class="box">
-              <div class="column">
-                <p>Usluge nekretnina</p>
-                <h1>Nekretnine</h1>
-              </div>
+  const bottomSectionContent = isOsiguranje
+    ? {
+        title: "Nekretnine",
+        description: "Otkrijte našu ponudu nekretnina. Sigurno dobar odabir.",
+        buttonText: "Pogledajte stranicu ZIHER nekretnina",
+        link: "nekretnine.html",
+      }
+    : {
+        title: "Osiguranje",
+        description:
+          "Otkrijte našu ponudu osiguranja. Pametan korak za bolju budućnost.",
+        buttonText: "Pogledajte stranicu ZIHER osiguranje",
+        link: "osiguranje.html",
+      };
+
+  const bottomSection = `
+    <section class="footer-bottom ${isOsiguranje ? "blue" : ""}">
+      <div class="container">
+        <div class="grid">
+          <div class="box">
+            <div class="column">
+              <h1>${bottomSectionContent.title}</h1>
             </div>
-            <div class="box">
-              <div class="column">
-                <h3 class="h8">Pronađi nekretninu</h3>
-                <p>Otkrijte našu ponudu nekretnina. Sigurno dobar odabir.</p>
-                <a class="btn-empty" href="nekretnine.html">
-                  <div class="flex-btn">Pogledaj stranicu ZIHER nekretnina
-                    <img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
-                  </div>
-                </a>
-              </div>
+          </div>
+          <div class="box">
+            <div class="column">
+              <p>${bottomSectionContent.description}</p>
+              <a class="btn-empty" href="${bottomSectionContent.link}">
+                <div class="flex-btn">${bottomSectionContent.buttonText}
+                  <img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
+                </div>
+              </a>
             </div>
           </div>
         </div>
-      </section>`
-    : `
-      <section class="footer-bottom">
-        <div class="container">
-          <div class="grid">
-            <div class="box">
-              <div class="column">
-                <p>Usluge osiguranja</p>
-                <h1>Osiguranje</h1>
-              </div>
-            </div>
-            <div class="box">
-              <div class="column">
-                <h3 class="h8">Osiguraj se</h3>
-                <p>Otkrijte našu ponudu osiguranja. Pametan korak za bolju budućnost.</p>
-                <a class="btn-empty" href="osiguranje.html">
-                  <div class="flex">Pogledaj stranicu ZIHER osiguranje
-                    <img class="icon-img" src="../img/arrowwhite.png" alt="arrow">
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>`;
+      </div>
+    </section>`;
 
   const footerHTML = `
     <div class="footer-top">
@@ -1265,6 +1486,14 @@ function renderFooter() {
         <span class="logo-img">
           <img src="/img/logo.svg" alt="Logo">
         </span>
+         <div class="flex">
+         <p>© 2025 ZIHER</p>
+         <ul>
+          <li class="nav_item">
+          <a class="nav_link" href="">Pravila privatnosti</a>
+        </li>
+      </ul>
+      </div>
       </div>
     </div>
     ${bottomSection}
@@ -1297,24 +1526,20 @@ function handleFooterScroll() {
 window.onload = renderFooter;
 //-------------------FOOTER
 
-//initialize on page load
 document.addEventListener("DOMContentLoaded", renderNavBar);
 document.addEventListener("DOMContentLoaded", renderSearchBar);
 document.addEventListener("DOMContentLoaded", renderFilterBar);
 document.addEventListener("DOMContentLoaded", renderSearchResults);
 document.addEventListener("DOMContentLoaded", renderSearchBarProjekti);
 document.addEventListener("DOMContentLoaded", renderHeader);
-document.addEventListener("DOMContentLoaded", renderHeaderOsiguranje);
 document.addEventListener("DOMContentLoaded", renderContactform);
 document.addEventListener("DOMContentLoaded", renderTeam);
 document.addEventListener("DOMContentLoaded", renderFooter);
 
 function init() {
   switch (global.currentPage) {
-    
     case "/":
     case "/landing.html":
-      
       break;
     case "/index.html":
       renderNavBar(navListNekretnineHTML);
@@ -1346,7 +1571,7 @@ function init() {
       search();
       renderFooter();
       break;
-      case "/search-projekti.html":
+    case "/search-projekti.html":
       renderNavBar(navListNekretnineHTML);
       renderSearchBarProjekti();
       searchProjekti();
@@ -1363,12 +1588,14 @@ function init() {
       renderNavBar(navListNekretnineHTML);
       renderSearchBar();
       displayAllNekretnine();
+      renderTeam();
       renderFooter();
       break;
     case "/projekti.html":
       renderNavBar(navListNekretnineHTML);
       renderSearchBarProjekti();
       displayProjekti();
+      renderTeam();
       renderFooter();
       break;
     case "/onama.html":
@@ -1378,7 +1605,6 @@ function init() {
       break;
     case "/onama-osiguranje.html":
       renderNavBar(navListOsiguranjeHTML);
-      renderHeaderOsiguranje();
       renderTeam();
       renderFooter();
       break;
@@ -1397,7 +1623,6 @@ function init() {
       break;
     case "/kontakt-osiguranje.html":
       renderNavBar(navListOsiguranjeHTML);
-      renderHeaderOsiguranje();
       renderContactform();
       renderTeam();
       renderFooter();
@@ -1406,7 +1631,7 @@ function init() {
 
   highlightActiveLink();
 }
-  
+
 document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener(
     "touchstart",
@@ -1464,7 +1689,6 @@ $(document).ready(function () {
     setTimeout(() => $messageContainer.hide(), 3000);
   }
 
-  // Only target the form inside the #kontakt section
   const $kontaktForm = $("#kontakt .form");
   if ($kontaktForm.length) {
     applyValidation($kontaktForm);
@@ -1473,7 +1697,6 @@ $(document).ready(function () {
 });
 
 //FORM
-//error alert for search
 function showAlert(message, className = "error") {
   const alertEl = document.createElement("div");
   alertEl.classList.add("alert", className);
@@ -1485,7 +1708,7 @@ function addCommasToNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-// ACCORDION FUNCTION
+// ACCORDION
 let accordions = document.querySelectorAll(".accordion-wrapper .accordion");
 accordions.forEach((acco) => {
   acco.addEventListener("click", () => {
