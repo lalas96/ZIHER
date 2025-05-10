@@ -525,11 +525,17 @@ function changePage(newPage, containerId, filterType) {
     "surface",
   ].some((param) => global.search[param]);
 
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({ top: 400, behavior: "smooth" });
+    }, 100); 
+  };
+
   if (hasSearchParams) {
     if (global.currentPage.includes("projekti")) {
-      searchProjekti();
+      searchProjekti().then(scrollToTop);
     } else {
-      search();
+      search().then(scrollToTop);
     }
   } else {
     fetchLocalData().then((data) => {
@@ -543,12 +549,11 @@ function changePage(newPage, containerId, filterType) {
           newPage,
           false,
           generateProjektiCard
-        );
+        ).then(scrollToTop);
       } else {
-        createCards({ estate: data.estate }, containerId, filterType, newPage);
+        createCards({ estate: data.estate }, containerId, filterType, newPage)
+          .then(scrollToTop);
       }
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 }
@@ -625,6 +630,8 @@ function displayPagination(
   goButton.addEventListener("click", () => {
     const selectedPage = parseInt(selectedPageDiv.dataset.value, 10);
     changePage(selectedPage, containerId, filterType);
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
   const pageInfo = document.createElement("span");

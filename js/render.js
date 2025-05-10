@@ -1266,6 +1266,8 @@ function renderTeam({
 
   const isKontakt = currentPage === "kontakt.html";
   const isKontaktOsiguranje = currentPage === "kontakt-osiguranje.html";
+  const isOsiguranje = currentPage === "osiguranje.html";
+  const isOnamaOsiguranje = currentPage === "onama-osiguranje.html";
 
   if (isKontakt || isKontaktOsiguranje) {
     showQuery = false;
@@ -1280,7 +1282,8 @@ function renderTeam({
     ? "Niste sigurni koje osiguranje vam treba? Pišite nam preko weba – zajedno ćemo pronaći najbolje osiguranje za vas."
     : "Niste sigurni odakle krenuti? Pišite nam preko našeg weba – zajedno ćemo naći pravi prostor za vas.";
 
-  const btnClass = isKontaktOsiguranje ? "btn btn-green" : "btn btn-primary";
+const btnClass = (isOnamaOsiguranje || isOsiguranje) ? "btn btn-green" : "btn btn-primary";
+
 
   let boxes = "";
   if (showQuery) {

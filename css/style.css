@@ -1389,14 +1389,9 @@ section.section-search-bar {
 }
 
 .flex {
-  align-items: center;
   gap: 8px;
 }
 
-.search-flex .btn,
-.flex-end .btn {
-  /*   margin-top: 32px; */
-}
 .search-flex .btn h5,
 .flex-end .btn h5 {
   font-size: 15px;
